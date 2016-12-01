@@ -1,0 +1,147 @@
+package org.cipher.ciphtypes.substition.complex;
+
+import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
+
+import java.security.InvalidKeyException;
+import java.util.*;
+
+/**
+ * The Polybius Square is essentially identical to the simple substitution cipher,
+ * except that each plaintext character is enciphered as 2 ciphertext characters.
+ * It can ususally be detected if there are only 5 or 6 different characters in the
+ * ciphertext. This algorithm offers very little communication security, and can be
+ * easily broken even by hand, especially as the messages become longer (more than
+ * several hundred ciphertext characters).
+ *
+ * @author Piotr 'pitrecki' Nowak
+ * @version 0.0.1
+ * @see SimpleSubstitutionCipher
+ * Created by Pitrecki on 2016-10-30.
+ */
+public class PolybiusSquareCipher extends ComplexSubstitutionCipher
+{
+    //Length ====> 25
+    private final int KEY_LENGTH = ASCII_TABLE.length - 1;
+
+    private String cipherKey;
+
+    public PolybiusSquareCipher() {
+        super();
+        keyGenerator();
+        squareGenerator(getCipherKey());
+    }
+
+    public PolybiusSquareCipher(String key) throws InvalidKeyException {
+        super();
+        if (!(key.length() == KEY_LENGTH))
+            throw new InvalidKeyException("Invalid cipherKey length: " + key.length() + " expected length: 25");
+        else if (!isUnigue(key))
+            throw new InvalidKeyException("Invalid cipherKey length, expected length: 25");
+        else
+            this.cipherKey = key.toUpperCase();
+        squareGenerator(getCipherKey());
+    }
+
+    public String getCipherKey() {
+        return cipherKey;
+    }
+
+
+    private void squareGenerator(String key) {
+        Character[][] cryptSqaure = new Character[5][5];
+        int index = 0;
+
+        for (int i = 0; i < cryptSqaure.length; i++) {
+            for (int j = 0; j < cryptSqaure[i].length; j++) {
+                cryptSqaure[i][j] = key.charAt(index++);
+            }
+        }
+
+        setCryptMatrix(cryptSqaure);
+
+    }
+
+    /**
+     * Generate unique key
+     * List should  prevent from duplicated values
+     */
+    private void keyGenerator() {
+        StringBuffer buffer = new StringBuffer();
+        List<Character> list = new ArrayList<>();
+        for (char letter : ASCII_TABLE)
+            list.add(letter);
+        Random random = new Random();
+        do {
+            int randomizeInteger = random.nextInt(list.size());
+            buffer.append(list.get(randomizeInteger));
+            list.remove(randomizeInteger);
+
+        }
+        while (buffer.length() <= KEY_LENGTH);
+
+        this.cipherKey = buffer.toString();
+    }
+
+    /**
+     * This method is responosbile for check is typed key by user is unique
+     * @param key input key by user
+     * @return true if key length is same, Set colection
+     */
+    private boolean isUnigue(String key) {
+        Set<Character> characterSet = new HashSet<>();
+        for (char letter : key.toCharArray())
+            characterSet.add(letter);
+
+        return key.length() == characterSet.size();
+    }
+
+    @Override
+    public void encrypt(String inputText) {
+        inputText = inputText.replace(" ", "").toUpperCase();
+        StringBuffer buffer = new StringBuffer();
+        int index = 0;
+
+        try {
+            while (true){
+                for (int i = 0; i < getCryptMatrix().length; i++) {
+                    for (int j = 0; j < getCryptMatrix()[i].length; j++) {
+                        if (inputText.charAt(index) == getCryptMatrix()[i][j]) {
+                            buffer.append(i);
+                            buffer.append(j);
+                            index++;
+                        }
+                        else if (index >= inputText.length())
+                            break;
+                    }
+                }
+            }
+        } catch (Exception e) {}
+
+
+        setProcessedText(buffer.toString());
+
+    }
+
+    @Override
+    public void decrypt(String inpuText) {
+        StringBuffer buffer = new StringBuffer();
+        int index = 0;
+        while (!((inpuText.length() / 2) == buffer.length())) {
+            int x = Integer.parseInt(inpuText.substring(index, index + 1));
+            index ++;
+            int y = Integer.parseInt(inpuText.substring(index, index + 1));
+            index ++;
+
+            buffer.append(getCryptMatrix()[x][y]);
+        }
+
+
+        setProcessedText(buffer.toString());
+    }
+
+    @Override
+    public String prepareDataToPrint() {
+        return "Text: " + getProcessedText() + " Generated cipherKey: " + getCipherKey();
+    }
+
+}
