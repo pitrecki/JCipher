@@ -5,7 +5,7 @@ import org.cipher.ciphtypes.substition.complex.BaconianCipher;
 import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
 
 /**
- * Simple enum class contains type variants
+ * Simple enum class contains variant types
  * @author Piotr 'pitrecki' Nowak
  * @version 0.0.1
  * Created by Pitrecki on 2016-11-06.

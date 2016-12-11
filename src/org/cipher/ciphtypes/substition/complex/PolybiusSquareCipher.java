@@ -66,20 +66,20 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
      * List should  prevent from duplicated values
      */
     private void keyGenerator() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
         List<Character> list = new ArrayList<>();
         for (char letter : ASCII_TABLE)
             list.add(letter);
         Random random = new Random();
         do {
             int randomizeInteger = random.nextInt(list.size());
-            buffer.append(list.get(randomizeInteger));
+            builder.append(list.get(randomizeInteger));
             list.remove(randomizeInteger);
 
         }
-        while (buffer.length() <= KEY_LENGTH);
+        while (builder.length() <= KEY_LENGTH);
 
-        this.cipherKey = buffer.toString();
+        this.cipherKey = builder.toString();
     }
 
     /**
@@ -98,7 +98,7 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
     @Override
     public void encrypt(String inputText) {
         inputText = inputText.replace(" ", "").toUpperCase();
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
         int index = 0;
 
         try {
@@ -106,8 +106,8 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
                 for (int i = 0; i < getCryptMatrix().length; i++) {
                     for (int j = 0; j < getCryptMatrix()[i].length; j++) {
                         if (inputText.charAt(index) == getCryptMatrix()[i][j]) {
-                            buffer.append(i);
-                            buffer.append(j);
+                            builder.append(i);
+                            builder.append(j);
                             index++;
                         }
                         else if (index >= inputText.length())
@@ -118,25 +118,25 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
         } catch (Exception e) {}
 
 
-        setProcessedText(buffer.toString());
+        setProcessedText(builder.toString());
 
     }
 
     @Override
     public void decrypt(String inpuText) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
         int index = 0;
-        while (!((inpuText.length() / 2) == buffer.length())) {
+        while (!((inpuText.length() / 2) == builder.length())) {
             int x = Integer.parseInt(inpuText.substring(index, index + 1));
             index ++;
             int y = Integer.parseInt(inpuText.substring(index, index + 1));
             index ++;
 
-            buffer.append(getCryptMatrix()[x][y]);
+            builder.append(getCryptMatrix()[x][y]);
         }
 
 
-        setProcessedText(buffer.toString());
+        setProcessedText(builder.toString());
     }
 
     @Override

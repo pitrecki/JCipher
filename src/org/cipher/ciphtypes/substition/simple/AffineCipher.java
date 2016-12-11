@@ -1,6 +1,5 @@
 package org.cipher.ciphtypes.substition.simple;
 
-import org.cipher.utils.Sign;
 import org.cipher.utils.Variant;
 
 /**

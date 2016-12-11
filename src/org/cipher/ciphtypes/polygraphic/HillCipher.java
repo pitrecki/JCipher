@@ -12,15 +12,17 @@ import java.security.InvalidKeyException;
 import java.util.Random;
 
 /**
- * //todo OPIS!
+ * In classical cryptography, the Hill cipher is a polygraphic substitution cipher based on linear algebra.
+ * Invented by Lester S. Hill in 1929, it was the first polygraphic cipher in which it was practical (though barely)
+ * to operate on more than three symbols at once. The following discussion assumes an elementary knowledge of matrices.
+ *
  * @author Piotr 'pitrecki' Nowak
  * @version 0.0.3
  * Created by Pitrecki on 2016-11-10.
  */
 public class HillCipher extends Cipher
 {
-    private final char LETTER_FOR_BLANK_FIELD = 'X';
-    private final short NUMBER_EQAULS_BLANK_FIELD = 23;
+
     //Numbers 221 is Ý,only true if word lenght is ODD!
     private final short SPECIAL_SIGN = 221;
 
@@ -75,6 +77,11 @@ public class HillCipher extends Cipher
         return (text.length()%2 == 0) ? text.length() : text.length() + 1;
     }
 
+    /**
+     *
+     * @param inputText text to decrypt
+     */
+
     @Override
     public void decrypt(String inputText) {
         cipherProccessing(inputText, Variant.DECRYPT);
@@ -101,8 +108,6 @@ public class HillCipher extends Cipher
             double calculatedModInvValue = modInverse.doubleValue();
 
 
-//            double determinantModInverted = A.determinant(A);
-//            BigInteger integer = new BigInteger(String.valueOf(determinantModInverted)).modInverse(BigInteger.valueOf(ASCII_TABLE.length));
             A = A.adjugate().modular(moduloValue).scalarMultiply(calculatedModInvValue).convertDoubleDataToInteger();
 
         }
@@ -127,7 +132,7 @@ public class HillCipher extends Cipher
                         break;
                     }
                     else if (text.charAt(iterator) == ' ') {
-                        matrixBData[0][matrixBIterator] = (int) NUMBER_EQAULS_BLANK_FIELD;
+                        matrixBData[0][matrixBIterator] = (int) SPECIAL_SIGN;
                         iterator++;
                         break;
                     }

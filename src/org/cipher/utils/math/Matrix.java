@@ -4,9 +4,11 @@ import org.cipher.utils.Variant;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.stream.DoubleStream;
 
 /**
- * In mathematics, a matrix (plural matrices) is a rectangular array[1] of numbers, symbols, or expressions, arranged in rows and columns. For example, the dimensions of the
+ * In mathematics, a matrix (plural matrices) is a rectangular array[1] of numbers, symbols, or expressions, arranged
+ * in rows and columns. For example, the dimensions of the
  * matrix below are 2 × 3 (read "two by three"), because there are two rows and three columns.
  * Example
  *  2  3  4
@@ -31,14 +33,9 @@ public class Matrix
      * @param data any type of Objects
      */
     public Matrix(Object[][] data) {
-//        if (isDataAreJagged(data)) {
         this.data = data;
         this.row = data.length;
         this.column = data[0].length;
-//        }
-//        else
-//            throw new InvalidMatrixException("Entered data are jagged, try enter antother");
-
     }
 
     /**
@@ -252,8 +249,12 @@ public class Matrix
     }
 
     /**
-     * //TODO opis
+     * The cofactors feature prominently in Laplace's formula for the expansion of determinants, which is
+     * a method of computing larger determinants in terms of smaller ones. Given the n × n  (aij),
+     * the determinant of A (denoted det(A)) can be written as the sum of the cofactors of any row or column of
+     * the matrix multiplied by the entries that generated them.
      * @param matrix matrix used for calculations
+     *
      * @return new cofactored matrix
      */
 
@@ -267,7 +268,28 @@ public class Matrix
     }
 
     /**
-     * //TODO opis
+     * The inverse of a square matrix A, sometimes called a reciprocal matrix, is a matrix A^(-1) such that
+     *
+     * AA^(-1)=I,
+     *
+     * where
+     * - I is the identity matrix.
+     *
+     * A square matrix A has an inverse if the determinant |A|!=0. The so-called invertible matrix theorem
+     * is major result in linear algebra which associates the existence of a matrix inverse with a number
+     * of other equivalent properties. A matrix possessing an inverse is called nonsingular, or invertible.
+     *
+     * The matrix inverse of a square matrix m may be taken in the Wolfram Language using the function Inverse[m].
+     *
+     * For a 2×2 matrix
+     * A= [a b;
+     * c d],
+     *
+     * the matrix inverse is
+     *
+     * A^(-1) = (1/det(A))[d -b; = (1/(ad-bc)) [d -b;
+     *                    -c a]		          -c a]
+     *
      * @return A^-1
      */
 
@@ -298,8 +320,10 @@ public class Matrix
     }
 
     /**
-     * //TODO opis -> macierz doplenien
+     * Definition
      * det(A) * inv(A)
+     * {@link #determinant(Matrix)}
+     * {@link #inverse()}
      * @return adjugated Matrix
      */
 
@@ -400,21 +424,4 @@ public class Matrix
 
         return epectedAmountOfElements == actutalAmountOfElements;
     }
-
-//    public String printData() {
-//        StringBuffer buffer = new StringBuffer();
-//
-//        for (Object[] objArray : getData()) {
-//            int line = 1;
-//            for (Object element : objArray) {
-//                buffer.append(element + " ");
-//                if ((buffer.length() * line) == getColumn()) {
-//                    buffer.append("\n");
-//                    line++;
-//                }
-//            }
-//        }
-//
-//        return buffer.toString();
-//    }
 }

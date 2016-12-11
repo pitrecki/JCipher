@@ -53,17 +53,6 @@ public final class AsciiGenerator
      */
 
     public static char[] bothCaseAlphabetGenerator() {
-
-//        char[] bothCase = Arrays.copyOf(upperCaseAlphabetGenerator(), upperCaseAlphabetGenerator().length * 2);
-
-//        int index = 26;
-//        for (char letter : lowerCaseAlphabetGenerator()) {
-//            bothCase[index] = letter;
-//            index++;
-//        }
-
-//        System.arraycopy(lowerCaseAlphabetGenerator(), 0, bothCase, bothCase.length/2, bothCase.length);
-
         //size 52 beacuse this array contains both
         //this most efficienty way of copy arrays
         char[] bothCase = new char[upperCaseAlphabetGenerator().length + lowerCaseAlphabetGenerator().length];

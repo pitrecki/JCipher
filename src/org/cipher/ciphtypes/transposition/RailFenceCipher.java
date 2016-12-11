@@ -15,9 +15,9 @@ import java.util.Arrays;
  * columns, read along the rows" cipher. This is equivalent to using an un-keyed columnar
  * transposition cipher
  *
- * FOR MORE INFORMATION LOOK AT: <a href="">LINK</a>
+ * FOR MORE INFORMATION LOOK AT: <a href="http://practicalcryptography.com/ciphers/classical-era/rail-fence/">LINK</a>
  *
- * ALSO CHECK THIS
+ * ALSO CHECK THIS <a href="https://en.wikipedia.org/wiki/Rail_fence_cipher"> WIKI </a>
  *
  * @author Piotr 'pitrecki' Nowak
  * @version 0.0.1
@@ -34,8 +34,20 @@ public class RailFenceCipher extends TranspositionCipher
     }
 
     /**
+     * In the rail fence cipher, the plaintext is written downwards and diagonally on successive
+     * "rails" of an imaginary fence, then moving up when we reach the bottom rail. When we reach
+     * the top rail, the message is written downwards again until the whole plaintext is written out.
+     * The message is then read off in rows. For example, if we have 3 "rails" and a message
+     * of 'WE ARE DISCOVERED. FLEE AT ONCE', the cipherer writes out:
      *
-     * @param textToDecode
+     * EXAMPLE:
+     *
+     *    W . . . E . . . C . . . R . . . L . . . T . . . E
+     *   . E . R . D . S . O . E . E . F . E . A . O . C .
+     *    . . A . . . I . . . V . . . D . . . E . . . N . .
+     *
+     *
+     * @param textToDecode is entered text
      */
 
     @Override
@@ -77,41 +89,42 @@ public class RailFenceCipher extends TranspositionCipher
         cryptArrayGenerator(inputText);
 
         Character[][] tmpCryptMatrix = ((Character[][]) getCryptMatrix());
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < tmpCryptMatrix.length; i++)
-            buffer.append(Arrays.toString(tmpCryptMatrix[i]));
+            builder.append(Arrays.toString(tmpCryptMatrix[i]));
 
-        setProcessedText(buffer.toString());
+        setProcessedText(builder.toString());
     }
 
     @Override
+    @SuppressWarnings("Not working yet")
     public void decrypt(String inputText) {
         cryptArrayGenerator(inputText);
         //TODO Poprawic implentacje, nie dziala jak nalezy
         //FIXME Napraw to wreszcie!
         Character[][] tmpCryptMatrix = ((Character[][]) getCryptMatrix());
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
 
 //       += (2*RAIL_KEY) - 2
 //        for (int i = 0; i < tmpCryptMatrix.length; i++) {
 //            for (int j = i; j < tmpCryptMatrix[i].length; j ++) {
-////                if (buffer.length() < RAIL_KEY)
-//                buffer.append(tmpCryptMatrix[i][j]);
+////                if (builder.length() < RAIL_KEY)
+//                builder.append(tmpCryptMatrix[i][j]);
 //
 //            }
 //        }
 
         for (int i = 0; i < tmpCryptMatrix[0].length; i++) {
             for (int j = 0; j < tmpCryptMatrix.length; j++) {
-                buffer.append(tmpCryptMatrix[j][i]);
+                builder.append(tmpCryptMatrix[j][i]);
             }
         }
 
 
 
 
-        setProcessedText(buffer.toString());
+        setProcessedText(builder.toString());
     }
 
 }

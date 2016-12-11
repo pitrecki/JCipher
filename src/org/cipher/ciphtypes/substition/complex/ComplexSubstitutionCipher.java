@@ -3,7 +3,8 @@ package org.cipher.ciphtypes.substition.complex;
 import org.cipher.ciphtypes.Cipher;
 
 /**
- * //TODO Opis!
+ * //TODO opisać
+ * Withount description
  * @author Piotr 'pitrecki' Nowak
  * @version 0.0.1
  * Created by Pitrecki on 2016-11-04.
