@@ -2,9 +2,8 @@ package org.cipher.utils.math;
 
 import org.cipher.utils.Variant;
 
-import java.lang.reflect.Array;
+
 import java.util.Arrays;
-import java.util.stream.DoubleStream;
 
 /**
  * In mathematics, a matrix (plural matrices) is a rectangular array[1] of numbers, symbols, or expressions, arranged
@@ -288,7 +287,7 @@ public class Matrix
      * the matrix inverse is
      *
      * A^(-1) = (1/det(A))[d -b; = (1/(ad-bc)) [d -b;
-     *                    -c a]		          -c a]
+     *                    -c a]		            -c a]
      *
      * @return A^-1
      */
