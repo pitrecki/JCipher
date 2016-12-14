@@ -70,6 +70,14 @@ public abstract class Cipher implements CipherInterface, DataPrintable
         this.cryptMatrix[row][column] = object;
     }
 
+    /**
+     * This method provide basic functionality of counting appearance of each letter and percentage
+     * usage of character in entire word
+     *
+     * @param textToAnalyze encrypted/decrypted word to analyze
+     * @return formatted list
+     */
+
     public String frequencyTextAnalysis(String textToAnalyze) {
         Map<Character, Integer> frequencyOcurencyMap = new HashMap<>(ASCII_TABLE.length);
         for (int i = 0; i < textToAnalyze.length(); i++) {
