@@ -1,4 +1,4 @@
-# Implementation of classic ciphers in Java
+# Implementation of classical ciphers in Java
 
 ## EN SECTION
 
