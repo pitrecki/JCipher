@@ -22,12 +22,10 @@ import org.cipher.utils.Variant;
  */
 public class CeasarCipher extends SimpleSubstitutionCipher
 {
-   // private enum sign {PLUS, MINUS}
-//    private final short KEY = 3;
-
 
     /**
-     * CALL SimpleSubstitutionCipher and setting MSTER KEY with value 3!
+     * CALL SimpleSubstitutionCipher and setting MASTER KEY to value 3!
+     * KEY set on 3 by default
      */
     public CeasarCipher() {
         super(3);
