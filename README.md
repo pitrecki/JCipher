@@ -9,7 +9,7 @@
 
 ######  Description
 
-Implementation of classic ciphers written in Java.
+Implementation of classical ciphers written in Java.
 The project aims to familiarize with the principle of action ciphers in the classical cryptography.
 
 UML diagram soon
