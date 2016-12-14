@@ -7,6 +7,8 @@ import org.cipher.interfaces.CipherInterface;
 import org.cipher.interfaces.DataPrintable;
 import org.cipher.utils.AsciiGenerator;
 
+import java.util.*;
+
 /**
  * Ciphers are arguably the corner stone of cryptography. In general, a cipher is
  * simply just a set of steps (an algorithm) for performing both an encryption, and
@@ -66,6 +68,25 @@ public abstract class Cipher implements CipherInterface, DataPrintable
 
     protected void setValueInCryptMatrix(int row, int column, Object object) {
         this.cryptMatrix[row][column] = object;
+    }
+
+    public String frequencyTextAnalysis(String textToAnalyze) {
+        Map<Character, Integer> frequencyOcurencyMap = new HashMap<>(ASCII_TABLE.length);
+        for (int i = 0; i < textToAnalyze.length(); i++) {
+            char ch = textToAnalyze.charAt(i);
+            if (!frequencyOcurencyMap.containsKey(ch))
+                frequencyOcurencyMap.put(ch, 1);
+            else
+                frequencyOcurencyMap.put(ch, frequencyOcurencyMap.get(ch) + 1);
+        }
+
+        List<String> percentList = new ArrayList<>(frequencyOcurencyMap.size());
+        for (Integer number : frequencyOcurencyMap.values()) {
+            Double divResult = Double.valueOf(number) / textToAnalyze.length();
+            percentList.add(String.format(Locale.UK, "%.2f", divResult));
+        }
+
+        return frequencyOcurencyMap.toString() + "\n" + percentList.toString();
     }
 
     @Override
