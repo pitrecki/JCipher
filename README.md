@@ -14,6 +14,36 @@ The project aims to familiarize with the principle of action ciphers in the clas
 
 UML diagram soon
 
+######  How to use
+
+Basics
+```java
+Cipher ceaser = new CeasarCipher();
+ceaser.encrypt("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG");
+String cipherText = ceaser.getProcessedText();
+String statistics = ceaser.frequencyTextAnalysis(cipherText);
+String allInfoAbout = ceaser.toString();
+```
+Fast way to print encrypted/decrypted text
+```java
+ceaser.printProccesedData();
+```
+Open file
+```java
+FileOperator fo = new FileOperator();
+fo.open("C:/plaintext");;
+ceaser.encrypt(fo.getText());
+cipherText = ceaser.getProcessedText();
+```
+```java
+Save to file (same path, see above)
+fo.save(cipherText);
+```
+Or like this
+```java
+fo.save(Paths.get("C:/MY_SECRET_FOLDER/"), cipherText);
+```
+
 
 ######  Resources
 
