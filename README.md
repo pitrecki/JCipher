@@ -28,6 +28,7 @@ Fast way to print encrypted/decrypted text
 ```java
 ceaser.printProccesedData();
 ```
+
 Open file
 ```java
 FileOperator fo = new FileOperator();
@@ -35,10 +36,12 @@ fo.open("C:/plaintext");;
 ceaser.encrypt(fo.getText());
 cipherText = ceaser.getProcessedText();
 ```
-```java
+
 Save to file (same path, see above)
+```java
 fo.save(cipherText);
 ```
+
 Or like this
 ```java
 fo.save(Paths.get("C:/MY_SECRET_FOLDER/"), cipherText);
