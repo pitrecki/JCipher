@@ -105,4 +105,24 @@ public abstract class Cipher implements CipherInterface, DataPrintable
 
     @Override
     public abstract String prepareDataToPrint();
+
+    /**
+     * Fastest way to print every information about:
+     * - crypted/decrypted text
+     * - crypt matrix
+     * - statistic of text analyze
+     * @return string with whole information
+     */
+
+    @Override
+    public String toString() {
+        String strCryptMatrix = "";
+        if (getCryptMatrix() != null)
+            for (Object[] objectsArray : getCryptMatrix())
+                strCryptMatrix += Arrays.toString(objectsArray) + "\n";
+
+        return "DECODED/ENCOED TEXT: " + getProcessedText() +
+                "\nCRYPT MATRIX:\n" + strCryptMatrix +
+                "STATISTICS: "  + frequencyTextAnalysis(getProcessedText());
+    }
 }

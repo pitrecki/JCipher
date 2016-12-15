@@ -30,8 +30,8 @@ public final class FileOperator
     }
 
     /**
-     *
-     * @param path
+     * Open file, which contains text to decode/encode
+     * @param path file path
      */
 
     public void open(Path path) {
@@ -52,7 +52,8 @@ public final class FileOperator
     }
 
     /**
-     *
+     * See {@link #open(Path)}
+     * File path as String (for lazy people :)).
      * @param path
      */
 
@@ -61,13 +62,14 @@ public final class FileOperator
     }
 
     /**
-     *
-     * @param path
-     * @param text
+     * Save decode/encode to file, be aware you must specify only absolute path. It generate output file called
+     * * 'output'
+     * @param path file path
+     * @param text to save
      */
 
     public void save(Path path, String text) {
-        String sPath = path != null ? path.toUri().getPath() : this.filePath.toUri().getPath();
+        String sPath = path != null ? path.toUri().getPath() : this.filePath.toAbsolutePath().toString();
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(sPath + OUTPUT_FILE_NAME))){
             if (text.contains("\n") || text.contains("\r")) {
                 String[] lineSeparatedArray = text.split("[\n\r]");
@@ -86,8 +88,8 @@ public final class FileOperator
     }
 
     /**
-     *
-     * @param str
+     * Use pre-specified path, only if you previously used {@link #open(Path)} method
+     * @param str to save
      */
 
     public void save(String str) {
