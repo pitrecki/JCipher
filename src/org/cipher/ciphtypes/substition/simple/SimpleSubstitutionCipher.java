@@ -82,12 +82,14 @@ public abstract class SimpleSubstitutionCipher extends Cipher
             for (int j = 0; j < ASCII_TABLE.length; j++) {
                 if (strToCharArray[i] == ASCII_TABLE[j]) {
                     int index = shift(j, eVariant);
+                    if (index < 0)
+                        index = ASCII_TABLE.length - Math.abs(index);
                     strToCharArray[i] = ASCII_TABLE[index];
                     break;
                 }
             }
         }
-        setProcessedText(Arrays.toString(strToCharArray));
+        setProcessedText(Arrays.toString(strToCharArray).replaceAll("[ \\[,\\]]", ""));
     }
 
 

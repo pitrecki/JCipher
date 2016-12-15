@@ -6,8 +6,6 @@ import org.cipher.utils.math.Algorithms;
 import org.cipher.utils.math.InvalidMatrixException;
 import org.cipher.utils.math.Matrix;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.util.Random;
 
@@ -102,11 +100,8 @@ public class HillCipher extends Cipher
         else {
             int moduloValue = ASCII_TABLE.length;
             A = new Matrix(getCryptMatrix());
-            String strDetValue = A.determinant(A).toString();
-            strDetValue = strDetValue.substring(0, strDetValue.lastIndexOf("."));
-            BigInteger modInverse = new BigInteger(strDetValue).modInverse(BigInteger.valueOf(moduloValue));
-            double calculatedModInvValue = modInverse.doubleValue();
-
+            double determinantValue = A.determinant(A);
+            double calculatedModInvValue = Algorithms.modInverse((long) determinantValue, moduloValue);
 
             A = A.adjugate().modular(moduloValue).scalarMultiply(calculatedModInvValue).convertDoubleDataToInteger();
 

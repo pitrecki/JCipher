@@ -1,5 +1,7 @@
 package org.cipher.utils.math;
 
+import java.math.BigInteger;
+
 /**
  * This class contains simple and useful algorithms needed in
  * the processing codes.
@@ -93,6 +95,20 @@ public final class Algorithms
             lcmResult = lcm(lcmResult, values[i]);
 
         return lcmResult;
+    }
+
+    /**
+     * Calculate modular multiplicative inverse of number
+     * @param a value to inverse
+     * @param m the modulus
+     * @return a^-1 mod m
+     */
+
+    public static long modInverse(long a, long m) {
+        BigInteger aBigInteger = new BigInteger(String.valueOf(a));
+        BigInteger mBigInteger = new BigInteger(String.valueOf(m));
+
+        return aBigInteger.modInverse(mBigInteger).longValue();
     }
 
 }

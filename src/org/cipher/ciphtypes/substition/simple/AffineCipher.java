@@ -1,6 +1,9 @@
 package org.cipher.ciphtypes.substition.simple;
 
 import org.cipher.utils.Variant;
+import org.cipher.utils.math.Algorithms;
+
+import java.math.BigInteger;
 
 /**
  * The <b>affine cipher</b> is a type of monoalphabeticfamily substitution cipher, wherein each letter
@@ -44,8 +47,9 @@ public class AffineCipher extends SimpleSubstitutionCipher
         int b = getKEY()[1];
         if (eVariant == Variant.ENCRYPT)
             return (a*value + b) % ASCII_TABLE.length;
-        else if (eVariant.equals(Variant.DECRYPT))
-            return (int) (Math.pow(a, -1.0)*(value - b) % ASCII_TABLE.length);
+        else if (eVariant.equals(Variant.DECRYPT)) {
+            return (int) ((Algorithms.modInverse(a, ASCII_TABLE.length) * (value - b)) % ASCII_TABLE.length);
+        }
 
         return -1;
     }
