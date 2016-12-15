@@ -5,17 +5,17 @@ import java.io.IOException;
 /**
  * Created by Pitrecki on 2016-10-22.
  */
-public class EmptyFileException extends IOException
+public class CheckFileException extends IOException
 {
-    public EmptyFileException() {
+    public CheckFileException() {
         super();
     }
 
-    public EmptyFileException(String message) {
+    public CheckFileException(String message) {
         super(message);
     }
 
-    public EmptyFileException(String message, Throwable cause) {
+    public CheckFileException(String message, Throwable cause) {
         super(message, cause);
     }
 }

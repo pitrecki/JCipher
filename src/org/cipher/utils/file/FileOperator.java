@@ -1,7 +1,9 @@
 package org.cipher.utils.file;
 
+
 import java.io.*;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * This class providing common opearating functionality on text files.
@@ -15,63 +17,82 @@ import java.nio.file.Path;
  */
 public final class FileOperator
 {
-    //TODO write, open, close read methods
+    private final String OUTPUT_FILE_NAME = "output";
 
-    private final String INPUT_FILE = "input";
-    private final String OUTPUT_FILE = "output";
-
-    private File file;
     private String text;
+    private Path filePath;
 
-    public FileOperator(File file) {
-        this.file = file;
-        this.text = "";
-    }
-
-    public FileOperator(String path) {
-        this.file = new File(path);
-        this.text = "";
+    public FileOperator() {
     }
 
     public String getText() {
         return text;
     }
 
-    public void open() throws IOException {
-        if (!file.exists())
-            this.file.createNewFile();
+    /**
+     *
+     * @param path
+     */
 
-        String line;
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        if (!bufferedReader.ready())
-            throw new EmptyFileException("Input file is empty");
-        else {
+    public void open(Path path) {
+        this.filePath = path.getParent();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path.toString()))){
+            if (!bufferedReader.ready())
+                throw new CheckFileException("File is empty!");
+
+            StringBuilder builder = new StringBuilder();
+            String line;
             while ((line = bufferedReader.readLine()) != null)
-                append(line);
-        }
+                builder.append(line);
 
-        bufferedReader.close();
+            this.text = builder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Apepend text by line parsed from file
-     * @param str   string line parameter
-     * @throws EmptyFileException   only when file is empty
+     *
+     * @param path
      */
-    private void append(String str) {
-        if (getText().length() == 0)
-            this.text = str;
-        else {
-            this.text = getText().concat(str);
+
+    public void open(String path) {
+        open(Paths.get(path));
+    }
+
+    /**
+     *
+     * @param path
+     * @param text
+     */
+
+    public void save(Path path, String text) {
+        String sPath = path != null ? path.toUri().getPath() : this.filePath.toUri().getPath();
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(sPath + OUTPUT_FILE_NAME))){
+            if (text.contains("\n") || text.contains("\r")) {
+                String[] lineSeparatedArray = text.split("[\n\r]");
+                for (String word : lineSeparatedArray) {
+                    bufferedWriter.write(word);
+                    bufferedWriter.newLine();
+                }
+            }
+            else
+                bufferedWriter.write(text);
+
+            bufferedWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
 
-    public void save(String text) throws IOException{
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(OUTPUT_FILE + ".txt"));
-        bufferedWriter.write(text);
-        bufferedWriter.flush();
-        bufferedWriter.close();
+    /**
+     *
+     * @param str
+     */
+
+    public void save(String str) {
+        save(null, str);
     }
+
 
 }
