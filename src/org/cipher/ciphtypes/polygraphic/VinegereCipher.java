@@ -32,6 +32,10 @@ public class VinegereCipher extends Cipher
         this.VINEGERE_TABLE = vinegereTableGenerate();
     }
 
+    VinegereCipher() {
+        this("");
+    }
+
     String getKeyword() {
         return keyword;
     }
@@ -145,5 +149,11 @@ public class VinegereCipher extends Cipher
     @Override
     public String prepareDataToPrint() {
         return getProcessedText();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\nKEYWORD: " + getKeyword();
     }
 }
