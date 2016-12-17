@@ -24,11 +24,24 @@ public class VinegereCipher extends Cipher
     //aka tabula recta
     private final char[][] VINEGERE_TABLE;
 
-    private  String keyword;
+    private String keyword;
+    private String plainText;
 
     public VinegereCipher(String keyword) {
         this.keyword = keyword.toUpperCase();
         this.VINEGERE_TABLE = vinegereTableGenerate();
+    }
+
+    String getKeyword() {
+        return keyword;
+    }
+
+    void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    String getPlainText() {
+        return plainText;
     }
 
     /**
@@ -61,13 +74,12 @@ public class VinegereCipher extends Cipher
     }
 
     /**
-     * The person sending the message chooses a keyword and repeats it until it matches the length of the
-     * plaintext
+     * Repeats entered keyword until it matches the length of the plaintext
      *
      * @param cryptTextLength length of plaintext
      */
 
-    private void keywordShifter(int cryptTextLength) {
+     void keywordShifter(int cryptTextLength) {
         if (cryptTextLength > keyword.length()) {
             int index = 0;
             char[] keywordCharArray = this.keyword.toCharArray();
@@ -103,6 +115,9 @@ public class VinegereCipher extends Cipher
 
     private void cipherProccessing(String text, Variant eVariant) {
         text = text.replaceAll("[ ]", "");
+        //necessary for inherit class
+        this.plainText = text;
+        // -----------------------------
         if (text.length() != keyword.length())
             keywordShifter(text.length());
 
