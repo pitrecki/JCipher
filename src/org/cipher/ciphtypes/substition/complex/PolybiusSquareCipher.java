@@ -66,20 +66,14 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
      * List should  prevent from duplicated values
      */
     private void keyGenerator() {
-        StringBuilder builder = new StringBuilder();
-        List<Character> list = new ArrayList<>();
-        for (char letter : ASCII_TABLE)
-            list.add(letter);
-        Random random = new Random();
+        Set<Character> chKeySet = new LinkedHashSet<>();
         do {
-            int randomizeInteger = random.nextInt(list.size());
-            builder.append(list.get(randomizeInteger));
-            list.remove(randomizeInteger);
+            char letter = ASCII_TABLE[new Random().nextInt(26)];
+            if (letter != 'J')
+                chKeySet.add(letter);
+        } while (chKeySet.size() != KEY_LENGTH);
 
-        }
-        while (builder.length() <= KEY_LENGTH);
-
-        this.cipherKey = builder.toString();
+        this.cipherKey = chKeySet.toString().replaceAll("[\\[\\], ]", "");
     }
 
     /**
