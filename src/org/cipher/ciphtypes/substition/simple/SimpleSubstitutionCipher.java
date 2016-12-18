@@ -110,13 +110,7 @@ public abstract class SimpleSubstitutionCipher extends Cipher
 
     @Override
     public String prepareDataToPrint() {
-//        try {
-//            return this.text = Arrays.toString(this.cryptArray[0]).replace("]", "").replace("[", "").replaceAll(", ", "");
-//        } catch (NullPointerException e) {}
-//
-//        return null;
-
-        return getProcessedText().replace("]", "").replace("[", "").replaceAll(", ", "");
+        return getProcessedText().replaceAll("[\\[\\], ]", "");
     }
 
 }

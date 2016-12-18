@@ -1,6 +1,7 @@
 package org.cipher.ciphtypes.substition.complex;
 
 import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
+import org.cipher.utils.math.Matrix;
 
 import java.security.InvalidKeyException;
 import java.util.*;
@@ -57,7 +58,7 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
             }
         }
 
-        setCryptMatrix(cryptSqaure);
+        setCryptMatrix(new Matrix(cryptSqaure));
 
     }
 
@@ -97,9 +98,9 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
 
         try {
             while (true){
-                for (int i = 0; i < getCryptMatrix().length; i++) {
-                    for (int j = 0; j < getCryptMatrix()[i].length; j++) {
-                        if (inputText.charAt(index) == getCryptMatrix()[i][j]) {
+                for (int i = 0; i < getCryptMatrix().getData().length; i++) {
+                    for (int j = 0; j < getCryptMatrix().getData()[i].length; j++) {
+                        if ((getCryptMatrix().getData()[i][j]).equals(inputText.charAt(index))) {
                             builder.append(i);
                             builder.append(j);
                             index++;
@@ -126,7 +127,7 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
             int y = Integer.parseInt(inpuText.substring(index, index + 1));
             index ++;
 
-            builder.append(getCryptMatrix()[x][y]);
+            builder.append(getCryptMatrix().getData()[x][y]);
         }
 
 

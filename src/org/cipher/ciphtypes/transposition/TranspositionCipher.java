@@ -1,8 +1,7 @@
 package org.cipher.ciphtypes.transposition;
 
 import org.cipher.ciphtypes.Cipher;
-import org.cipher.interfaces.CipherInterface;
-import org.cipher.interfaces.DataPrintable;
+import org.cipher.utils.math.Matrix;
 
 import java.util.Arrays;
 
@@ -31,16 +30,16 @@ public abstract class TranspositionCipher extends Cipher
 
     @Override
     protected void setProcessedText(String text) {
-        super.setProcessedText(text.replace("]", "").replace("[", "").replace(",", "").replace("*", "").replace(" ", ""));
+        super.setProcessedText(text.replaceAll("[\\[\\],* ]", ""));
     }
 
     @Override
-    protected void setCryptMatrix(Object[][] cryptMatrix) {
-        Character[][]  chArray = (Character[][]) cryptMatrix;
+    protected void setCryptMatrix(Matrix cryptMatrix) {
+        Character[][]  chArray = (Character[][]) cryptMatrix.getData();
         for (int i = 0; i < chArray.length; i++)
             Arrays.fill(chArray[i], '*');
 
-        setCryptMatrix(chArray);
+        setCryptMatrix(new Matrix(chArray));
     }
 
     protected abstract void cryptArrayGenerator(String strText);

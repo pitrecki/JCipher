@@ -1,6 +1,7 @@
 package org.cipher.ciphtypes.substition.complex;
 
 import org.cipher.ciphtypes.Cipher;
+import org.cipher.utils.math.Matrix;
 
 /**
  * //TODO opisać
@@ -17,12 +18,7 @@ public abstract class ComplexSubstitutionCipher extends Cipher
     }
 
     @Override
-    public Character[][] getCryptMatrix() {
-        return ((Character[][]) super.getCryptMatrix());
-    }
-
-    @Override
-    protected void setCryptMatrix(Object[][] cryptMatrix) {
+    protected void setCryptMatrix(Matrix cryptMatrix) {
         super.setCryptMatrix(cryptMatrix);
     }
 
@@ -35,6 +31,6 @@ public abstract class ComplexSubstitutionCipher extends Cipher
 
     @Override
     public String prepareDataToPrint() {
-        return getProcessedText().replace("[", "").replace("]", "").replace(",", "").replace(" ", "");
+        return getProcessedText().replaceAll("[\\[\\], ]", "");
     }
 }

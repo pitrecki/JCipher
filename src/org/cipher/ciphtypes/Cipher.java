@@ -6,6 +6,7 @@ import org.cipher.ciphtypes.transposition.TranspositionCipher;
 import org.cipher.interfaces.CipherInterface;
 import org.cipher.interfaces.DataPrintable;
 import org.cipher.utils.AsciiGenerator;
+import org.cipher.utils.math.Matrix;
 
 import java.util.*;
 
@@ -37,6 +38,7 @@ import java.util.*;
  * @see SimpleSubstitutionCipher
  * @see ComplexSubstitutionCipher
  * @see TranspositionCipher
+ * @see Matrix
  * Created by Pitrecki on 2016-11-04.
  */
 public abstract class Cipher implements CipherInterface, DataPrintable
@@ -44,7 +46,7 @@ public abstract class Cipher implements CipherInterface, DataPrintable
     public final char[] ASCII_TABLE;
 
     private String processedText;
-    private Object[][] cryptMatrix;
+    private Matrix cryptMatrix;
 
     public Cipher() {
         this.ASCII_TABLE = AsciiGenerator.upperCaseAlphabetGenerator();
@@ -58,16 +60,16 @@ public abstract class Cipher implements CipherInterface, DataPrintable
         this.processedText = text;
     }
 
-    public Object[][] getCryptMatrix() {
+    public Matrix getCryptMatrix() {
         return cryptMatrix;
     }
 
-    protected void setCryptMatrix(Object[][] cryptMatrix) {
+    protected void setCryptMatrix(Matrix cryptMatrix) {
         this.cryptMatrix = cryptMatrix;
     }
 
     protected void setValueInCryptMatrix(int row, int column, Object object) {
-        this.cryptMatrix[row][column] = object;
+        cryptMatrix.setValueInMatrix(row, column, object);
     }
 
     /**
@@ -118,7 +120,7 @@ public abstract class Cipher implements CipherInterface, DataPrintable
     public String toString() {
         String strCryptMatrix = "";
         if (getCryptMatrix() != null)
-            for (Object[] objectsArray : getCryptMatrix())
+            for (Object[] objectsArray : cryptMatrix.getData())
                 strCryptMatrix += Arrays.toString(objectsArray) + "\n";
 
         return "DECODED/ENCOED TEXT: " + getProcessedText() +

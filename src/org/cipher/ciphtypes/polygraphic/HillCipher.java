@@ -36,14 +36,14 @@ public class HillCipher extends Cipher
         if (key.length != key[0].length)
             throw new InvalidKeyException("Key size not matched!");
         else
-            setCryptMatrix(key);
+            setCryptMatrix(new Matrix(key));
 
     }
 
     private void keyGenerator(int size) {
-        setCryptMatrix(new Integer[size][size]);
-        for (int i = 0; i < getCryptMatrix().length; i++) {
-            for (int j = 0; j < getCryptMatrix()[i].length; j++) {
+        setCryptMatrix(new Matrix(new Integer[size][size]));
+        for (int i = 0; i < getCryptMatrix().getData().length; i++) {
+            for (int j = 0; j < getCryptMatrix().getData()[i].length; j++) {
                 setValueInCryptMatrix(i, j, generateValue());
             }
         }
@@ -96,10 +96,10 @@ public class HillCipher extends Cipher
         Matrix A = null;
 
         if (eVariant.equals(Variant.ENCRYPT))
-            A = new Matrix(getCryptMatrix());
+            A = new Matrix(getCryptMatrix().getData());
         else {
             int moduloValue = ASCII_TABLE.length;
-            A = new Matrix(getCryptMatrix());
+            A = new Matrix(getCryptMatrix().getData());
             double determinantValue = A.determinant(A);
             double calculatedModInvValue = Algorithms.modInverse((long) determinantValue, moduloValue);
 

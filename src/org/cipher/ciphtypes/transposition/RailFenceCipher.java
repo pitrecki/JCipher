@@ -1,5 +1,7 @@
 package org.cipher.ciphtypes.transposition;
 
+import org.cipher.utils.math.Matrix;
+
 import java.util.Arrays;
 
 /**
@@ -53,12 +55,12 @@ public class RailFenceCipher extends TranspositionCipher
     @Override
     protected void cryptArrayGenerator(String textToDecode) {
         String temp = textToDecode.replaceAll(" ", "");
-        setCryptMatrix(new Character[RAIL_KEY][temp.length()]);
+        setCryptMatrix(new Matrix(new Character[RAIL_KEY][temp.length()]));
 
 //        char[] textToCharArray = temp.toCharArray();
         int textCharIndex = 0;
         try {
-            for (int j = 0; j < getCryptMatrix()[0].length; j += RAIL_KEY + 1) {
+            for (int j = 0; j < getCryptMatrix().getData()[0].length; j += RAIL_KEY + 1) {
                 int row = 0;
                 int column = j;
                 do {
@@ -67,7 +69,7 @@ public class RailFenceCipher extends TranspositionCipher
                     row++;
                     column++;
                     textCharIndex++;
-                } while (row < getCryptMatrix().length);
+                } while (row < getCryptMatrix().getData().length);
 
                 row -= 1;
                 column -= 1;
@@ -88,7 +90,7 @@ public class RailFenceCipher extends TranspositionCipher
     public void encrypt(String inputText) {
         cryptArrayGenerator(inputText);
 
-        Character[][] tmpCryptMatrix = ((Character[][]) getCryptMatrix());
+        Character[][] tmpCryptMatrix = (Character[][]) getCryptMatrix().getData();
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < tmpCryptMatrix.length; i++)
@@ -103,7 +105,7 @@ public class RailFenceCipher extends TranspositionCipher
         cryptArrayGenerator(inputText);
         //TODO Poprawic implentacje, nie dziala jak nalezy
         //FIXME Napraw to wreszcie!
-        Character[][] tmpCryptMatrix = ((Character[][]) getCryptMatrix());
+        Character[][] tmpCryptMatrix = ((Character[][]) getCryptMatrix().getData());
         StringBuilder builder = new StringBuilder();
 
 //       += (2*RAIL_KEY) - 2
