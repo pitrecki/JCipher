@@ -88,14 +88,14 @@ public class HillCipher extends Cipher
     /**
      * The entire logic of a hill cipher
      * @param text to process
-     * @param eVariant enum contains enumerated types like ENCRYPT or DECRYPT
+     * @param variant enum contains enumerated types like ENCRYPT or DECRYPT
      */
 
-    private void cipherProccessing(String text, Variant eVariant) {
+    private void cipherProccessing(String text, Variant variant) {
         text = text.replaceAll(" ", "").toUpperCase();
         Matrix A = null;
 
-        if (eVariant.equals(Variant.ENCRYPT))
+        if (variant.equals(Variant.ENCRYPT))
             A = new Matrix(getCryptMatrix().getData());
         else {
             int moduloValue = ASCII_TABLE.length;

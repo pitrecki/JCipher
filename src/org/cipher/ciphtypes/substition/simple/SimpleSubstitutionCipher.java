@@ -75,13 +75,13 @@ public abstract class SimpleSubstitutionCipher extends Cipher
         textShifting(inpuText,Variant.DECRYPT);
     }
 
-    private void textShifting(String inpuText, Variant eVariant) {
+    private void textShifting(String inpuText, Variant variant) {
         char[] strToCharArray = inpuText.toUpperCase().toCharArray();
 
         for (int i = 0; i < strToCharArray.length; i++) {
             for (int j = 0; j < ASCII_TABLE.length; j++) {
                 if (strToCharArray[i] == ASCII_TABLE[j]) {
-                    int index = shift(j, eVariant);
+                    int index = shift(j, variant);
                     if (index < 0)
                         index = ASCII_TABLE.length - Math.abs(index);
                     strToCharArray[i] = ASCII_TABLE[index];
@@ -102,11 +102,11 @@ public abstract class SimpleSubstitutionCipher extends Cipher
     /**
      *
      * @param index
-     * @param eVariant ENCRYPT equals Encrypt; DECRYPT equals Decrypt
+     * @param variant ENCRYPT equals Encrypt; DECRYPT equals Decrypt
      * @return
      */
 
-    protected abstract int shift(int index, Variant eVariant);
+    protected abstract int shift(int index, Variant variant);
 
     @Override
     public String prepareDataToPrint() {

@@ -48,7 +48,7 @@ public abstract class Cipher implements CipherInterface, DataPrintable
     private String processedText;
     private Matrix cryptMatrix;
 
-    public Cipher() {
+    public  Cipher() {
         this.ASCII_TABLE = AsciiGenerator.upperCaseAlphabetGenerator();
     }
 

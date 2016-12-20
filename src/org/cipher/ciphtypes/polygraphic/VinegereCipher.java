@@ -114,10 +114,10 @@ public class VinegereCipher extends Cipher
     /**
      *
      * @param text to decode or encode
-     * @param eVariant enuma type eq. DECRYPT or ENCRYPT
+     * @param variant enuma type eq. DECRYPT or ENCRYPT
      */
 
-    private void cipherProccessing(String text, Variant eVariant) {
+    private void cipherProccessing(String text, Variant variant) {
         text = text.replaceAll("[ ]", "");
         //necessary for inherit class
         this.plainText = text;
@@ -130,7 +130,7 @@ public class VinegereCipher extends Cipher
             int keywordCurrentLetter = this.keyword.charAt(i);
             int inputTextCurrentLetter = text.charAt(i);
             int result = 0;
-            switch (eVariant) {
+            switch (variant) {
                 case ENCRYPT:
                     result = (keywordCurrentLetter + inputTextCurrentLetter) % ASCII_TABLE.length;
                     break;

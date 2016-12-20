@@ -41,10 +41,10 @@ public class CeasarCipher extends SimpleSubstitutionCipher
  */
 
     @Override
-    protected int shift(int value, Variant eVariant) {
-        if (eVariant.equals(Variant.ENCRYPT))
+    protected int shift(int value, Variant variant) {
+        if (variant.equals(Variant.ENCRYPT))
             return (value + getMasterKEY()) % ASCII_TABLE.length;
-        else if (eVariant.equals(Variant.DECRYPT))
+        else if (variant.equals(Variant.DECRYPT))
             return (value - getMasterKEY()) % ASCII_TABLE.length;
 
         return -1;

@@ -29,12 +29,12 @@ public class AtbashCipher extends SimpleSubstitutionCipher
     /**
      *
      * @param value
-     * @param eVariant PLUS equals Encrypt; MINUS equals Decrypt
+     * @param variant PLUS equals Encrypt; MINUS equals Decrypt
      * @return
      */
 
     @Override
-    protected int shift(int value, Variant eVariant) {
+    protected int shift(int value, Variant variant) {
         return (ASCII_TABLE.length - 1) - value;
     }
 }

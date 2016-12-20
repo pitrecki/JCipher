@@ -15,32 +15,39 @@ import java.util.*;
  * several hundred ciphertext characters).
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.1
+ * @version 0.0.4
  * @see SimpleSubstitutionCipher
  * Created by Pitrecki on 2016-10-30.
  */
 public class PolybiusSquareCipher extends ComplexSubstitutionCipher
 {
+    enum Encoding {ALPHABETICAL, NUMERICAL}
+
     //Length ====> 25
     private final int KEY_LENGTH = ASCII_TABLE.length - 1;
 
+    //is true if encoding choosen to NUMERICAL, please see constructors arguments
     private String cipherKey;
+    private boolean isEncodingSetToNumeric;
 
-    public PolybiusSquareCipher() {
+    public PolybiusSquareCipher(Encoding encoding) {
         super();
         keyGenerator();
         squareGenerator(getCipherKey());
+        this.isEncodingSetToNumeric = encoding.equals(Encoding.NUMERICAL);
     }
 
-    public PolybiusSquareCipher(String key) throws InvalidKeyException {
+    public PolybiusSquareCipher(String key, Encoding encoding) throws InvalidKeyException {
         super();
-        if (!(key.length() == KEY_LENGTH))
+        if (key.length() != KEY_LENGTH)
             throw new InvalidKeyException("Invalid cipherKey length: " + key.length() + " expected length: 25");
         else if (!isUnigue(key))
             throw new InvalidKeyException("Invalid cipherKey length, expected length: 25");
         else
             this.cipherKey = key.toUpperCase();
         squareGenerator(getCipherKey());
+
+        this.isEncodingSetToNumeric = encoding.equals(Encoding.NUMERICAL);
     }
 
     public String getCipherKey() {
@@ -90,6 +97,31 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
         return key.length() == characterSet.size();
     }
 
+    /**
+     * Translating decoded/encoded result of cipher processing to numeric or alphabetic answer
+     *
+     * @param textToEncode text to translate
+     * @return translated text
+     */
+
+    protected String encodingTranslator(String textToEncode) {
+        char[] chKeyArray = new char[5];
+        for (int i = 0; i < chKeyArray.length; i++)
+            chKeyArray[i] = (char) ('A' + i);
+
+
+        if (isEncodingSetToNumeric)
+            return textToEncode;
+        else {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < textToEncode.length(); i++)
+                builder.append(chKeyArray[Character.getNumericValue(textToEncode.charAt(i))]);
+
+
+            return builder.toString();
+        }
+    }
+
     @Override
     public void encrypt(String inputText) {
         inputText = inputText.replace(" ", "").toUpperCase();
@@ -113,13 +145,15 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
         } catch (Exception e) {}
 
 
-        setProcessedText(builder.toString());
+        setProcessedText(encodingTranslator(builder.toString()));
 
     }
 
     @Override
     public void decrypt(String inpuText) {
         StringBuilder builder = new StringBuilder();
+        if (inpuText.matches(".*[A-Z].*"))
+            inpuText = encodingTranslator(inpuText);
         int index = 0;
         while (!((inpuText.length() / 2) == builder.length())) {
             int x = Integer.parseInt(inpuText.substring(index, index + 1));
