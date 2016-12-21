@@ -76,7 +76,7 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
 
     /**
      * Generate unique key
-     * List should  prevent from duplicated values
+     * Set should  prevent from duplicated values
      */
     private void keyGenerator() {
         Set<Character> chKeySet = new LinkedHashSet<>();
@@ -121,8 +121,8 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
 
     protected String encodingTranslator(String textToEncode, Encoding encoding) {
         char[] chKeyArray = new char[5];
-        for (int i = 0; i < chKeyArray.length; i++)
-            chKeyArray[i] = (char) ('A' + i);
+        System.arraycopy(ASCII_TABLE, 0, chKeyArray, 0, chKeyArray.length);
+
         StringBuilder builder = new StringBuilder();
 
         switch (encoding) {
@@ -140,18 +140,19 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
                                 builder.append(j);
                         }
                     }
-                    break;
                 }
+                break;
         }
 
         return builder.toString();
     }
 
     @Override
-    @SuppressWarnings("Work only for alphabetic plaintext")
+    @SuppressWarnings("Work only with alphabetic plaintext")
     public void encrypt(String inputText) throws IllegalFormatException {
         if (inputText.matches(".*[0-9].*"))
             throw new IllegalArgumentException("Only letters, your input: " + inputText);
+
         inputText = inputText.replace(" ", "").toUpperCase();
         StringBuilder builder = new StringBuilder();
         int index = 0;
