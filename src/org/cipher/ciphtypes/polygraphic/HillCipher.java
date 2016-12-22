@@ -44,12 +44,12 @@ public class HillCipher extends Cipher
         setCryptMatrix(new Matrix(new Integer[size][size]));
         for (int i = 0; i < getCryptMatrix().getData().length; i++) {
             for (int j = 0; j < getCryptMatrix().getData()[i].length; j++) {
-                setValueInCryptMatrix(i, j, generateValue());
+                setValueInCryptMatrix(i, j, generateRandomValue());
             }
         }
     }
 
-    private int generateValue() {
+    private int generateRandomValue() {
         return new Random().nextInt(ASCII_TABLE.length);
     }
 

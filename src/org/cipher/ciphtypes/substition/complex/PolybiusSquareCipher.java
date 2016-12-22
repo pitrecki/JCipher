@@ -48,6 +48,8 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
             throw new InvalidKeyException("Invalid cipherKey length: " + key.length() + " , expected length: 25");
         else if (!isUnigue(key))
             throw new InvalidKeyException("Cinpher key is not unique");
+        else if (key.matches("[Jj0-9]"))
+            throw new InvalidKeyException("Key contains illegal character");
         else
             this.cipherKey = key.toUpperCase();
         squareGenerator(getCipherKey());
@@ -59,6 +61,11 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
         return cipherKey;
     }
 
+
+    /**
+     * Create 5x5 cryptoghraphy Matrix and fill with enteted key
+     * @param key entered by user
+     */
 
     private void squareGenerator(String key) {
         Character[][] cryptSqaure = new Character[5][5];
@@ -80,8 +87,9 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
      */
     private void keyGenerator() {
         Set<Character> chKeySet = new LinkedHashSet<>();
+        Random random = new Random();
         do {
-            char letter = ASCII_TABLE[new Random().nextInt(26)];
+            char letter = ASCII_TABLE[random.nextInt(26)];
             if (letter != 'J')
                 chKeySet.add(letter);
         } while (chKeySet.size() != KEY_LENGTH);

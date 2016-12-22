@@ -35,9 +35,10 @@ public class RunningKeyCipher extends VinegereCipher
 
     private String keywordGenerator() {
         //size between 60 and MAX_BOUND
-        Character[] keywordArray = new Character[new Random().nextInt(MAX_BOUND)+60];
+        Random randomValue = new Random();
+        Character[] keywordArray = new Character[randomValue.nextInt(MAX_BOUND)+60];
         for (int i = 0; i < keywordArray.length; i++) {
-            int randomCharacter = new Random().nextInt(ASCII_TABLE.length);
+            int randomCharacter = randomValue.nextInt(ASCII_TABLE.length);
             keywordArray[i] = ASCII_TABLE[randomCharacter];
         }
 
