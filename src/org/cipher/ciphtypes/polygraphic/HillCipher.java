@@ -28,7 +28,7 @@ public class HillCipher extends Cipher
 
     public HillCipher(int size) {
         super();
-        keyGenerator(size);
+        cryptMatrixGenerator(size);
     }
 
     public HillCipher(Integer[][] key) throws InvalidKeyException {
@@ -40,7 +40,8 @@ public class HillCipher extends Cipher
 
     }
 
-    private void keyGenerator(int size) {
+    private void cryptMatrixGenerator(int size) {
+
         setCryptMatrix(new Matrix(new Integer[size][size]));
         for (int i = 0; i < getCryptMatrix().getData().length; i++) {
             for (int j = 0; j < getCryptMatrix().getData()[i].length; j++) {

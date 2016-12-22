@@ -37,8 +37,8 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
 
     public PolybiusSquareCipher(Encoding encoding) {
         super();
-        keyGenerator();
-        squareGenerator(getCipherKey());
+        randomKeyGenerator();
+        cryptMatrixGenerator(getCipherKey());
         this.isEncodingSetToNumeric = setEncoding(encoding);
     }
 
@@ -52,7 +52,7 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
             throw new InvalidKeyException("Key contains illegal character");
         else
             this.cipherKey = key.toUpperCase();
-        squareGenerator(getCipherKey());
+        cryptMatrixGenerator(getCipherKey());
 
         this.isEncodingSetToNumeric = setEncoding(encoding);
     }
@@ -67,7 +67,7 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
      * @param key entered by user
      */
 
-    private void squareGenerator(String key) {
+    private void cryptMatrixGenerator(String key) {
         Character[][] cryptSqaure = new Character[5][5];
         int index = 0;
 
@@ -85,7 +85,7 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
      * Generate unique key
      * Set should  prevent from duplicated values
      */
-    private void keyGenerator() {
+    private void randomKeyGenerator() {
         Set<Character> chKeySet = new LinkedHashSet<>();
         Random random = new Random();
         do {
