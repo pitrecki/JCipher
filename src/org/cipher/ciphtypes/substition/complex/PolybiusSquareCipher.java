@@ -1,8 +1,9 @@
 package org.cipher.ciphtypes.substition.complex;
 
 import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
-import org.cipher.utils.math.Matrix;
+import org.cipher.utils.CryptMatrixGenerator;
 
+import java.lang.reflect.Array;
 import java.security.InvalidKeyException;
 import java.util.*;
 
@@ -68,16 +69,22 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
      */
 
     private void cryptMatrixGenerator(String key) {
-        Character[][] cryptSqaure = new Character[5][5];
-        int index = 0;
+        CryptMatrixGenerator<Character> cmg = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Character.class).build();
 
-        for (int i = 0; i < cryptSqaure.length; i++) {
-            for (int j = 0; j < cryptSqaure[i].length; j++) {
-                cryptSqaure[i][j] = key.charAt(index++);
-            }
-        }
+        List<Character> characterKeyList = new ArrayList<>(key.length());
+        for (Character character : key.toCharArray())
+            characterKeyList.add(character);
 
-        setCryptMatrix(new Matrix(cryptSqaure));
+        cmg.fill(characterKeyList.toArray(new Character[characterKeyList.size()]));
+        setCryptMatrix(cmg.getGenereratedCryptMatrix());
+
+//        char[] keyChArray = key.toCharArray();
+//        Character[] keyObjChArray = new Character[key.length()];
+//        for (int i = 0; i < keyChArray.length; i++)
+//            keyObjChArray[i] = keyChArray[i];
+
+//        cryptMatrix.fill(keyObjChArray);
+//        setCryptMatrix(cryptMatrix.getGenereratedCryptMatrix());
 
     }
 

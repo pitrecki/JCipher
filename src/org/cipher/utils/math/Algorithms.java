@@ -110,5 +110,4 @@ public final class Algorithms
 
         return aBigInteger.modInverse(mBigInteger).longValue();
     }
-
 }

@@ -49,6 +49,12 @@ public class Matrix
         emptyMatrixInit();
     }
 
+    public Matrix(Matrix matrix) {
+        this.column = matrix.getColumn();
+        this.row = matrix.getRow();
+        this.data = matrix.getData();
+    }
+
     /**
      *  Constructor generate square matrix MxM
      * @param square
@@ -112,11 +118,11 @@ public class Matrix
      *
      * @param B Matrix
      * @return result of the multiplication of two matrices
-     * @throws InvalidMatrixException only when matrix A M dim not equls matrix B dim N.
+     * @throws MatrixException only when matrix A M dim not equls matrix B dim N.
      */
 
     @SuppressWarnings("works only for numbers!")
-    public Matrix multiply(Matrix B) throws InvalidMatrixException {
+    public Matrix multiply(Matrix B) throws MatrixException {
         Double[][] tmpArray = new Double[B.getRow()][B.getColumn()];
         if (checkDimension(B)) {
             double value = 0;
@@ -132,7 +138,7 @@ public class Matrix
             B.setData(tmpArray);
         }
         else {
-            throw new InvalidMatrixException("Incorect dimenesion, expected value: " + getDimension());
+            throw new MatrixException("Incorect dimenesion, expected value: " + getDimension());
         }
 
         return B;

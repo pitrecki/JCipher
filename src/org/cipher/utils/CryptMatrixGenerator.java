@@ -5,6 +5,10 @@ import org.cipher.utils.math.Matrix;
 import java.lang.reflect.Array;
 
 /**
+ * Creating encrpytion matrix with selected parameters
+ *
+ * @author Piotr 'pitrecki' Nowak
+ * @version 0.0.5
  * Created by Pitrecki on 2016-12-22.
  */
 public final class CryptMatrixGenerator<T>
@@ -22,7 +26,7 @@ public final class CryptMatrixGenerator<T>
         createCryptMatrix();
     }
 
-    @SuppressWarnings("ccc")
+    @SuppressWarnings("Problem with T casting")
     private void createCryptMatrix() {
         T[][] genericCryptMatrix = ((T[][]) Array.newInstance(this.clazzType.asSubclass(clazzType.getSuperclass()), this.column, this.row));
         this.matrix = new Matrix(genericCryptMatrix);

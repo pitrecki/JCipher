@@ -1,9 +1,10 @@
 package org.cipher.ciphtypes.polygraphic;
 
 import org.cipher.ciphtypes.Cipher;
+import org.cipher.utils.CryptMatrixGenerator;
 import org.cipher.utils.Variant;
 import org.cipher.utils.math.Algorithms;
-import org.cipher.utils.math.InvalidMatrixException;
+import org.cipher.utils.math.MatrixException;
 import org.cipher.utils.math.Matrix;
 
 import java.security.InvalidKeyException;
@@ -13,6 +14,9 @@ import java.util.Random;
  * In classical cryptography, the Hill cipher is a polygraphic substitution cipher based on linear algebra.
  * Invented by Lester S. Hill in 1929, it was the first polygraphic cipher in which it was practical (though barely)
  * to operate on more than three symbols at once. The following discussion assumes an elementary knowledge of matrices.
+ *
+ * Please watch for cryptographic matrix, which is the reason for the failure of the inversion of the determinant and the
+ * length of the module.
  *
  * @author Piotr 'pitrecki' Nowak
  * @version 0.0.3
@@ -26,34 +30,41 @@ public class HillCipher extends Cipher
 
     private Integer[] procesedData;
 
-    public HillCipher(int size) {
+    public HillCipher(int size) throws ArithmeticException {
         super();
         cryptMatrixGenerator(size);
     }
 
-    public HillCipher(Integer[][] key) throws InvalidKeyException {
+    public HillCipher(Matrix cryptMatrix) throws InvalidKeyException {
         super();
-        if (key.length != key[0].length)
+        if (cryptMatrix.getData().length != cryptMatrix.getData()[0].length)
             throw new InvalidKeyException("Key size not matched!");
         else
-            setCryptMatrix(new Matrix(key));
+            setCryptMatrix(cryptMatrix);
 
+    }
+
+    public HillCipher(Integer[][] key) throws InvalidKeyException {
+        this(new Matrix(key));
     }
 
     private void cryptMatrixGenerator(int size) {
 
-        setCryptMatrix(new Matrix(new Integer[size][size]));
-        for (int i = 0; i < getCryptMatrix().getData().length; i++) {
-            for (int j = 0; j < getCryptMatrix().getData()[i].length; j++) {
-                setValueInCryptMatrix(i, j, generateRandomValue());
-            }
-        }
+        CryptMatrixGenerator<Integer> cryptMatrixGenerator =
+                new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Integer.class).withSize(size).build();
+
+        Integer[] values = new Integer[size*size];
+        for (int i = 0; i < size*size; i++)
+            values[i] = generateRandomValue();
+
+        cryptMatrixGenerator.fill(values);
+        setCryptMatrix(cryptMatrixGenerator.getGenereratedCryptMatrix());
+
     }
 
     private int generateRandomValue() {
         return new Random().nextInt(ASCII_TABLE.length);
     }
-
 
     /**
      *
@@ -102,7 +113,7 @@ public class HillCipher extends Cipher
             int moduloValue = ASCII_TABLE.length;
             A = new Matrix(getCryptMatrix().getData());
             double determinantValue = A.determinant(A);
-            double calculatedModInvValue = Algorithms.modInverse((long) determinantValue, moduloValue);
+            double calculatedModInvValue =  Algorithms.modInverse((long) determinantValue, moduloValue);
 
             A = A.adjugate().modular(moduloValue).scalarMultiply(calculatedModInvValue).convertDoubleDataToInteger();
 
@@ -145,7 +156,7 @@ public class HillCipher extends Cipher
                     procDataIndex++;
                 }
 
-            } catch (InvalidMatrixException | NumberFormatException e) {
+            } catch (MatrixException | NumberFormatException e) {
                 System.err.println(e);
             }
         }
