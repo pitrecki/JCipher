@@ -120,8 +120,7 @@ public abstract class Cipher implements CipherInterface, DataPrintable
     public String toString() {
         String strCryptMatrix = "";
         if (getCryptMatrix() != null)
-            for (Object[] objectsArray : cryptMatrix.getData())
-                strCryptMatrix += Arrays.toString(objectsArray) + "\n";
+            strCryptMatrix = getCryptMatrix().toString();
 
         return "DECODED/ENCOED TEXT: " + getProcessedText() +
                 "\nCRYPT MATRIX:\n" + strCryptMatrix +

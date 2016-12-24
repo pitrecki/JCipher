@@ -4,6 +4,7 @@ import org.cipher.utils.Variant;
 
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * In mathematics, a matrix (plural matrices) is a rectangular array[1] of numbers, symbols, or expressions, arranged
@@ -428,5 +429,12 @@ public class Matrix
             actutalAmountOfElements += objArray.length;
 
         return epectedAmountOfElements == actutalAmountOfElements;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        Stream.of(getData()).map(Arrays::toString).forEach(line -> builder.append(line + System.lineSeparator()));
+        return builder.toString();
     }
 }
