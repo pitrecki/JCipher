@@ -39,11 +39,12 @@ public class HillCipher extends Cipher
         cryptMatrixGenerator(size);
     }
 
-    public HillCipher(Matrix cryptMatrix) throws IllegalArgumentException{
+    public HillCipher(Matrix cryptMatrix) throws IllegalArgumentException {
         super();
+
         if (cryptMatrix.getData().length != cryptMatrix.getData()[0].length)
             throw new IllegalArgumentException("Key size not matched!");
-        else
+
             setCryptMatrix(cryptMatrix);
 
     }
@@ -53,7 +54,6 @@ public class HillCipher extends Cipher
     }
 
     private void cryptMatrixGenerator(int size) {
-
         CryptMatrixGenerator<Integer> cryptMatrixGenerator =
                 new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Integer.class).withSize(size).build();
 
@@ -89,10 +89,6 @@ public class HillCipher extends Cipher
         return data.stream().map(integer -> integer%MOD_VAL).collect(Collectors.toList());
     }
 
-    private int isEvenOrOdd(String text) {
-        return (text.length()%2 == 0) ? text.length() : text.length() + 1;
-    }
-
     /**
      *
      * @param inputText text to decrypt
@@ -119,15 +115,15 @@ public class HillCipher extends Cipher
 
         if (variant.equals(Variant.DECRYPT)) {
             double determinantValue = A.determinant(A);
-            double calculatedModInvValue =  Algorithms.modInverse((long) determinantValue, MOD_VAL);
+            double calculatedModInvValue = Algorithms.modInverse((long) determinantValue, MOD_VAL);
 
             A = A.adjugate().modular(MOD_VAL).scalarMultiply(calculatedModInvValue).convertDoubleDataToInteger();
         }
 
         int matrixARowNumber = A.getRow();
-        int fixedInputTextLength = isEvenOrOdd(text);
-        if (fixedInputTextLength > text.length())
-            text = text.concat(" ");
+
+        text = text.length()%2 == 0 ? text : text.concat(" ");
+        int fixedInputTextLength = text.length();
 
         Integer[][] matrixBData = new Integer[1][matrixARowNumber];
         List<Integer> procesedData = new ArrayList<>();
