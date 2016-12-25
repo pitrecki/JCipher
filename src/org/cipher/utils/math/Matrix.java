@@ -2,7 +2,6 @@ package org.cipher.utils.math;
 
 import org.cipher.utils.Variant;
 
-
 import java.util.Arrays;
 import java.util.stream.Stream;
 

@@ -108,9 +108,5 @@ public abstract class SimpleSubstitutionCipher extends Cipher
 
     protected abstract int shift(int index, Variant variant);
 
-    @Override
-    public String prepareDataToPrint() {
-        return getProcessedText().replaceAll("[\\[\\], ]", "");
-    }
 
 }

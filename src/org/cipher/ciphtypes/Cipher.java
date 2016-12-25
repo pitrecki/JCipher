@@ -99,7 +99,7 @@ public abstract class Cipher implements CipherInterface, DataPrintable
         return frequencyOcurencyMap.toString() + "\n" + percentList.toString();
     }
 
-    protected static String prepareText(String str) {
+    protected String textProcessing(String str) {
         return str.replaceAll("[\\W\\p{Digit}\\p{Punct}]", "").toUpperCase();
     }
 
@@ -110,7 +110,9 @@ public abstract class Cipher implements CipherInterface, DataPrintable
     public abstract void decrypt(String inputText);
 
     @Override
-    public abstract String prepareDataToPrint();
+    public String prepareDataToPrint() {
+        return getProcessedText();
+    }
 
     /**
      * Fastest way to print every information about:

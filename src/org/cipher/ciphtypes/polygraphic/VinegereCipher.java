@@ -118,7 +118,7 @@ public class VinegereCipher extends Cipher
      */
 
     private void cipherProccessing(String text, Variant variant) {
-        text = Cipher.prepareText(text);
+        text = textProcessing(text);
         //necessary for inherit class
         this.plainText = text;
         // -----------------------------
@@ -146,10 +146,6 @@ public class VinegereCipher extends Cipher
         setProcessedText(builder.toString());
     }
 
-    @Override
-    public String prepareDataToPrint() {
-        return getProcessedText();
-    }
 
     @Override
     public String toString() {

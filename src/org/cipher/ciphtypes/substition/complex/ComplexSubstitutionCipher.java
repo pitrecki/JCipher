@@ -29,8 +29,4 @@ public abstract class ComplexSubstitutionCipher extends Cipher
     @Override
     public abstract void decrypt(String inputText);
 
-    @Override
-    public String prepareDataToPrint() {
-        return Cipher.prepareText(getProcessedText());
-    }
 }

@@ -50,8 +50,5 @@ public abstract class TranspositionCipher extends Cipher
     @Override
     public abstract void encrypt(String inputText);
 
-    @Override
-    public String prepareDataToPrint() {
-        return getProcessedText();
-    }
+
 }

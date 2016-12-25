@@ -4,7 +4,6 @@ import org.cipher.ciphtypes.Cipher;
 import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
 import org.cipher.utils.CryptMatrixGenerator;
 
-import java.lang.reflect.Array;
 import java.security.InvalidKeyException;
 import java.util.*;
 
@@ -102,7 +101,7 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
                 chKeySet.add(letter);
         } while (chKeySet.size() != KEY_LENGTH);
 
-        this.cipherKey = Cipher.prepareText(chKeySet.toString());
+        this.cipherKey = textProcessing(chKeySet.toString());
     }
 
     /**

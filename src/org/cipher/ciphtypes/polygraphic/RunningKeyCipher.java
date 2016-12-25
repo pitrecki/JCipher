@@ -44,7 +44,7 @@ public class RunningKeyCipher extends VinegereCipher
             keywordArray[i] = ASCII_TABLE[randomCharacter];
         }
 
-        return Cipher.prepareText(Arrays.toString(keywordArray));
+        return textProcessing(Arrays.toString(keywordArray));
     }
 
     @Override

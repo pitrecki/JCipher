@@ -110,7 +110,7 @@ public class HillCipher extends Cipher
      */
 
     private void cipherProccessing(String text, Variant variant) throws MatrixException {
-        text = Cipher.prepareText(text);
+        text = textProcessing(text);
         Matrix A =  new Matrix(getCryptMatrix());
 
         if (variant.equals(Variant.DECRYPT)) {
@@ -162,8 +162,4 @@ public class HillCipher extends Cipher
         setProcessedText(stringBuilder.toString());
     }
 
-    @Override
-    public String prepareDataToPrint() {
-        return getProcessedText();
-    }
 }
