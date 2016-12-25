@@ -118,7 +118,7 @@ public class VinegereCipher extends Cipher
      */
 
     private void cipherProccessing(String text, Variant variant) {
-        text = text.replaceAll("[ ]", "");
+        text = Cipher.prepareText(text);
         //necessary for inherit class
         this.plainText = text;
         // -----------------------------

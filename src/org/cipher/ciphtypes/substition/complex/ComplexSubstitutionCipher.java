@@ -31,6 +31,6 @@ public abstract class ComplexSubstitutionCipher extends Cipher
 
     @Override
     public String prepareDataToPrint() {
-        return getProcessedText().replaceAll("[\\[\\], ]", "");
+        return Cipher.prepareText(getProcessedText());
     }
 }

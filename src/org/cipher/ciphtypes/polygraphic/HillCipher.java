@@ -4,11 +4,14 @@ import org.cipher.ciphtypes.Cipher;
 import org.cipher.utils.CryptMatrixGenerator;
 import org.cipher.utils.Variant;
 import org.cipher.utils.math.Algorithms;
-import org.cipher.utils.math.MatrixException;
 import org.cipher.utils.math.Matrix;
+import org.cipher.utils.math.MatrixException;
 
-import java.security.InvalidKeyException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * In classical cryptography, the Hill cipher is a polygraphic substitution cipher based on linear algebra.
@@ -19,7 +22,7 @@ import java.util.Random;
  * length of the module.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.3
+ * @version 0.0.6
  * Created by Pitrecki on 2016-11-10.
  */
 public class HillCipher extends Cipher
@@ -27,24 +30,25 @@ public class HillCipher extends Cipher
 
     //Numbers 221 is Ý,only true if word lenght is ODD!
     private final short SPECIAL_SIGN = 221;
+    //equals 26
+    private final int MOD_VAL = ASCII_TABLE.length;
 
-    private Integer[] procesedData;
 
     public HillCipher(int size) throws ArithmeticException {
         super();
         cryptMatrixGenerator(size);
     }
 
-    public HillCipher(Matrix cryptMatrix) throws InvalidKeyException {
+    public HillCipher(Matrix cryptMatrix) throws IllegalArgumentException{
         super();
         if (cryptMatrix.getData().length != cryptMatrix.getData()[0].length)
-            throw new InvalidKeyException("Key size not matched!");
+            throw new IllegalArgumentException("Key size not matched!");
         else
             setCryptMatrix(cryptMatrix);
 
     }
 
-    public HillCipher(Integer[][] key) throws InvalidKeyException {
+    public HillCipher(Integer[][] key) throws IllegalArgumentException {
         this(new Matrix(key));
     }
 
@@ -73,14 +77,16 @@ public class HillCipher extends Cipher
 
     @Override
     public void encrypt(String inputText) {
-        cipherProccessing(inputText, Variant.ENCRYPT);
+        try {
+            cipherProccessing(inputText, Variant.ENCRYPT);
+        } catch (MatrixException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    private Integer[] modDivide(Integer[] data) {
-        for (int i = 0; i < data.length; i++)
-            data[i] = (data[i] % 26);
-        return data;
+    private List<Integer> modDivide(List<Integer> data) {
+        return data.stream().map(integer -> integer%MOD_VAL).collect(Collectors.toList());
     }
 
     private int isEvenOrOdd(String text) {
@@ -94,7 +100,11 @@ public class HillCipher extends Cipher
 
     @Override
     public void decrypt(String inputText) {
-        cipherProccessing(inputText, Variant.DECRYPT);
+        try {
+            cipherProccessing(inputText, Variant.DECRYPT);
+        } catch (MatrixException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -103,35 +113,28 @@ public class HillCipher extends Cipher
      * @param variant enum contains enumerated types like ENCRYPT or DECRYPT
      */
 
-    private void cipherProccessing(String text, Variant variant) {
-        text = text.replaceAll(" ", "").toUpperCase();
-        Matrix A = null;
+    private void cipherProccessing(String text, Variant variant) throws MatrixException {
+        text = Cipher.prepareText(text);
+        Matrix A =  new Matrix(getCryptMatrix());
 
-        if (variant.equals(Variant.ENCRYPT))
-            A = new Matrix(getCryptMatrix().getData());
-        else {
-            int moduloValue = ASCII_TABLE.length;
-            A = new Matrix(getCryptMatrix().getData());
+        if (variant.equals(Variant.DECRYPT)) {
             double determinantValue = A.determinant(A);
-            double calculatedModInvValue =  Algorithms.modInverse((long) determinantValue, moduloValue);
+            double calculatedModInvValue =  Algorithms.modInverse((long) determinantValue, MOD_VAL);
 
-            A = A.adjugate().modular(moduloValue).scalarMultiply(calculatedModInvValue).convertDoubleDataToInteger();
-
+            A = A.adjugate().modular(MOD_VAL).scalarMultiply(calculatedModInvValue).convertDoubleDataToInteger();
         }
 
-
-        int rowNumber = A.getRow();
+        int matrixARowNumber = A.getRow();
         int fixedInputTextLength = isEvenOrOdd(text);
         if (fixedInputTextLength > text.length())
             text = text.concat(" ");
 
-        Integer[][] matrixBData = new Integer[1][rowNumber];
-        this.procesedData = new Integer[fixedInputTextLength];
+        Integer[][] matrixBData = new Integer[1][matrixARowNumber];
+        List<Integer> procesedData = new ArrayList<>();
 
         int iterator = 0;
-        int procDataIndex = 0;
         while (iterator != fixedInputTextLength) {
-            for (int matrixBIterator = 0; matrixBIterator < rowNumber; matrixBIterator++) {
+            for (int matrixBIterator = 0; matrixBIterator < matrixARowNumber; matrixBIterator++) {
                 for (int asciIndex = 0; asciIndex < ASCII_TABLE.length; asciIndex++) {
                     if (text.charAt(iterator) == ASCII_TABLE[asciIndex]) {
                         matrixBData[0][matrixBIterator] = asciIndex;
@@ -148,24 +151,17 @@ public class HillCipher extends Cipher
             try {
                 Matrix B = new Matrix(matrixBData).transpose();
                 B = A.multiply(B);
-                B = B.transpose();
-
-                for (int i = 0; i < B.getColumn(); i++) {
-                    String str = B.getData()[0][i].toString();
-                    this.procesedData[procDataIndex] = (Integer.parseInt(str.substring(0, str.lastIndexOf("."))));
-                    procDataIndex++;
-                }
-
+                B = B.transpose().convertDoubleDataToInteger();
+                Arrays.stream(B.getData()[0]).forEach(o -> procesedData.add((Integer) o));
             } catch (MatrixException | NumberFormatException e) {
-                System.err.println(e);
+                e.printStackTrace();
             }
         }
 
+        List<Integer> integers = modDivide(procesedData);
+
         StringBuilder stringBuilder = new StringBuilder();
-        this.procesedData = modDivide(procesedData);
-        for (Integer aProcesedData : procesedData) {
-            stringBuilder.append(ASCII_TABLE[aProcesedData]);
-        }
+        integers.stream().map(integer -> ASCII_TABLE[integer]).forEach(stringBuilder::append);
 
         setProcessedText(stringBuilder.toString());
     }

@@ -1,5 +1,7 @@
 package org.cipher.ciphtypes.polygraphic;
 
+import org.cipher.ciphtypes.Cipher;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -42,7 +44,7 @@ public class RunningKeyCipher extends VinegereCipher
             keywordArray[i] = ASCII_TABLE[randomCharacter];
         }
 
-        return Arrays.toString(keywordArray).replaceAll("[\\[\\], ]","");
+        return Cipher.prepareText(Arrays.toString(keywordArray));
     }
 
     @Override

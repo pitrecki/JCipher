@@ -99,6 +99,10 @@ public abstract class Cipher implements CipherInterface, DataPrintable
         return frequencyOcurencyMap.toString() + "\n" + percentList.toString();
     }
 
+    protected static String prepareText(String str) {
+        return str.replaceAll("[\\W\\p{Digit}\\p{Punct}]", "").toUpperCase();
+    }
+
     @Override
     public abstract void encrypt(String inputText);
 

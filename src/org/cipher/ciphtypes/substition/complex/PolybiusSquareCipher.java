@@ -1,5 +1,6 @@
 package org.cipher.ciphtypes.substition.complex;
 
+import org.cipher.ciphtypes.Cipher;
 import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
 import org.cipher.utils.CryptMatrixGenerator;
 
@@ -101,7 +102,7 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
                 chKeySet.add(letter);
         } while (chKeySet.size() != KEY_LENGTH);
 
-        this.cipherKey = chKeySet.toString().replaceAll("[\\[\\], ]", "");
+        this.cipherKey = Cipher.prepareText(chKeySet.toString());
     }
 
     /**

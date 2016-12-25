@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  * {@link #inverse()}
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.1
+ * @version 0.0.5
  * Created by Pitrecki on 2016-11-10.
  */
 public class Matrix
@@ -178,12 +178,7 @@ public class Matrix
                 tmpMatrix[column][row] = this.getData()[row][column];
             }
         }
-
-        flush();
-        setData(tmpMatrix);
-        this.column = tmpMatrix[0].length;
-        this.row = tmpMatrix.length;
-
+        injectFlushedData(new Matrix(tmpMatrix));
         return this;
     }
 
@@ -197,19 +192,19 @@ public class Matrix
      * @return calculated determinant
      */
 
-    public Double determinant(Matrix matrix) {
-        switch (this.getRow()) {
+    public Double determinant(Matrix matrix) throws MatrixException {
+        switch (matrix.getRow()) {
             case 0:
-//                throw new InvalidMatrixException("Matrix size equals 0!");
+               throw new MatrixException("Size can not be 0");
             case 1:
-                return Double.parseDouble(this.getData()[0][0].toString());
+                return Double.parseDouble(matrix.getData()[0][0].toString());
             case 2:
-                return (Double.parseDouble(this.getData()[0][0].toString()) * Double.parseDouble(this.getData()[1][1].toString())) - (Double.parseDouble(this.getData()[0][1].toString())
-                        * Double.parseDouble(this.getData()[1][0].toString()));
+                return (Double.parseDouble(matrix.getData()[0][0].toString()) * Double.parseDouble(matrix.getData()[1][1].toString())) - (Double.parseDouble(this.getData()[0][1].toString())
+                        * Double.parseDouble(matrix.getData()[1][0].toString()));
             default:
                 double sum = 0.0;
                 for (int i = 0; i < matrix.getColumn(); i++)
-                    sum += changeSign(i) * (Double.parseDouble(this.getData()[0][i].toString())) * determinant(subMatrix(matrix, 0, i));
+                    sum += changeSign(i) * (Double.parseDouble(matrix.getData()[0][i].toString())) * determinant(subMatrix(matrix, 0, i));
                 return sum;
         }
 
@@ -264,7 +259,7 @@ public class Matrix
      * @return new cofactored matrix
      */
 
-    public Matrix cofactor(Matrix matrix) {
+    public Matrix cofactor(Matrix matrix) throws MatrixException {
         Double[][] tmpData = new Double[matrix.getRow()][matrix.getColumn()];
         for (int i = 0; i < matrix.getRow(); i++)
             for (int j = 0; j < matrix.getColumn(); j++)
@@ -308,18 +303,13 @@ public class Matrix
         double[][] tmpMatrixVals = new double[this.getRow()][this.getColumn()];
         for (int i = 0; i < getData().length; i++) {
             for (int j = 0; j < getData()[i].length; j++) {
-                String str = getData()[i][j].toString();
-                if (!str.contains("."))
-                    str = str.concat(".0");
-                tmpMatrixVals[i][j] = Double.valueOf(str);
+                tmpMatrixVals[i][j] = Double.valueOf(getData()[i][j].toString());
             }
         }
-
         tmpMatrixVals = new Jama.Matrix(tmpMatrixVals).inverse().getArray();
-        Double[][] tmpMatrixConvertedToObject = new Double[tmpMatrixVals.length][tmpMatrixVals[0].length];
-        for (int i = 0; i < tmpMatrixVals.length; i++)
-            for (int j = 0; j < tmpMatrixVals[i].length; j++)
-                tmpMatrixConvertedToObject[i][j] = tmpMatrixVals[i][j];
+
+        Double[][] tmpMatrixConvertedToObject = Arrays.stream(tmpMatrixVals).map(doubles ->
+                Arrays.stream(doubles).boxed().toArray(Double[]::new)).toArray(Double[][]::new);
 
         this.setData(tmpMatrixConvertedToObject);
         return this;
@@ -333,7 +323,7 @@ public class Matrix
      * @return adjugated Matrix
      */
 
-    public Matrix adjugate() {
+    public Matrix adjugate() throws MatrixException {
         double detVal = determinant(this);
         inverse();
         return scalarMultiply(detVal);
@@ -377,10 +367,8 @@ public class Matrix
         Integer[][] intVals = new Integer[this.getRow()][this.getColumn()];
         for (int i = 0; i < this.getRow(); i++) {
             for (int j = 0; j < this.getColumn(); j++) {
-                double  roundValue =  Math.round((Double) getData()[i][j]);
-                String str = String.valueOf(roundValue);
-                str = str.substring(0, str.lastIndexOf("."));
-                intVals[i][j] = Integer.valueOf(str);
+                long  roundValue =  Math.round((Double) getData()[i][j]);
+                intVals[i][j] = ((int) roundValue);
             }
         }
         setData(intVals);
