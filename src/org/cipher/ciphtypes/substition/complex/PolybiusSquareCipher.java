@@ -1,6 +1,5 @@
 package org.cipher.ciphtypes.substition.complex;
 
-import org.cipher.ciphtypes.Cipher;
 import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
 import org.cipher.utils.CryptMatrixGenerator;
 
@@ -16,7 +15,7 @@ import java.util.*;
  * several hundred ciphertext characters).
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.4
+ * @version 0.0.5
  * @see SimpleSubstitutionCipher
  * Created by Pitrecki on 2016-10-30.
  */
@@ -71,21 +70,10 @@ public class PolybiusSquareCipher extends ComplexSubstitutionCipher
     private void cryptMatrixGenerator(String key) {
         CryptMatrixGenerator<Character> cmg = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Character.class).build();
 
-        List<Character> characterKeyList = new ArrayList<>(key.length());
-        for (Character character : key.toCharArray())
-            characterKeyList.add(character);
+        Character[] characterKeyArray = key.chars().mapToObj(value ->(char) value).toArray(Character[]::new);
 
-        cmg.fill(characterKeyList.toArray(new Character[characterKeyList.size()]));
+        cmg.fill(characterKeyArray);
         setCryptMatrix(cmg.getGenereratedCryptMatrix());
-
-//        char[] keyChArray = key.toCharArray();
-//        Character[] keyObjChArray = new Character[key.length()];
-//        for (int i = 0; i < keyChArray.length; i++)
-//            keyObjChArray[i] = keyChArray[i];
-
-//        cryptMatrix.fill(keyObjChArray);
-//        setCryptMatrix(cryptMatrix.getGenereratedCryptMatrix());
-
     }
 
     /**
