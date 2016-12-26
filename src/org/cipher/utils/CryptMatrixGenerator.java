@@ -3,6 +3,7 @@ package org.cipher.utils;
 import org.cipher.utils.math.Matrix;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 
 /**
  * Creating encrpytion matrix with selected parameters
@@ -26,9 +27,12 @@ public final class CryptMatrixGenerator<T>
         createCryptMatrix();
     }
 
-    @SuppressWarnings("Problem with T casting")
+    @SuppressWarnings("T casting can cause problems")
     private void createCryptMatrix() {
-        T[][] genericCryptMatrix = ((T[][]) Array.newInstance(this.clazzType.asSubclass(clazzType.getSuperclass()), this.column, this.row));
+        Type type = clazzType.getSimpleName().equals("Object") ? clazzType.getClass().getSuperclass() :
+                clazzType.asSubclass(clazzType.getSuperclass());
+
+        T[][] genericCryptMatrix = ((T[][]) Array.newInstance(type.getClass(), this.column, this.row));
         this.matrix = new Matrix(genericCryptMatrix);
     }
 
