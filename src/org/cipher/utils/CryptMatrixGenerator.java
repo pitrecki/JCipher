@@ -29,10 +29,7 @@ public final class CryptMatrixGenerator<T>
 
     @SuppressWarnings("T casting can cause problems")
     private void createCryptMatrix() {
-        Type type = clazzType.getSimpleName().equals("Object") ? clazzType.getClass().getSuperclass() :
-                clazzType.asSubclass(clazzType.getSuperclass());
-
-        T[][] genericCryptMatrix = ((T[][]) Array.newInstance(type.getClass(), this.row, this.column));
+        T[][] genericCryptMatrix = ((T[][]) Array.newInstance(clazzType, this.row, this.column));
         this.matrix = new Matrix(genericCryptMatrix);
     }
 
