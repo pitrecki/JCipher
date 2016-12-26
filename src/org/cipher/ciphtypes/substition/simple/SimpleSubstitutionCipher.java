@@ -2,7 +2,7 @@ package org.cipher.ciphtypes.substition.simple;
 
 import org.cipher.ciphtypes.Cipher;
 import org.cipher.interfaces.DataPrintable;
-import org.cipher.utils.Variant;
+import org.cipher.utils.CryptVariant;
 
 import java.util.Arrays;
 
@@ -67,21 +67,21 @@ public abstract class SimpleSubstitutionCipher extends Cipher
 
     @Override
     public void encrypt(String inputText) {
-        textShifting(inputText, Variant.ENCRYPT);
+        textShifting(inputText, CryptVariant.ENCRYPT);
     }
 
     @Override
     public void decrypt(String inpuText) {
-        textShifting(inpuText,Variant.DECRYPT);
+        textShifting(inpuText, CryptVariant.DECRYPT);
     }
 
-    private void textShifting(String inpuText, Variant variant) {
+    private void textShifting(String inpuText, CryptVariant cryptVariant) {
         char[] strToCharArray = inpuText.toUpperCase().toCharArray();
 
         for (int i = 0; i < strToCharArray.length; i++) {
             for (int j = 0; j < ASCII_TABLE.length; j++) {
                 if (strToCharArray[i] == ASCII_TABLE[j]) {
-                    int index = shift(j, variant);
+                    int index = shift(j, cryptVariant);
                     if (index < 0)
                         index = ASCII_TABLE.length - Math.abs(index);
                     strToCharArray[i] = ASCII_TABLE[index];
@@ -102,11 +102,11 @@ public abstract class SimpleSubstitutionCipher extends Cipher
     /**
      *
      * @param index
-     * @param variant ENCRYPT equals Encrypt; DECRYPT equals Decrypt
+     * @param cryptVariant ENCRYPT equals Encrypt; DECRYPT equals Decrypt
      * @return
      */
 
-    protected abstract int shift(int index, Variant variant);
+    protected abstract int shift(int index, CryptVariant cryptVariant);
 
 
 }

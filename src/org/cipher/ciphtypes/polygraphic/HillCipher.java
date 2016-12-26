@@ -2,7 +2,7 @@ package org.cipher.ciphtypes.polygraphic;
 
 import org.cipher.ciphtypes.Cipher;
 import org.cipher.utils.CryptMatrixGenerator;
-import org.cipher.utils.Variant;
+import org.cipher.utils.CryptVariant;
 import org.cipher.utils.math.Algorithms;
 import org.cipher.utils.math.Matrix;
 import org.cipher.utils.math.MatrixException;
@@ -78,7 +78,7 @@ public class HillCipher extends Cipher
     @Override
     public void encrypt(String inputText) {
         try {
-            cipherProccessing(inputText, Variant.ENCRYPT);
+            cipherProccessing(inputText, CryptVariant.ENCRYPT);
         } catch (MatrixException e) {
             e.printStackTrace();
         }
@@ -97,7 +97,7 @@ public class HillCipher extends Cipher
     @Override
     public void decrypt(String inputText) {
         try {
-            cipherProccessing(inputText, Variant.DECRYPT);
+            cipherProccessing(inputText, CryptVariant.DECRYPT);
         } catch (MatrixException e) {
             e.printStackTrace();
         }
@@ -106,14 +106,14 @@ public class HillCipher extends Cipher
     /**
      * The entire logic of a hill cipher
      * @param text to process
-     * @param variant enum contains enumerated types like ENCRYPT or DECRYPT
+     * @param cryptVariant enum contains enumerated types like ENCRYPT or DECRYPT
      */
 
-    private void cipherProccessing(String text, Variant variant) throws MatrixException {
+    private void cipherProccessing(String text, CryptVariant cryptVariant) throws MatrixException {
         text = textProcessing(text);
         Matrix A =  new Matrix(getCryptMatrix());
 
-        if (variant.equals(Variant.DECRYPT)) {
+        if (cryptVariant.equals(CryptVariant.DECRYPT)) {
             double determinantValue = A.determinant(A);
             double calculatedModInvValue = Algorithms.modInverse((long) determinantValue, MOD_VAL);
 

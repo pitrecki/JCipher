@@ -1,6 +1,6 @@
 package org.cipher.ciphtypes.substition.simple;
 
-import org.cipher.utils.Variant;
+import org.cipher.utils.CryptVariant;
 
 /**
  * The <b>Atbash cipher </b>is a substitution cipher with a specific key where the letters of
@@ -29,12 +29,12 @@ public class AtbashCipher extends SimpleSubstitutionCipher
     /**
      *
      * @param value
-     * @param variant PLUS equals Encrypt; MINUS equals Decrypt
+     * @param cryptVariant PLUS equals Encrypt; MINUS equals Decrypt
      * @return
      */
 
     @Override
-    protected int shift(int value, Variant variant) {
+    protected int shift(int value, CryptVariant cryptVariant) {
         return (ASCII_TABLE.length - 1) - value;
     }
 }

@@ -1,12 +1,9 @@
 package org.cipher.ciphtypes.substition.complex;
 
 
-import org.cipher.utils.Variant;
+import org.cipher.ciphtypes.Cipher;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -20,39 +17,31 @@ import java.util.stream.Collectors;
  *
  * THERE ARE TWO DIFERENT VARIANT OF THIS CIPHER
  * PLEASE SEE FOR MORE DETAIL INFORMATION
- * {@link #generateAlphabetMap()}
+ * {@link #generateAlphabetMap(Variant)}
  *
  * @author Piotr 'pitrecki' Nowak
  * @version 0.0.1
  * Created by Pitrecki on 2016-11-02.
- * @see ComplexSubstitutionCipher
  * @see org.cipher.ciphtypes.Cipher
  */
-public class BaconianCipher extends ComplexSubstitutionCipher
+public class BaconianCipher extends Cipher
 {
-    /**
-     *
-     */
+    enum Variant {STANDARD, DISTINCT}
+
     private final char CHARACTER_REPRESENT_BY_BINARY_ZERO = 'A';
     private final char CHARACTER_REPRESENT_BY_BINARY_ONE = 'B';
     private final int FIX_LENGTH = 5;
 
     private  Map<Character, String> alphabetMap;
-    private boolean isStandardMode;
 
 
     /**
      * This constructor is responsible for craete diferent variants of Bacionaian cipher
-     * @param ciphVariant STANDARD or DISTINCT
+     * @param variant STANDARD or DISTINCT
      */
-    public BaconianCipher(Variant ciphVariant) {
+    public BaconianCipher(Variant variant) {
         super();
-        if (ciphVariant.equals(Variant.STANDARD))
-            this.isStandardMode = true;
-
-        generateAlphabetMap();
-
-
+        generateAlphabetMap(variant);
     }
 
     /**
@@ -71,7 +60,7 @@ public class BaconianCipher extends ComplexSubstitutionCipher
      *
      */
 
-    private void generateAlphabetMap() {
+    private void generateAlphabetMap(Variant variant) {
 
         this.alphabetMap = new HashMap<>(ASCII_TABLE.length);
         StringBuilder builder = new StringBuilder();
@@ -82,7 +71,7 @@ public class BaconianCipher extends ComplexSubstitutionCipher
 
             //this condition is true only, when Variant = Standard
             //it generate MAP shown above
-            if (isStandardMode) {
+            if (variant.equals(Variant.STANDARD)) {
                 value = value == 9 ? 8 : value;
                 value = value == 21 ? 20 : value;
                 if (value > 9) value--;
@@ -107,14 +96,17 @@ public class BaconianCipher extends ComplexSubstitutionCipher
     }
 
     /**
-     * This method is responsible for encryption logic, depaatched on {@link #generateAlphabetMap()}
+     * This method is responsible for encryption logic, depaatched on {@link #generateAlphabetMap(Variant)}
      * @param inputText standard plaintext input
      */
     @Override
     public void encrypt(String inputText) {
+        String text = textProcessing(inputText);
         StringBuilder builder = new StringBuilder();
-        for (Character letter : inputText.toUpperCase().replace(" ", "").toCharArray())
-            builder.append(alphabetMap.get(letter));
+        text.chars().mapToObj(value -> (char) value).map(character -> alphabetMap.get(character)).forEach(builder::append);
+
+//        for (Character letter : inputText.toUpperCase().replace(" ", "").toCharArray())
+//            builder.append(alphabetMap.get(letter));
 
         setProcessedText(builder.toString().replace('0', CHARACTER_REPRESENT_BY_BINARY_ZERO).replace('1', CHARACTER_REPRESENT_BY_BINARY_ONE));
     }

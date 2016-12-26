@@ -4,13 +4,13 @@ import org.cipher.ciphtypes.Cipher;
 import org.cipher.utils.math.Matrix;
 
 /**
- * //TODO opisać
- * Withount description
+ * Probably it will be delete in future.
  * @author Piotr 'pitrecki' Nowak
  * @version 0.0.1
  * Created by Pitrecki on 2016-11-04.
  */
-public abstract class ComplexSubstitutionCipher extends Cipher
+@Deprecated
+abstract class ComplexSubstitutionCipher extends Cipher
 {
 
     public ComplexSubstitutionCipher() {

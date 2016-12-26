@@ -1,6 +1,6 @@
 package org.cipher.ciphtypes.substition.simple;
 
-import org.cipher.utils.Variant;
+import org.cipher.utils.CryptVariant;
 
 /**
  * In cryptography, a <b>Caesar cipher</b>, also known as Caesar's cipher, the shift cipher,
@@ -41,10 +41,10 @@ public class CeasarCipher extends SimpleSubstitutionCipher
  */
 
     @Override
-    protected int shift(int value, Variant variant) {
-        if (variant.equals(Variant.ENCRYPT))
+    protected int shift(int value, CryptVariant cryptVariant) {
+        if (cryptVariant.equals(CryptVariant.ENCRYPT))
             return (value + getMasterKEY()) % ASCII_TABLE.length;
-        else if (variant.equals(Variant.DECRYPT))
+        else if (cryptVariant.equals(CryptVariant.DECRYPT))
             return (value - getMasterKEY()) % ASCII_TABLE.length;
 
         return -1;

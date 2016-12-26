@@ -1,7 +1,7 @@
 package org.cipher.ciphtypes.polygraphic;
 
 import org.cipher.ciphtypes.Cipher;
-import org.cipher.utils.Variant;
+import org.cipher.utils.CryptVariant;
 
 /**
  * The Vigenère cipher is a method of encrypting alphabetic text by using a series of different Caesar
@@ -103,21 +103,21 @@ public class VinegereCipher extends Cipher
 
     @Override
     public void encrypt(String inputText) {
-        cipherProccessing(inputText, Variant.ENCRYPT);
+        cipherProccessing(inputText, CryptVariant.ENCRYPT);
     }
 
     @Override
     public void decrypt(String inputText) {
-        cipherProccessing(inputText, Variant.DECRYPT);
+        cipherProccessing(inputText, CryptVariant.DECRYPT);
     }
 
     /**
      *
      * @param text to decode or encode
-     * @param variant enuma type eq. DECRYPT or ENCRYPT
+     * @param cryptVariant enuma type eq. DECRYPT or ENCRYPT
      */
 
-    private void cipherProccessing(String text, Variant variant) {
+    private void cipherProccessing(String text, CryptVariant cryptVariant) {
         text = textProcessing(text);
         //necessary for inherit class
         this.plainText = text;
@@ -130,7 +130,7 @@ public class VinegereCipher extends Cipher
             int keywordCurrentLetter = this.keyword.charAt(i);
             int inputTextCurrentLetter = text.charAt(i);
             int result = 0;
-            switch (variant) {
+            switch (cryptVariant) {
                 case ENCRYPT:
                     result = (keywordCurrentLetter + inputTextCurrentLetter) % ASCII_TABLE.length;
                     break;

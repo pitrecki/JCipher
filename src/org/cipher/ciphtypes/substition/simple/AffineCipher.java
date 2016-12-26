@@ -1,6 +1,6 @@
 package org.cipher.ciphtypes.substition.simple;
 
-import org.cipher.utils.Variant;
+import org.cipher.utils.CryptVariant;
 import org.cipher.utils.math.Algorithms;
 
 /**
@@ -40,12 +40,12 @@ public class AffineCipher extends SimpleSubstitutionCipher
 
 
     @Override
-    protected int shift(int value, Variant variant) {
+    protected int shift(int value, CryptVariant cryptVariant) {
         int a = getKEY()[0];
         int b = getKEY()[1];
-        if (variant == Variant.ENCRYPT)
+        if (cryptVariant == CryptVariant.ENCRYPT)
             return (a*value + b) % ASCII_TABLE.length;
-        else if (variant.equals(Variant.DECRYPT)) {
+        else if (cryptVariant.equals(CryptVariant.DECRYPT)) {
             return (int) ((Algorithms.modInverse(a, ASCII_TABLE.length) * (value - b)) % ASCII_TABLE.length);
         }
 

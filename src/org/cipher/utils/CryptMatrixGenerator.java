@@ -50,7 +50,7 @@ public final class CryptMatrixGenerator<T>
 
     public static class CryptMatrixGeneratorBuilder<T>
     {
-        //defualt values
+        //default values
         private int column = 5;
         private int row = 5;
 

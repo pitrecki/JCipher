@@ -1,5 +1,6 @@
 package org.cipher.ciphtypes.substition.complex;
 
+import org.cipher.ciphtypes.Cipher;
 import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
 import org.cipher.utils.CryptMatrixGenerator;
 
@@ -16,10 +17,10 @@ import java.util.*;
  *
  * @author Piotr 'pitrecki' Nowak
  * @version 0.0.5
- * @see SimpleSubstitutionCipher
+ * @see Cipher
  * Created by Pitrecki on 2016-10-30.
  */
-public class PolybiusSquareCipher extends ComplexSubstitutionCipher
+public class PolybiusSquareCipher extends Cipher
 {
     enum Encoding {ALPHABETICAL, NUMERICAL}
 

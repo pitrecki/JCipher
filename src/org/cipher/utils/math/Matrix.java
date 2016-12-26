@@ -1,6 +1,6 @@
 package org.cipher.utils.math;
 
-import org.cipher.utils.Variant;
+import org.cipher.utils.CryptVariant;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -357,7 +357,7 @@ public class Matrix
     /**
      * Convert Double type data values into Integer type data values
      * @see org.cipher.ciphtypes.polygraphic.HillCipher
-     * {@link org.cipher.ciphtypes.polygraphic.HillCipher#cipherProccessing(String, Variant)}
+     * {@link org.cipher.ciphtypes.polygraphic.HillCipher#cipherProccessing(String, CryptVariant)}
      *
      * @return matrix with changed data type.
      */
