@@ -5,6 +5,7 @@ import org.cipher.ciphtypes.Cipher;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * The Baconian cipher is named after its inventor, Sir Francis Bacon. The Baconian cipher is
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
  */
 public class BaconianCipher extends Cipher
 {
-    enum Variant {STANDARD, DISTINCT}
+    public enum Variant {STANDARD, DISTINCT}
 
     private final char CHARACTER_REPRESENT_BY_BINARY_ZERO = 'A';
     private final char CHARACTER_REPRESENT_BY_BINARY_ONE = 'B';
@@ -56,7 +57,7 @@ public class BaconianCipher extends Cipher
      *       f  AABAB       m    ABABB       s  BAAAB       z    BABBB
      *
      *
-     * For DISTINCT it will genratara standard ASCI MAP with standard binary number represent from 0 to 25
+     * For DISTINCT it will genratara standard ASCII MAP with standard binary number represent from 0 to 25
      *
      */
 
@@ -66,31 +67,40 @@ public class BaconianCipher extends Cipher
         StringBuilder builder = new StringBuilder();
 
         for (int index = 0; index < ASCII_TABLE.length; index++) {
-            char currentLetter = ASCII_TABLE[index];
+            String currentLetter = String.valueOf(ASCII_TABLE[index]);
             int value = index;
 
-            //this condition is true only, when Variant = Standard
-            //it generate MAP shown above
+            /*
+                this condition is true only, when Variant = Standard
+                Generate MAP shown above
+            */
             if (variant.equals(Variant.STANDARD)) {
-                value = value == 9 ? 8 : value;
-                value = value == 21 ? 20 : value;
-                if (value > 9) value--;
-                if (value > 20) value -= 1;
+                if (currentLetter.matches("[JVK-U]"))
+                    value -= 1;
+                else if (currentLetter.matches("[W-Z]"))
+                    value -= 2;
             }
 
             String binaryVal = Integer.toString(value , 2);
-            if (binaryVal.length() == FIX_LENGTH)
-                builder.append(Integer.toString(value, 2));
-            else {
-                int currentLength = FIX_LENGTH - binaryVal.length();
-                for (int k = 0; k < currentLength; k++) {
-                    builder.append("0");
-                }
-                builder.append(Integer.toString(value, 2));
-            }
-            this.alphabetMap.put(currentLetter, builder.toString());
+            /*
+                If length of converted string is less than FIX_LENGTH (5) than append begin of builder with 0.
+                After all append builder with binary value
+                For exmaple:
+                C is 2, binary value is: 10
+                We need fixed lenegth binary represent of value, so we should fix representation of result
+                A result of this block we recive:  ---> '000' and '10' ----> 00010
+             */
 
-            //flush bufferm length is equal to FIX_LENGTH
+            if (binaryVal.length() < FIX_LENGTH) {
+                int currentLength = FIX_LENGTH - binaryVal.length();
+                IntStream.range(0, currentLength).map(operand -> operand = 0).forEach(builder::append);
+            }
+
+            builder.append(Integer.toString(value, 2));
+
+            this.alphabetMap.put(currentLetter.charAt(0), builder.toString());
+
+            //prepare buffer for reuse
             builder.delete(0, builder.length());
         }
     }
@@ -108,16 +118,16 @@ public class BaconianCipher extends Cipher
 //        for (Character letter : inputText.toUpperCase().replace(" ", "").toCharArray())
 //            builder.append(alphabetMap.get(letter));
 
-        setProcessedText(builder.toString().replace('0', CHARACTER_REPRESENT_BY_BINARY_ZERO).replace('1', CHARACTER_REPRESENT_BY_BINARY_ONE));
+        String str = builder.toString().replace('0', CHARACTER_REPRESENT_BY_BINARY_ZERO).replace('1', CHARACTER_REPRESENT_BY_BINARY_ONE);
+        setProcessedText(str);
     }
 
     @Override
     public void decrypt(String inpuText) {
         inpuText = inpuText.replace(CHARACTER_REPRESENT_BY_BINARY_ZERO, '0').replace(CHARACTER_REPRESENT_BY_BINARY_ONE, '1');
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < inpuText.length(); i+= FIX_LENGTH) {
+        for (int i = 0; i < inpuText.length(); i+= FIX_LENGTH)
             builder.append(getKeyByValue(alphabetMap, inpuText.substring(i, (i + FIX_LENGTH))));
-        }
 
         setProcessedText(builder.toString());
     }

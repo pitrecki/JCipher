@@ -25,13 +25,6 @@ import java.util.Arrays;
  */
 public abstract class SimpleSubstitutionCipher extends Cipher
 {
-    // private enum sign {PLUS, MINUS}
-//    private final short KEY = 3;
-
-//    private String text;
-//    private char[][] cryptArray;
-//    private char[] asciiTable;
-
     private final int[] KEY;
 
     public SimpleSubstitutionCipher(int[] key) {
@@ -57,11 +50,11 @@ public abstract class SimpleSubstitutionCipher extends Cipher
      * @see CeasarCipher
      * @see AtbashCipher
      */
-    protected int getMasterKEY() {
+    int getMasterKEY() {
         return this.KEY[0];
     }
 
-    protected int[] getKEY() {
+    int[] getKEY() {
         return this.KEY;
     }
 
@@ -89,7 +82,7 @@ public abstract class SimpleSubstitutionCipher extends Cipher
                 }
             }
         }
-        setProcessedText(Arrays.toString(strToCharArray).replaceAll("[ \\[,\\]]", ""));
+        setProcessedText(textProcessing(Arrays.toString(strToCharArray)));
     }
 
 
@@ -106,7 +99,5 @@ public abstract class SimpleSubstitutionCipher extends Cipher
      * @return
      */
 
-    protected abstract int shift(int index, CryptVariant cryptVariant);
-
-
+    abstract int shift(int index, CryptVariant cryptVariant);
 }
