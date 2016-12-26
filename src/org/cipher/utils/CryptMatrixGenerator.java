@@ -32,7 +32,7 @@ public final class CryptMatrixGenerator<T>
         Type type = clazzType.getSimpleName().equals("Object") ? clazzType.getClass().getSuperclass() :
                 clazzType.asSubclass(clazzType.getSuperclass());
 
-        T[][] genericCryptMatrix = ((T[][]) Array.newInstance(type.getClass(), this.column, this.row));
+        T[][] genericCryptMatrix = ((T[][]) Array.newInstance(type.getClass(), this.row, this.column));
         this.matrix = new Matrix(genericCryptMatrix);
     }
 
