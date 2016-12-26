@@ -1,7 +1,6 @@
 package org.cipher.ciphtypes.substition.complex;
 
 import org.cipher.ciphtypes.Cipher;
-import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
 import org.cipher.utils.CryptMatrixGenerator;
 
 import java.security.InvalidKeyException;
@@ -157,26 +156,17 @@ public class PolybiusSquareCipher extends Cipher
         if (inputText.matches(".*[0-9].*"))
             throw new IllegalArgumentException("Only letters, your input: " + inputText);
 
-        inputText = inputText.replace(" ", "").toUpperCase();
+        inputText = textProcessing(inputText);
         StringBuilder builder = new StringBuilder();
-        int index = 0;
 
-        try {
-            while (true){
-                for (int i = 0; i < getCryptMatrix().getData().length; i++) {
-                    for (int j = 0; j < getCryptMatrix().getData()[i].length; j++) {
-                        if ((getCryptMatrix().getData()[i][j]).equals(inputText.charAt(index))) {
-                            builder.append(i);
-                            builder.append(j);
-                            index++;
-                        }
-                        else if (index >= inputText.length())
-                            break;
-                    }
+        for (int i = 0; i < inputText.length(); i++) {
+            for (int j = 0; j < getCryptMatrix().getData().length; j++) {
+                for (int k = 0; k < getCryptMatrix().getData()[j].length; k++) {
+                    if (getCryptMatrix().getData()[j][k].equals(inputText.charAt(i)))
+                        builder.append(j).append(k);
                 }
             }
-        } catch (Exception e) {}
-
+        }
 
         String translatedString =
                 isEncodingSetToNumeric ? builder.toString() : encodingTranslator(builder.toString(), Encoding.ALPHABETICAL);
@@ -190,7 +180,7 @@ public class PolybiusSquareCipher extends Cipher
         if (inpuText.matches(".*[A-Z].*"))
             inpuText = encodingTranslator(inpuText, Encoding.NUMERICAL);
         int index = 0;
-        while (!((inpuText.length() / 2) == builder.length())) {
+        while ((inpuText.length() / 2) != builder.length()) {
             int x = Integer.parseInt(inpuText.substring(index, index + 1));
             index ++;
             int y = Integer.parseInt(inpuText.substring(index, index + 1));

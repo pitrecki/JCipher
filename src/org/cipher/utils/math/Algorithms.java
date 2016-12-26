@@ -40,8 +40,7 @@ public final class Algorithms
         double remainder = p % q;
         if (remainder == 0)
             return q;
-        double gcd = gcd(q, remainder);
-        return gcd;
+        return gcd(q, remainder);
     }
 
     /**
