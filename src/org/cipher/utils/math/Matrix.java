@@ -84,6 +84,8 @@ public class Matrix
 
     public void setData(Object[][] data) {
         this.data = data;
+        this.row = data.length;
+        this.column = data[0].length;
     }
 
     /**
@@ -257,6 +259,7 @@ public class Matrix
      * @return new cofactored matrix
      */
 
+    @SuppressWarnings("Not work properly")
     public Matrix cofactor(Matrix matrix) throws MatrixException {
         Double[][] tmpData = new Double[matrix.getRow()][matrix.getColumn()];
         for (int i = 0; i < matrix.getRow(); i++)
@@ -419,5 +422,15 @@ public class Matrix
         StringBuilder builder = new StringBuilder();
         Stream.of(getData()).map(Arrays::toString).forEach(line -> builder.append(line + System.lineSeparator()));
         return builder.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Matrix matrix = (Matrix) o;
+        return column == matrix.column &&
+                row == matrix.row &&
+                Arrays.equals(data, matrix.data);
     }
 }
