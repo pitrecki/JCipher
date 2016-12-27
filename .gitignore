@@ -29,7 +29,7 @@ $RECYCLE.BIN/
 *.class
 
 #Files and others
-test/
+test/otherStuff
 *.png
 *.txt
 cipher.puml
