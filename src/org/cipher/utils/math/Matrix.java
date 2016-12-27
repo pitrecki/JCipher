@@ -3,6 +3,8 @@ package org.cipher.utils.math;
 import org.cipher.utils.CryptVariant;
 
 import java.util.Arrays;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -201,13 +203,10 @@ public class Matrix
                 return (Double.parseDouble(matrix.getData()[0][0].toString()) * Double.parseDouble(matrix.getData()[1][1].toString())) - (Double.parseDouble(this.getData()[0][1].toString())
                         * Double.parseDouble(matrix.getData()[1][0].toString()));
             default:
-                double sum = 0.0;
-                for (int i = 0; i < matrix.getColumn(); i++)
-                    sum += changeSign(i) * (Double.parseDouble(matrix.getData()[0][i].toString())) * determinant(subMatrix(matrix, 0, i));
-                return sum;
+                double[][] primitiveData = Arrays.stream((Double[][]) getData()).map(doubles ->
+                        Arrays.stream(doubles).mapToDouble(Double::doubleValue).toArray()).toArray(double[][]::new);
+                return new Jama.Matrix(primitiveData).det();
         }
-
-//        return Double.valueOf(-1);
     }
 
     /**
@@ -298,13 +297,10 @@ public class Matrix
             Old code here
             return (transpose().cofactor(this).scalarMultiply(1.0/determinant(this)));
          */
-        
-        double[][] tmpMatrixVals = new double[this.getRow()][this.getColumn()];
-        for (int i = 0; i < getData().length; i++) {
-            for (int j = 0; j < getData()[i].length; j++) {
-                tmpMatrixVals[i][j] = Double.valueOf(getData()[i][j].toString());
-            }
-        }
+
+        double[][] tmpMatrixVals = Arrays.stream((Double[][]) getData()).map(doubles ->
+                Arrays.stream(doubles).mapToDouble(Double::doubleValue).toArray()).toArray(double[][]::new);
+
         tmpMatrixVals = new Jama.Matrix(tmpMatrixVals).inverse().getArray();
 
         Double[][] tmpMatrixConvertedToObject = Arrays.stream(tmpMatrixVals).map(doubles ->

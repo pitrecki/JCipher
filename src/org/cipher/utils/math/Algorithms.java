@@ -78,7 +78,7 @@ public final class Algorithms
      * @return computed lcm value
      */
     public static double lcm(double  p, double q) {
-        return (p * q / gcd(p, q));
+        return (Math.abs(p * q) / gcd(p, q));
     }
 
 
