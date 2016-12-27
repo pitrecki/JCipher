@@ -39,7 +39,7 @@ public final class Algorithms
     public static double gcd(double p, double q) {
         double remainder = p % q;
         if (remainder == 0)
-            return q;
+            return Math.abs(q);
         return gcd(q, remainder);
     }
 
