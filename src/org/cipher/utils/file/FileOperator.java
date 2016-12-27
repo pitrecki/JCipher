@@ -9,7 +9,7 @@ import java.nio.file.Paths;
  * This class providing common opearating functionality on text files.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.2
+ * @version 0.5.5
  * Created by Pitrecki on 2016-10-22.
  * @see java.io.File
  * @see java.io.BufferedWriter

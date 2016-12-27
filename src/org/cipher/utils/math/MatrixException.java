@@ -1,6 +1,8 @@
 package org.cipher.utils.math;
 
 /**
+ * @author Piotr 'pitrecki' Nowak
+ * @version 0.5.5
  * Created by Pitrecki on 2016-11-11.
  */
 public class MatrixException extends Exception

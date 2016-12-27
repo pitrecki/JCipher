@@ -6,7 +6,7 @@ import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
 /**
  * Simple enum class contains variant types
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.2
+ * @version 0.5.5
  * Created by Pitrecki on 2016-11-06.
  *
  * @see org.cipher.ciphtypes.Cipher

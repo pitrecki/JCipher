@@ -19,7 +19,7 @@ import java.util.Arrays;
  * ALSO YOU CAN CHECK THIS <a href="http://practicalcryptography.com/ciphers/classical-era/"> ANOTHER LINK</a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.2
+ * @version 0.5.5
  * Created by Pitrecki on 2016-10-27.
  * @see Cipher
  */

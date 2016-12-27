@@ -4,7 +4,7 @@ package org.cipher.interfaces;
  * This interface provides the basic functionality of the encryption and decryption
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.2
+ * @version 0.5.5
  *
  * @see org.cipher.ciphtypes.Cipher
  * Created by Pitrecki on 2016-10-15.

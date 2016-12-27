@@ -3,8 +3,6 @@ package org.cipher.utils.math;
 import org.cipher.utils.CryptVariant;
 
 import java.util.Arrays;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -20,7 +18,7 @@ import java.util.stream.Stream;
  * {@link #inverse()}
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.2
+ * @version 0.5.5
  * Created by Pitrecki on 2016-11-10.
  */
 public class Matrix

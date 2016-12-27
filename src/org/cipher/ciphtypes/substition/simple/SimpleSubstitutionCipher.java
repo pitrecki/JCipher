@@ -18,7 +18,7 @@ import java.util.Arrays;
  * <b>For more information look at:</b> <a href="https://en.wikipedia.org/wiki/Substitution_cipher"> LINK </a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.2
+ * @version 0.5.5
  * @see org.cipher.interfaces.CipherInterface
  * @see DataPrintable
  * Created by Pitrecki on 2016-10-24.

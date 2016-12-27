@@ -7,7 +7,7 @@ package org.cipher.ciphtypes.polygraphic;
  * Vigenere cipher.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.2
+ * @version 0.5.5
  * Created by Pitrecki on 2016-11-07.
  * @see VinegereCipher
  */

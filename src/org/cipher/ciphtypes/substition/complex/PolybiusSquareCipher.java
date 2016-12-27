@@ -15,7 +15,7 @@ import java.util.*;
  * several hundred ciphertext characters).
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.2
+ * @version 0.5.5
  * @see Cipher
  * Created by Pitrecki on 2016-10-30.
  */
