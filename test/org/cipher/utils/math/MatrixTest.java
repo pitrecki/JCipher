@@ -1,10 +1,12 @@
 package org.cipher.utils.math;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Locale;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,7 +46,7 @@ class MatrixTest
                 {3.0, 6.0, 9.0}
         });
 
-        assertEquals(expectedTransposition.toString(), A.transpose().toString());
+        assertArrayEquals(expectedTransposition.getData(), A.transpose().getData());
     }
 
     @Test
@@ -56,7 +58,7 @@ class MatrixTest
                 {102d, 126d, 150d}
         });
 
-        assertEquals(expectedResult.toString(), A.multiply(A).toString());
+        assertArrayEquals(expectedResult.getData(), A.multiply(A).getData());
     }
 
     @Test
@@ -68,11 +70,11 @@ class MatrixTest
                 {17.5, 20d, 22.5d}
         });
 
-        assertEquals(expectedResult.toString(), A.scalarMultiply(2.5).toString());
+        assertArrayEquals(expectedResult.getData(), A.scalarMultiply(2.5).getData());
     }
 
     @Test
-    @DisplayName("Try to adjugate matrix, in this case should return 0 and matrix is singular Exception is exptected")
+    @DisplayName("Try adjugate matrix, in this case should return 0 and matrix is singular Exception is exptected")
     void testMatrixAdjugate() throws MatrixException {
         assertThrows(RuntimeException.class, () -> A.adjugate());
     }
@@ -106,6 +108,18 @@ class MatrixTest
                 {2d, 1d}
         });
 
-        assertEquals(expectedMatrix.toString(), A.modular(1).toString());
+        assertArrayEquals(expectedMatrix.getData(), A.modular(1).getData());
+    }
+
+    @Test
+    @DisplayName("Matrix is created by enetered size, every elements should be set to null")
+    void testForGenerateEmyptyMatrix() {
+        this.A = null;
+        this.A = new Matrix(3);
+
+
+        assertAll("Check for every element is null", () -> {
+            Stream.of(A.getData()).forEach(objects -> Arrays.stream(objects).forEach(Assertions::assertNull));
+        });
     }
 }
