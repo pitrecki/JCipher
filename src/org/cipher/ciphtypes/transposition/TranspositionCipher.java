@@ -19,10 +19,11 @@ import java.util.Arrays;
  * ALSO YOU CAN CHECK THIS <a href="http://practicalcryptography.com/ciphers/classical-era/"> ANOTHER LINK</a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.1
+ * @version 0.5.2
  * Created by Pitrecki on 2016-10-27.
  * @see Cipher
  */
+@Deprecated
 public abstract class TranspositionCipher extends Cipher
 {
     public TranspositionCipher() {

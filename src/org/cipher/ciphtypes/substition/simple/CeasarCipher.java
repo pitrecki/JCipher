@@ -17,7 +17,7 @@ import org.cipher.utils.CryptVariant;
  * <b>For more information look at:</b> <a href="https://en.wikipedia.org/wiki/Caesar_cipher"> LINK </a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.3
+ * @version 0.5.2
  * @see SimpleSubstitutionCipher
  */
 public class CeasarCipher extends SimpleSubstitutionCipher
@@ -41,7 +41,7 @@ public class CeasarCipher extends SimpleSubstitutionCipher
  */
 
     @Override
-    protected int shift(int value, CryptVariant cryptVariant) {
+    int shift(int value, CryptVariant cryptVariant) {
         if (cryptVariant.equals(CryptVariant.ENCRYPT))
             return (value + getMasterKEY()) % ASCII_TABLE.length;
         else if (cryptVariant.equals(CryptVariant.DECRYPT))

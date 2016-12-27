@@ -3,13 +3,12 @@ package org.cipher.utils;
 import org.cipher.utils.math.Matrix;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 
 /**
  * Creating encrpytion matrix with selected parameters
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.5
+ * @version 0.5.2
  * Created by Pitrecki on 2016-12-22.
  */
 public final class CryptMatrixGenerator<T>
@@ -67,7 +66,7 @@ public final class CryptMatrixGenerator<T>
         }
 
         public CryptMatrixGeneratorBuilder withSize(int size) {
-            if (size < 0)
+            if (size <= 0)
                 throw new IllegalArgumentException("Size can not be negative");
             this.column = this.row = size;
 

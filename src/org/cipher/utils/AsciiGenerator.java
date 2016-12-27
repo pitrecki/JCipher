@@ -7,7 +7,7 @@ package org.cipher.utils;
  * <p>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.1
+ * @version 0.5.2
  * Created by Pitrecki on 2016-10-17.
  */
 public final class AsciiGenerator

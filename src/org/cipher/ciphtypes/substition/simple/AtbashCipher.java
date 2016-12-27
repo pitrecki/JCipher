@@ -15,7 +15,7 @@ import org.cipher.utils.CryptVariant;
  * FOR MORE INFORMATATION LOOK AT <a href="http://practicalcryptography.com/ciphers/classical-era/atbash-cipher/"> LINK </a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.1
+ * @version 0.5.2
  * Created by Pitrecki on 2016-10-26.
  * @see SimpleSubstitutionCipher
  */
@@ -34,7 +34,7 @@ public class AtbashCipher extends SimpleSubstitutionCipher
      */
 
     @Override
-    protected int shift(int value, CryptVariant cryptVariant) {
+    int shift(int value, CryptVariant cryptVariant) {
         return (ASCII_TABLE.length - 1) - value;
     }
 }

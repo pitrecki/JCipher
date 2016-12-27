@@ -22,10 +22,11 @@ import java.util.Arrays;
  * ALSO CHECK THIS <a href="https://en.wikipedia.org/wiki/Rail_fence_cipher"> WIKI </a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.1
+ * @version 0.5.2
  * Created by Pitrecki on 2016-10-28.
  *
  */
+@Deprecated
 public class RailFenceCipher extends TranspositionCipher
 {
     private final int RAIL_KEY;

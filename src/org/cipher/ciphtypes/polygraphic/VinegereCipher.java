@@ -16,7 +16,7 @@ import org.cipher.utils.CryptVariant;
  * method of deciphering a Vigenère cipher, in 1863.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.1
+ * @version 0.5.2
  * Created by Pitrecki on 2016-12-11.
  */
 public class VinegereCipher extends Cipher

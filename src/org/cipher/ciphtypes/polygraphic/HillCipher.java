@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * length of the module.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.6
+ * @version 0.5.2
  * Created by Pitrecki on 2016-11-10.
  */
 public class HillCipher extends Cipher

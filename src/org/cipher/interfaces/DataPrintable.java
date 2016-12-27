@@ -3,7 +3,7 @@ package org.cipher.interfaces;
 /**
  * This interface provides the basic functionality of printing result on screen.
  * @author Piotr 'pitrecki' Nowak
- * @version 1.0.0
+ * @version 0.5.2
  * @see org.cipher.ciphtypes.Cipher
  * Created by Pitrecki on 2016-10-18.
  */

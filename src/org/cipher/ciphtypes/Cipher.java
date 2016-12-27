@@ -1,8 +1,6 @@
 package org.cipher.ciphtypes;
 
-import org.cipher.ciphtypes.substition.complex.ComplexSubstitutionCipher;
 import org.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
-import org.cipher.ciphtypes.transposition.TranspositionCipher;
 import org.cipher.interfaces.CipherInterface;
 import org.cipher.interfaces.DataPrintable;
 import org.cipher.utils.AsciiGenerator;
@@ -31,13 +29,11 @@ import java.util.*;
  *
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.1.1
+ * @version 0.5.2
  * @see org.cipher.interfaces.CipherInterface
  * @see org.cipher.interfaces.DataPrintable
  *
  * @see SimpleSubstitutionCipher
- * @see ComplexSubstitutionCipher
- * @see TranspositionCipher
  * @see Matrix
  * Created by Pitrecki on 2016-11-04.
  */

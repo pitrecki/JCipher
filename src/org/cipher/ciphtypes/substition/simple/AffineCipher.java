@@ -17,7 +17,7 @@ import org.cipher.utils.math.Algorithms;
  * <b>THIS CLASS EXTEND SimpleSubstitutionCipher</b>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.0.1
+ * @version 0.5,2
  * @see SimpleSubstitutionCipher
  * Created by Pitrecki on 2016-10-20.
  */
@@ -40,7 +40,7 @@ public class AffineCipher extends SimpleSubstitutionCipher
 
 
     @Override
-    protected int shift(int value, CryptVariant cryptVariant) {
+    int shift(int value, CryptVariant cryptVariant) {
         int a = getKEY()[0];
         int b = getKEY()[1];
         if (cryptVariant == CryptVariant.ENCRYPT)
