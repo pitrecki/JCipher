@@ -82,8 +82,6 @@ public class Matrix
 
     public void setData(Object[][] data) {
         this.data = data;
-        this.row = data.length;
-        this.column = data[0].length;
     }
 
     /**

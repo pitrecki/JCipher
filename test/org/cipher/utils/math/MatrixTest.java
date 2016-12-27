@@ -83,7 +83,7 @@ class MatrixTest
         String expectedResult = "[1.0, 0.0]\r\n" +
                                  "[0.0, 1.0]\r\n";
 
-        A.setData(new Double[][]{
+        A = new Matrix(new Double[][]{
                 {1d, 0d},
                 {0d, 1d}
         });
@@ -101,7 +101,7 @@ class MatrixTest
                 {0d, 0d}
         });
 
-        A.setData(new Double[][] {
+        A= new Matrix(new Double[][] {
                 {1d, 2d},
                 {2d, 1d}
         });
