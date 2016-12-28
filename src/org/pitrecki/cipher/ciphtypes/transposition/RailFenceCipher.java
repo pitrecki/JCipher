@@ -58,7 +58,6 @@ public class RailFenceCipher extends TranspositionCipher
         String temp = textToDecode.replaceAll(" ", "");
         setCryptMatrix(new Matrix(new Character[RAIL_KEY][temp.length()]));
 
-//        char[] textToCharArray = temp.toCharArray();
         int textCharIndex = 0;
         try {
             for (int j = 0; j < getCryptMatrix().getData()[0].length; j += RAIL_KEY + 1) {

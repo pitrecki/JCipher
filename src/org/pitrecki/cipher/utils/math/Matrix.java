@@ -89,9 +89,6 @@ public class Matrix
      * This method fill matrix with default values eqauls 0.0
      */
     private void emptyMatrixInit() {
-//        for (int i = 0; i < getRow(); i++) {
-//        for (Object[] objects : this.getData())
-//            Arrays.fill(objects, null);
         Arrays.stream(getData()).forEach(objects -> Arrays.fill(objects, null));
     }
 

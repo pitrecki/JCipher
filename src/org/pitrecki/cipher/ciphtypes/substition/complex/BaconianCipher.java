@@ -118,9 +118,6 @@ public class BaconianCipher extends Cipher
         StringBuilder builder = new StringBuilder();
         text.chars().mapToObj(value -> (char) value).map(character -> alphabetMap.get(character)).forEach(builder::append);
 
-//        for (Character letter : inputText.toUpperCase().replace(" ", "").toCharArray())
-//            builder.append(alphabetMap.get(letter));
-
         String str = builder.toString().replace('0', CHARACTER_REPRESENT_BY_BINARY_ZERO).replace('1', CHARACTER_REPRESENT_BY_BINARY_ONE);
         setProcessedText(str);
     }
