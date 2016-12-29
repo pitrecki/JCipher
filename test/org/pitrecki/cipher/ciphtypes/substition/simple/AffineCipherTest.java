@@ -37,7 +37,7 @@ class AffineCipherTest
     @DisplayName("Tesing of correct decryption")
     void testTextDecryption() {
         //the gold is buried in orono
-        String expected = LONG_MESSAGE.replaceAll("[\\W]","").toUpperCase();
+        String expected = LONG_MESSAGE;
 
         String plainttext = "karxvmodhinedrodsvevsv";
         affine.decrypt(plainttext);
@@ -65,7 +65,7 @@ class AffineCipherTest
         affine = new AffineCipher(1, 0);
 
         //the gold is buried in orono
-        String expected = LONG_MESSAGE.replaceAll("[\\W]","").toUpperCase();
+        String expected = LONG_MESSAGE;
 
         String plainttext = expected;
         affine.decrypt(plainttext);

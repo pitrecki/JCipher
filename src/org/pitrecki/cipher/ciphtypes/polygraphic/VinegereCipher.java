@@ -3,6 +3,9 @@ package org.pitrecki.cipher.ciphtypes.polygraphic;
 import org.pitrecki.cipher.ciphtypes.Cipher;
 import org.pitrecki.cipher.utils.CryptVariant;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * The Vigenère cipher is a method of encrypting alphabetic text by using a series of different Caesar
  * ciphers based on the letters of a keyword. It is a simple form of polyalphabetic substitution.The
@@ -44,6 +47,10 @@ public class VinegereCipher extends Cipher
         this.keyword = keyword;
     }
 
+    void setPlaintext(String plaintext) {
+        this.plaintext = plaintext;
+    }
+
     String getPlaintext() {
         return plaintext;
     }
@@ -78,73 +85,95 @@ public class VinegereCipher extends Cipher
     }
 
     /**
-     * Repeats entered keyword until it matches the length of the plaintext
-     *
-     * @param cryptTextLength length of plaintext
+     *  Invoke decrypt scenario
      */
 
-     void keywordShifter(int cryptTextLength) {
-        if (cryptTextLength > keyword.length()) {
-            int index = 0;
-            char[] keywordCharArray = keyword.toCharArray();
-            StringBuilder builder = new StringBuilder(keyword);
-            for (int i = 0; i < (cryptTextLength - keyword.length()); i++) {
-                if (index == keyword.length())
-                    index = 0;
-                builder.append(keywordCharArray[index]);
-                index++;
-            }
-            keyword = builder.toString();
-        }
-        else if (cryptTextLength < keyword.length()) {
-            keyword = keyword.trim().substring(0, cryptTextLength);
-        }
-    }
-
-    @Override
-    public void encrypt(String inputText) {
-        cipherProccessing(inputText, CryptVariant.ENCRYPT);
-    }
-
-    @Override
-    public void decrypt(String inputText) {
-        cipherProccessing(inputText, CryptVariant.DECRYPT);
-    }
-
-    /**
-     *
-     * @param text to decode or encode
-     * @param cryptVariant enuma type eq. DECRYPT or ENCRYPT
-     */
-
-    private void cipherProccessing(String text, CryptVariant cryptVariant) {
-        text = textProcessing(text);
-        //necessary for inherit class
-        plaintext = text;
-        // -----------------------------
-        if (text.length() != getKeyword().length())
-            keywordShifter(text.length());
+    void invokeDecryptScenario() {
+        /*
+            See plaintext field, this necassacry for inherit classes.
+        */
+        keywordRepeater(plaintext.length());
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < keyword.length(); i++) {
             int keywordCurrentLetter = keyword.charAt(i);
-            int inputTextCurrentLetter = text.charAt(i);
-            int result = 0;
-            switch (cryptVariant) {
-                case ENCRYPT:
-                    result = (keywordCurrentLetter + inputTextCurrentLetter) % ASCII_TABLE.length;
-                    break;
-                case DECRYPT:
-                    result = (inputTextCurrentLetter - keywordCurrentLetter) % ASCII_TABLE.length;
-                    if (result < 0)
-                        result = ASCII_TABLE.length - Math.abs(result);
-                    break;
-            }
+            int inputTextCurrentLetter = plaintext.charAt(i);
+            int result = calculateCoordinate(CryptVariant.DECRYPT, keywordCurrentLetter, inputTextCurrentLetter);
             builder.append(ASCII_TABLE[result]);
         }
 
         setProcessedText(builder.toString());
     }
+
+    /**
+     * Invoke encrpyt scenario
+     */
+
+    void invokeEncryptScenario() {
+        keywordRepeater(plaintext.length());
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < keyword.length(); i++) {
+            int keywordCurrentLetter = keyword.charAt(i);
+            int inputTextCurrentLetter = plaintext.charAt(i);
+            int result = calculateCoordinate(CryptVariant.ENCRYPT, keywordCurrentLetter, inputTextCurrentLetter);
+            builder.append(ASCII_TABLE[result]);
+        }
+
+        setProcessedText(builder.toString());
+    }
+
+    /**
+     * Repeats entered keyword until it matches the length of the plaintext.
+     *
+     * @param cryptTextLength length of plaintext
+     */
+
+     void keywordRepeater(int cryptTextLength) {
+        if (cryptTextLength > keyword.length()) {
+            int fixLength = cryptTextLength - keyword.length();
+            String keyword = Stream.generate(() ->
+                    this.keyword).limit(fixLength).collect(Collectors.joining()).substring(0, fixLength);
+            this.keyword = keyword;
+        }
+        else if (cryptTextLength < keyword.length()) {
+            keyword = keyword.substring(0, cryptTextLength);
+        }
+    }
+
+    @Override
+    public void encrypt(String inputText) {
+        plaintext = textProcessing(inputText);
+        invokeEncryptScenario();
+    }
+
+    @Override
+    public void decrypt(String inputText) {
+        plaintext = textProcessing(inputText);
+        invokeDecryptScenario();
+    }
+
+    /**
+     *
+     * @param cryptVariant DECRYPT or ENCRYPT
+     * @param keywordLetter current letter keyowrd
+     * @param textLetter current letter plaintext
+     * @return computed integer value
+     */
+
+    int calculateCoordinate(CryptVariant cryptVariant, int keywordLetter, int textLetter) {
+        switch (cryptVariant) {
+            case ENCRYPT:
+                return (keywordLetter + textLetter) % ASCII_TABLE.length;
+            case DECRYPT:
+                int result = (textLetter - keywordLetter) % ASCII_TABLE.length;
+                if (result < 0)
+                    result = ASCII_TABLE.length - Math.abs(result);
+                return  result;
+        }
+        return 0;
+    }
+
 
 
     @Override

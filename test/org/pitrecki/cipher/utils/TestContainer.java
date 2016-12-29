@@ -7,8 +7,8 @@ public interface TestContainer
 {
     //Text section
     String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    String SHORT_MESSAGE = "STRIKE NOW";
-    String LONG_MESSAGE = "the gold is buried in orono";
+    String SHORT_MESSAGE = "STRIKE NOW".replaceAll("[\\W]", "");
+    String LONG_MESSAGE = "the gold is buried in orono".replaceAll("[\\W]", "").toUpperCase();
 
     //Key section
 

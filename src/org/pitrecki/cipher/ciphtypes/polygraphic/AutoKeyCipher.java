@@ -1,5 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.polygraphic;
 
+import org.pitrecki.cipher.utils.CryptVariant;
+
 /**
  * The Autokey Cipher is a polyalphabetic substitution cipher. It is closely related
  * to the Vigenere cipher, but uses a different method of generating the key. It was
@@ -18,21 +20,43 @@ public class AutoKeyCipher extends VinegereCipher
     }
 
     /**
-     * Create a new keyword as combination with keyword and n-first part of plaintext
-     *
+     * After decryption, encoded letter is added at the end of keyword.
+     * Repeat until reach length of plaintext.
+     * For better explanation, visit this site: <a href="http://crypto.interactive-maths.com/autokey-cipher.html#decrypt">LINK</a>
+     */
+
+    @Override
+    void invokeDecryptScenario() {
+        StringBuilder builder = new StringBuilder();
+        String keyword = getKeyword();
+        for (int i = 0; i < getPlaintext().length(); i++) {
+            int currentKeyWordIndex = keyword.charAt(i);
+            int currentPlaintextIndex = getPlaintext().charAt(i);
+            int result = calculateCoordinate(CryptVariant.DECRYPT, currentKeyWordIndex, currentPlaintextIndex);
+
+            keyword +=  ASCII_TABLE[result];
+            builder.append(ASCII_TABLE[result]);
+        }
+
+        setProcessedText(builder.toString());
+    }
+
+    /**
+     * Create a new keyword as combination with keyword and n-first part of plaintext.
+     * This step is necessary only, when encryption is performing.
      * @param cryptTextLength length of plaintext
      */
 
     @Override
-    void keywordShifter(int cryptTextLength) {
+    void keywordRepeater(int cryptTextLength) {
         if (cryptTextLength > getKeyword().length()) {
             StringBuilder builder = new StringBuilder();
-            int proccessedLength = cryptTextLength - getKeyword().length();
-            builder.append(getKeyword()).append(getPlaintext().trim().substring(0, proccessedLength));
+            int fixLength = cryptTextLength - getKeyword().length();
+            builder.append(getKeyword()).append(getPlaintext().substring(0, fixLength));
             setKeyword(builder.toString());
         }
         else if (cryptTextLength < getKeyword().length()) {
-            setKeyword(getKeyword().trim().substring(0, cryptTextLength));
+            setKeyword(getKeyword().substring(0, cryptTextLength));
         }
     }
 }
