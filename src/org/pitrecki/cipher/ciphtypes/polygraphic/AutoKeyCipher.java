@@ -28,7 +28,7 @@ public class AutoKeyCipher extends VinegereCipher
         if (cryptTextLength > getKeyword().length()) {
             StringBuilder builder = new StringBuilder();
             int proccessedLength = cryptTextLength - getKeyword().length();
-            builder.append(getKeyword()).append(getPlainText().trim().substring(0, proccessedLength));
+            builder.append(getKeyword()).append(getPlaintext().trim().substring(0, proccessedLength));
             setKeyword(builder.toString());
         }
         else if (cryptTextLength < getKeyword().length()) {

@@ -78,7 +78,7 @@ public class Matrix
 
 
     public String getDimension() {
-        return this.getColumn() + "x" + this.getRow();
+        return getColumn() + "x" + getRow();
     }
 
     public void setData(Object[][] data) {
@@ -125,10 +125,10 @@ public class Matrix
         Double[][] tmpArray = new Double[B.getRow()][B.getColumn()];
         if (checkDimension(B)) {
             double value = 0;
-            for (int rowIndexMatrixA = 0; rowIndexMatrixA < this.getRow(); rowIndexMatrixA++) {
+            for (int rowIndexMatrixA = 0; rowIndexMatrixA < getRow(); rowIndexMatrixA++) {
                 for (int columnIndexMatrixB = 0; columnIndexMatrixB < B.getColumn(); columnIndexMatrixB++) {
-                    for (int columnIndexMatrixA = 0; columnIndexMatrixA < this.getColumn(); columnIndexMatrixA++) {
-                        value += (Double.parseDouble(this.getData()[rowIndexMatrixA][columnIndexMatrixA].toString()) * (Double.parseDouble(B.getData()[columnIndexMatrixA][columnIndexMatrixB].toString())));
+                    for (int columnIndexMatrixA = 0; columnIndexMatrixA < getColumn(); columnIndexMatrixA++) {
+                        value += (Double.parseDouble(getData()[rowIndexMatrixA][columnIndexMatrixA].toString()) * (Double.parseDouble(B.getData()[columnIndexMatrixA][columnIndexMatrixB].toString())));
                     }
                     tmpArray[rowIndexMatrixA][columnIndexMatrixB] = value;
                     value = 0;
@@ -151,8 +151,8 @@ public class Matrix
      */
 
     public Matrix scalarMultiply(double scalar) {
-        for (int i = 0; i < this.getRow(); i++)
-            for (int j = 0; j < this.getColumn(); j++)
+        for (int i = 0; i < getRow(); i++)
+            for (int j = 0; j < getColumn(); j++)
                 setValueInMatrix(i, j, (scalar * Double.parseDouble(getData()[i][j].toString())));
 
         return this;
@@ -171,9 +171,9 @@ public class Matrix
 
     public Matrix transpose() {
         Object[][] tmpMatrix = new Object[getColumn()][getRow()];
-        for (int row = 0; row < this.getRow(); row++) {
-            for (int column = 0; column < this.getColumn(); column++) {
-                tmpMatrix[column][row] = this.getData()[row][column];
+        for (int row = 0; row < getRow(); row++) {
+            for (int column = 0; column < getColumn(); column++) {
+                tmpMatrix[column][row] = getData()[row][column];
             }
         }
         injectFlushedData(new Matrix(tmpMatrix));
@@ -197,7 +197,7 @@ public class Matrix
             case 1:
                 return Double.parseDouble(matrix.getData()[0][0].toString());
             case 2:
-                return (Double.parseDouble(matrix.getData()[0][0].toString()) * Double.parseDouble(matrix.getData()[1][1].toString())) - (Double.parseDouble(this.getData()[0][1].toString())
+                return (Double.parseDouble(matrix.getData()[0][0].toString()) * Double.parseDouble(matrix.getData()[1][1].toString())) - (Double.parseDouble(getData()[0][1].toString())
                         * Double.parseDouble(matrix.getData()[1][0].toString()));
             default:
                 double[][] primitiveData = Arrays.stream((Double[][]) getData()).map(doubles ->
@@ -304,7 +304,7 @@ public class Matrix
         Double[][] tmpMatrixConvertedToObject = Arrays.stream(tmpMatrixVals).map(doubles ->
                 Arrays.stream(doubles).boxed().toArray(Double[]::new)).toArray(Double[][]::new);
 
-        this.setData(tmpMatrixConvertedToObject);
+        setData(tmpMatrixConvertedToObject);
         return this;
     }
 
@@ -331,8 +331,8 @@ public class Matrix
      */
 
     public void flush() {
-        this.setData(null);
-        this.column = this.row = 0;
+        setData(null);
+        column = row = 0;
     }
 
     /**
@@ -357,9 +357,9 @@ public class Matrix
      */
 
     public Matrix convertDoubleDataToInteger() {
-        Integer[][] intVals = new Integer[this.getRow()][this.getColumn()];
-        for (int i = 0; i < this.getRow(); i++) {
-            for (int j = 0; j < this.getColumn(); j++) {
+        Integer[][] intVals = new Integer[getRow()][getColumn()];
+        for (int i = 0; i < getRow(); i++) {
+            for (int j = 0; j < getColumn(); j++) {
                 long  roundValue =  Math.round((Double) getData()[i][j]);
                 intVals[i][j] = ((int) roundValue);
             }
@@ -375,8 +375,8 @@ public class Matrix
      */
 
     public Matrix modular(double value) {
-        for (int i = 0; i < this.getRow(); i++) {
-            for (int j = 0; j < this.getColumn(); j++) {
+        for (int i = 0; i < getRow(); i++) {
+            for (int j = 0; j < getColumn(); j++) {
                 Double modResult = ((Double) getData()[i][j]) % value;
                 if (modResult < 0)
                     modResult += value;

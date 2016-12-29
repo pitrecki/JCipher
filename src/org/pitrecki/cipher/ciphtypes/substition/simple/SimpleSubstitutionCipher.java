@@ -29,7 +29,7 @@ public abstract class SimpleSubstitutionCipher extends Cipher
     private final int[] KEY;
 
     public SimpleSubstitutionCipher(int[] key) {
-        this.KEY = key;
+        KEY = key;
     }
 
     public SimpleSubstitutionCipher(int key) {
@@ -52,11 +52,11 @@ public abstract class SimpleSubstitutionCipher extends Cipher
      * @see AtbashCipher
      */
     int getMasterKEY() {
-        return this.KEY[0];
+        return KEY[0];
     }
 
     int[] getKEY() {
-        return this.KEY;
+        return KEY;
     }
 
     @Override

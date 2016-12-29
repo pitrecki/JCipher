@@ -54,7 +54,7 @@ public class HillCipher extends Cipher
     }
 
     private void cryptMatrixGenerator(int size) {
-        CryptMatrixGenerator<Integer> cryptMatrixGenerator =
+        CryptMatrixGenerator cryptMatrixGenerator =
                 new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Integer.class).withSize(size).build();
 
         Integer[] values = new Integer[size*size];

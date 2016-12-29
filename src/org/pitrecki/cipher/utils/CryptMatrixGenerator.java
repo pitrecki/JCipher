@@ -19,7 +19,7 @@ public final class CryptMatrixGenerator<T>
     private int row;
     private Matrix matrix;
 
-    private CryptMatrixGenerator(CryptMatrixGeneratorBuilder builder) {
+    private CryptMatrixGenerator(CryptMatrixGeneratorBuilder<T> builder) {
         this.clazzType = builder.clazzType;
         this.column= builder.column;
         this.row = builder.row;
@@ -28,8 +28,8 @@ public final class CryptMatrixGenerator<T>
 
     @SuppressWarnings("T casting can cause problems")
     private void createCryptMatrix() {
-        T[][] genericCryptMatrix = ((T[][]) Array.newInstance(clazzType, this.row, this.column));
-        this.matrix = new Matrix(genericCryptMatrix);
+        T[][] genericCryptMatrix = ((T[][]) Array.newInstance(clazzType, row, column));
+        matrix = new Matrix(genericCryptMatrix);
     }
 
     public void fill(T ... values) {
@@ -41,7 +41,7 @@ public final class CryptMatrixGenerator<T>
             }
         }
 
-        this.matrix.setData(tmpGenericData);
+        matrix.setData(tmpGenericData);
     }
 
     public Matrix getGenereratedCryptMatrix() {

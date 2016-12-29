@@ -15,14 +15,14 @@ class CryptMatrixGeneratorTest
     @Test
     @DisplayName("Testing of crypt matrix object instantion")
     void testOfCratingCryptMatrixInstantion() {
-        this.cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Object.class).build();
+        cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Object.class).build();
         assertNotNull(cryptMatrixGenerator);
     }
 
     @Test
     @DisplayName("Testing of valid size of encrypt matrix")
     void testOfSetSize() {
-        this.cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Object.class).withSize(10).build();
+        cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Object.class).withSize(10).build();
         int expectedRowNumber = 10;
         int expectedColumnNumber = 10;
 
@@ -38,7 +38,7 @@ class CryptMatrixGeneratorTest
     @Test
     @DisplayName("Testing of valid column size of encrypt matrix")
     void testOfSetColumn() {
-        this.cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Object.class).withColumn(3).build();
+        cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Object.class).withColumn(3).build();
         int expectedRowNumber = 5;
         int expectedColumnNumber = 3;
 
@@ -54,7 +54,7 @@ class CryptMatrixGeneratorTest
     @Test
     @DisplayName("Testing of valid row size of encrypt matrix")
     void testOfSetRow() {
-        this.cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Object.class).withRow(2).build();
+        cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Object.class).withRow(2).build();
         int expectedRowNumber = 2;
         int expectedColumnNumber = 5;
 
@@ -100,7 +100,7 @@ class CryptMatrixGeneratorTest
     void testOfCryptMatrixIsFilledProperly() {
         Integer[] valuesToFillMatrix = {2, 2, -3, -1};
 
-        this.cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Integer.class).withSize(2).build();
+        cryptMatrixGenerator = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Integer.class).withSize(2).build();
         cryptMatrixGenerator.fill(valuesToFillMatrix);
 
         String expectedMatrix = "[2, 2]\r\n" +

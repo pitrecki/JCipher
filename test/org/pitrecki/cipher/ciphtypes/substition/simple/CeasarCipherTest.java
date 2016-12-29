@@ -22,7 +22,7 @@ class CeasarCipherTest implements TestContainer
 
     @BeforeEach
     void setUp() {
-        this.ceaser = new CeasarCipher();
+        ceaser = new CeasarCipher();
     }
 
     private List<String> listInit(String ... params) {

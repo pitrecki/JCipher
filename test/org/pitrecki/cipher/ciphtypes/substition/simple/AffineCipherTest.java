@@ -18,7 +18,7 @@ class AffineCipherTest
 
     @BeforeEach
     void setUp() {
-        this.affine = new AffineCipher(3, 5);
+        affine = new AffineCipher(3, 5);
     }
 
     @Test
@@ -49,7 +49,7 @@ class AffineCipherTest
     @Test
     @DisplayName("Key set to 0, should replace all with A")
     void testKeySetToZeroShouldReturnA() {
-        this.affine = new AffineCipher(new int[]{0, 0});
+        affine = new AffineCipher(new int[]{0, 0});
 
         String expected = "AAAAAAAAAAAAAAAAAAAAAA";
 
@@ -62,7 +62,7 @@ class AffineCipherTest
     @Test
     @DisplayName("Key set to a= 1, b = 0 should return same message")
     void testKeySetToOneAndZero() {
-        this.affine = new AffineCipher(1, 0);
+        affine = new AffineCipher(1, 0);
 
         //the gold is buried in orono
         String expected = LONG_MESSAGE.replaceAll("[\\W]","").toUpperCase();

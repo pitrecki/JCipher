@@ -66,7 +66,7 @@ public class BaconianCipher extends Cipher
 
     private void generateAlphabetMap(Variant variant) {
 
-        this.alphabetMap = new HashMap<>(ASCII_TABLE.length);
+        alphabetMap = new HashMap<>(ASCII_TABLE.length);
         StringBuilder builder = new StringBuilder();
 
         for (int index = 0; index < ASCII_TABLE.length; index++) {
@@ -101,7 +101,7 @@ public class BaconianCipher extends Cipher
 
             builder.append(Integer.toString(value, 2));
 
-            this.alphabetMap.put(currentLetter.charAt(0), builder.toString());
+            alphabetMap.put(currentLetter.charAt(0), builder.toString());
 
             //prepare buffer for reuse
             builder.delete(0, builder.length());

@@ -25,7 +25,7 @@ class MatrixTest
         Double[][] data = new Double[][]{{1d, 2d, 3d},
                                          {4d, 5d, 6d},
                                          {7d, 8d, 9d}};
-        this.A = new Matrix(data);
+        A = new Matrix(data);
     }
 
     @Test
@@ -114,8 +114,8 @@ class MatrixTest
     @Test
     @DisplayName("Matrix is created by enetered size, every elements should be set to null")
     void testForGenerateEmyptyMatrix() {
-        this.A = null;
-        this.A = new Matrix(3);
+        A = null;
+        A = new Matrix(3);
 
 
         assertAll("Check for every element is null", () -> {

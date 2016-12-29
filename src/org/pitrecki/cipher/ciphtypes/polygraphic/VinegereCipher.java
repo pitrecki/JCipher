@@ -25,7 +25,7 @@ public class VinegereCipher extends Cipher
     private final char[][] VINEGERE_TABLE;
 
     private String keyword;
-    private String plainText;
+    private String plaintext;
 
     public VinegereCipher(String keyword) {
         this.keyword = keyword.toUpperCase();
@@ -44,8 +44,8 @@ public class VinegereCipher extends Cipher
         this.keyword = keyword;
     }
 
-    String getPlainText() {
-        return plainText;
+    String getPlaintext() {
+        return plaintext;
     }
 
     /**
@@ -86,18 +86,18 @@ public class VinegereCipher extends Cipher
      void keywordShifter(int cryptTextLength) {
         if (cryptTextLength > keyword.length()) {
             int index = 0;
-            char[] keywordCharArray = this.keyword.toCharArray();
-            StringBuilder builder = new StringBuilder(this.keyword);
+            char[] keywordCharArray = keyword.toCharArray();
+            StringBuilder builder = new StringBuilder(keyword);
             for (int i = 0; i < (cryptTextLength - keyword.length()); i++) {
                 if (index == keyword.length())
                     index = 0;
                 builder.append(keywordCharArray[index]);
                 index++;
             }
-            this.keyword = builder.toString();
+            keyword = builder.toString();
         }
         else if (cryptTextLength < keyword.length()) {
-            this.keyword = keyword.trim().substring(0, cryptTextLength);
+            keyword = keyword.trim().substring(0, cryptTextLength);
         }
     }
 
@@ -120,14 +120,14 @@ public class VinegereCipher extends Cipher
     private void cipherProccessing(String text, CryptVariant cryptVariant) {
         text = textProcessing(text);
         //necessary for inherit class
-        this.plainText = text;
+        plaintext = text;
         // -----------------------------
-        if (text.length() != keyword.length())
+        if (text.length() != getKeyword().length())
             keywordShifter(text.length());
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < keyword.length(); i++) {
-            int keywordCurrentLetter = this.keyword.charAt(i);
+            int keywordCurrentLetter = keyword.charAt(i);
             int inputTextCurrentLetter = text.charAt(i);
             int result = 0;
             switch (cryptVariant) {

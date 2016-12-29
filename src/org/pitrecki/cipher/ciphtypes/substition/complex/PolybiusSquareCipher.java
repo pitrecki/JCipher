@@ -39,7 +39,7 @@ public class PolybiusSquareCipher extends Cipher
         super();
         randomKeyGenerator();
         cryptMatrixGenerator(getCipherKey());
-        this.isEncodingSetToNumeric = setEncoding(encoding);
+        isEncodingSetToNumeric = setEncoding(encoding);
     }
 
     public PolybiusSquareCipher(String key, Encoding encoding) throws InvalidKeyException {
@@ -51,10 +51,10 @@ public class PolybiusSquareCipher extends Cipher
         else if (key.matches("[Jj0-9]"))
             throw new InvalidKeyException("Key contains illegal character");
         else
-            this.cipherKey = key.toUpperCase();
+            cipherKey = key.toUpperCase();
         cryptMatrixGenerator(getCipherKey());
 
-        this.isEncodingSetToNumeric = setEncoding(encoding);
+        isEncodingSetToNumeric = setEncoding(encoding);
     }
 
     public String getCipherKey() {
@@ -89,7 +89,7 @@ public class PolybiusSquareCipher extends Cipher
                 chKeySet.add(letter);
         } while (chKeySet.size() != KEY_LENGTH);
 
-        this.cipherKey = textProcessing(chKeySet.toString());
+        cipherKey = textProcessing(chKeySet.toString());
     }
 
     /**

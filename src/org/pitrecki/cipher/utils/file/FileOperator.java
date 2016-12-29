@@ -35,7 +35,7 @@ public final class FileOperator
      */
 
     public void open(Path path) {
-        this.filePath = path.getParent();
+        filePath = path.getParent();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path.toString()))){
             if (!bufferedReader.ready())
                 throw new CheckFileException("File is empty!");
@@ -45,7 +45,7 @@ public final class FileOperator
             while ((line = bufferedReader.readLine()) != null)
                 builder.append(line);
 
-            this.text = builder.toString();
+            text = builder.toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,7 +69,7 @@ public final class FileOperator
      */
 
     public void save(Path path, String text) {
-        String sPath = path != null ? path.toUri().getPath() : this.filePath.toAbsolutePath().toString();
+        String sPath = path != null ? path.toUri().getPath() : filePath.toAbsolutePath().toString();
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(sPath + OUTPUT_FILE_NAME))){
             if (text.contains("\n") || text.contains("\r")) {
                 String[] lineSeparatedArray = text.split("[\n\r]");

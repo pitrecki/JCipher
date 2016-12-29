@@ -33,7 +33,7 @@ public class RailFenceCipher extends TranspositionCipher
 
     public RailFenceCipher(int key) {
         super();
-        this.RAIL_KEY = key;
+        RAIL_KEY = key;
     }
 
     /**

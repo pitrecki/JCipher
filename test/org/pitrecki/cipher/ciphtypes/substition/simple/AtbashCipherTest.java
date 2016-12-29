@@ -18,7 +18,7 @@ class AtbashCipherTest
 
     @BeforeEach
     void setUp() {
-        this.atbash = new AtbashCipher();
+        atbash = new AtbashCipher();
     }
 
     @Test
