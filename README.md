@@ -32,7 +32,7 @@ ceaser.printProccesedData();
 Open file
 ```java
 FileOperator fo = new FileOperator();
-fo.open("C:/plaintext");;
+fo.open("C:/plaintext");
 ceaser.encrypt(fo.getText());
 cipherText = ceaser.getProcessedText();
 ```
