@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 /**
  * This class contains simple and useful algorithms needed in
- * the processing codes.
+ * the codes processing.
  *
  * @author Piotr 'pitrecki' Nowak
  * @version 0.5.5

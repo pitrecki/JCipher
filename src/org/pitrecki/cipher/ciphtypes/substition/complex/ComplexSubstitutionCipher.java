@@ -18,8 +18,8 @@ abstract class ComplexSubstitutionCipher extends Cipher
     }
 
     @Override
-    protected void setCryptMatrix(Matrix cryptMatrix) {
-        super.setCryptMatrix(cryptMatrix);
+    protected void setEncryptMatrix(Matrix encryptMatrix) {
+        super.setEncryptMatrix(encryptMatrix);
     }
 
 

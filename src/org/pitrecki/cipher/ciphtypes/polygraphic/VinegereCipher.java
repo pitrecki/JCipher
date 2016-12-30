@@ -85,38 +85,23 @@ public class VinegereCipher extends Cipher
     }
 
     /**
-     *  Invoke decrypt scenario
+     *  Invoke decrypt or encrypt  scenario
+     *  @param cryptVariant ENCRYPTION or  DECRYPTION {@link CryptVariant}
      */
 
-    void invokeDecryptScenario() {
-        /*
-            See plaintext field, this necassacry for inherit classes.
-        */
+    private void cipherProcessing(CryptVariant cryptVariant) {
         keywordRepeater(plaintext.length());
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < keyword.length(); i++) {
             int keywordCurrentLetter = keyword.charAt(i);
             int inputTextCurrentLetter = plaintext.charAt(i);
-            int result = calculateCoordinate(CryptVariant.DECRYPT, keywordCurrentLetter, inputTextCurrentLetter);
-            builder.append(ASCII_TABLE[result]);
-        }
+            int result = 0;
+            if (cryptVariant.equals(CryptVariant.ENCRYPT))
+                result = calculateCoordinate(cryptVariant, keywordCurrentLetter, inputTextCurrentLetter);
+            else
+                result = calculateCoordinate(cryptVariant, keywordCurrentLetter, inputTextCurrentLetter);
 
-        setProcessedText(builder.toString());
-    }
-
-    /**
-     * Invoke encrpyt scenario
-     */
-
-    void invokeEncryptScenario() {
-        keywordRepeater(plaintext.length());
-
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < keyword.length(); i++) {
-            int keywordCurrentLetter = keyword.charAt(i);
-            int inputTextCurrentLetter = plaintext.charAt(i);
-            int result = calculateCoordinate(CryptVariant.ENCRYPT, keywordCurrentLetter, inputTextCurrentLetter);
             builder.append(ASCII_TABLE[result]);
         }
 
@@ -144,13 +129,13 @@ public class VinegereCipher extends Cipher
     @Override
     public void encrypt(String inputText) {
         plaintext = textProcessing(inputText);
-        invokeEncryptScenario();
+        cipherProcessing(CryptVariant.ENCRYPT);
     }
 
     @Override
     public void decrypt(String inputText) {
         plaintext = textProcessing(inputText);
-        invokeDecryptScenario();
+        cipherProcessing(CryptVariant.DECRYPT);
     }
 
     /**

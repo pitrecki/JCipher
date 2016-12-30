@@ -35,12 +35,12 @@ public abstract class TranspositionCipher extends Cipher
     }
 
     @Override
-    protected void setCryptMatrix(Matrix cryptMatrix) {
-        Character[][]  chArray = (Character[][]) cryptMatrix.getData();
+    protected void setEncryptMatrix(Matrix encryptMatrix) {
+        Character[][]  chArray = (Character[][]) encryptMatrix.getData();
         for (int i = 0; i < chArray.length; i++)
             Arrays.fill(chArray[i], '*');
 
-        setCryptMatrix(new Matrix(chArray));
+        setEncryptMatrix(new Matrix(chArray));
     }
 
     protected abstract void cryptArrayGenerator(String strText);

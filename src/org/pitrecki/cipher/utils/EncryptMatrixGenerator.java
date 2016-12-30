@@ -11,7 +11,7 @@ import java.lang.reflect.Array;
  * @version 0.5.5
  * Created by Pitrecki on 2016-12-22.
  */
-public final class CryptMatrixGenerator<T>
+public final class EncryptMatrixGenerator<T>
 {
     private final Class<T> clazzType;
 
@@ -19,7 +19,7 @@ public final class CryptMatrixGenerator<T>
     private int row;
     private Matrix matrix;
 
-    private CryptMatrixGenerator(CryptMatrixGeneratorBuilder<T> builder) {
+    private EncryptMatrixGenerator(CryptMatrixGeneratorBuilder<T> builder) {
         this.clazzType = builder.clazzType;
         this.column= builder.column;
         this.row = builder.row;
@@ -90,8 +90,8 @@ public final class CryptMatrixGenerator<T>
             return this;
         }
 
-        public CryptMatrixGenerator build() {
-            return new CryptMatrixGenerator(this);
+        public EncryptMatrixGenerator build() {
+            return new EncryptMatrixGenerator(this);
         }
     }
 }

@@ -56,20 +56,20 @@ public class RailFenceCipher extends TranspositionCipher
     @Override
     protected void cryptArrayGenerator(String textToDecode) {
         String temp = textToDecode.replaceAll(" ", "");
-        setCryptMatrix(new Matrix(new Character[RAIL_KEY][temp.length()]));
+        setEncryptMatrix(new Matrix(new Character[RAIL_KEY][temp.length()]));
 
         int textCharIndex = 0;
         try {
-            for (int j = 0; j < getCryptMatrix().getData()[0].length; j += RAIL_KEY + 1) {
+            for (int j = 0; j < getEncryptMatrix().getData()[0].length; j += RAIL_KEY + 1) {
                 int row = 0;
                 int column = j;
                 do {
                     char letter = temp.charAt(textCharIndex);
-                    setValueInCryptMatrix(row, column, letter);
+                    setValueInEncryptMatrix(row, column, letter);
                     row++;
                     column++;
                     textCharIndex++;
-                } while (row < getCryptMatrix().getData().length);
+                } while (row < getEncryptMatrix().getData().length);
 
                 row -= 1;
                 column -= 1;
@@ -78,7 +78,7 @@ public class RailFenceCipher extends TranspositionCipher
                     row--;
                     column++;
                     char letter = temp.charAt(textCharIndex);
-                    setValueInCryptMatrix(row, column, letter);
+                    setValueInEncryptMatrix(row, column, letter);
                     textCharIndex++;
                 } while (row > 1);
             }
@@ -90,7 +90,7 @@ public class RailFenceCipher extends TranspositionCipher
     public void encrypt(String inputText) {
         cryptArrayGenerator(inputText);
 
-        Character[][] tmpCryptMatrix = (Character[][]) getCryptMatrix().getData();
+        Character[][] tmpCryptMatrix = (Character[][]) getEncryptMatrix().getData();
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < tmpCryptMatrix.length; i++)
@@ -105,7 +105,7 @@ public class RailFenceCipher extends TranspositionCipher
         cryptArrayGenerator(inputText);
         //TODO Poprawic implentacje, nie dziala jak nalezy
         //FIXME Napraw to wreszcie!
-        Character[][] tmpCryptMatrix = ((Character[][]) getCryptMatrix().getData());
+        Character[][] tmpCryptMatrix = ((Character[][]) getEncryptMatrix().getData());
         StringBuilder builder = new StringBuilder();
 
 //       += (2*RAIL_KEY) - 2

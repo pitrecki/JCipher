@@ -1,7 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.substition.complex;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
-import org.pitrecki.cipher.utils.CryptMatrixGenerator;
+import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
 
 import java.security.InvalidKeyException;
 import java.util.*;
@@ -38,7 +38,7 @@ public class PolybiusSquareCipher extends Cipher
     public PolybiusSquareCipher(Encoding encoding) {
         super();
         randomKeyGenerator();
-        cryptMatrixGenerator(getCipherKey());
+        encryptMatrixGenerator(getCipherKey());
         isEncodingSetToNumeric = setEncoding(encoding);
     }
 
@@ -52,7 +52,7 @@ public class PolybiusSquareCipher extends Cipher
             throw new InvalidKeyException("Key contains illegal character");
         else
             cipherKey = key.toUpperCase();
-        cryptMatrixGenerator(getCipherKey());
+        encryptMatrixGenerator(getCipherKey());
 
         isEncodingSetToNumeric = setEncoding(encoding);
     }
@@ -67,13 +67,13 @@ public class PolybiusSquareCipher extends Cipher
      * @param key entered by user
      */
 
-    private void cryptMatrixGenerator(String key) {
-        CryptMatrixGenerator<Character> cmg = new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Character.class).build();
+    private void encryptMatrixGenerator(String key) {
+        EncryptMatrixGenerator<Character> cmg = new EncryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Character.class).build();
 
         Character[] characterKeyArray = key.chars().mapToObj(value ->(char) value).toArray(Character[]::new);
 
         cmg.fill(characterKeyArray);
-        setCryptMatrix(cmg.getGenereratedCryptMatrix());
+        setEncryptMatrix(cmg.getGenereratedCryptMatrix());
     }
 
     /**
@@ -160,9 +160,9 @@ public class PolybiusSquareCipher extends Cipher
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < inputText.length(); i++) {
-            for (int j = 0; j < getCryptMatrix().getData().length; j++) {
-                for (int k = 0; k < getCryptMatrix().getData()[j].length; k++) {
-                    if (getCryptMatrix().getData()[j][k].equals(inputText.charAt(i)))
+            for (int j = 0; j < getEncryptMatrix().getData().length; j++) {
+                for (int k = 0; k < getEncryptMatrix().getData()[j].length; k++) {
+                    if (getEncryptMatrix().getData()[j][k].equals(inputText.charAt(i)))
                         builder.append(j).append(k);
                 }
             }
@@ -186,7 +186,7 @@ public class PolybiusSquareCipher extends Cipher
             int y = Integer.parseInt(inpuText.substring(index, index + 1));
             index ++;
 
-            builder.append(getCryptMatrix().getData()[x][y]);
+            builder.append(getEncryptMatrix().getData()[x][y]);
         }
 
         String translatedString =

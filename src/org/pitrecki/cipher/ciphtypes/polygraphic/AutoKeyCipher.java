@@ -26,7 +26,9 @@ public class AutoKeyCipher extends VinegereCipher
      */
 
     @Override
-    void invokeDecryptScenario() {
+    public void decrypt(String plaintext) {
+        setPlaintext(textProcessing(plaintext));
+
         StringBuilder builder = new StringBuilder();
         String keyword = getKeyword();
         for (int i = 0; i < getPlaintext().length(); i++) {

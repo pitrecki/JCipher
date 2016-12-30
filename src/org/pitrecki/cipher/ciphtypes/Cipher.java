@@ -42,7 +42,7 @@ public abstract class Cipher implements CipherInterface, DataPrintable
     public final char[] ASCII_TABLE;
 
     private String processedText;
-    private Matrix cryptMatrix;
+    private Matrix encryptMatrix;
 
     public  Cipher() {
         this.ASCII_TABLE = AsciiGenerator.upperCaseAlphabetGenerator();
@@ -56,16 +56,16 @@ public abstract class Cipher implements CipherInterface, DataPrintable
         this.processedText = text;
     }
 
-    public Matrix getCryptMatrix() {
-        return cryptMatrix;
+    public Matrix getEncryptMatrix() {
+        return encryptMatrix;
     }
 
-    protected void setCryptMatrix(Matrix cryptMatrix) {
-        this.cryptMatrix = cryptMatrix;
+    protected void setEncryptMatrix(Matrix encryptMatrix) {
+        this.encryptMatrix = encryptMatrix;
     }
 
-    protected void setValueInCryptMatrix(int row, int column, Object object) {
-        cryptMatrix.setValueInMatrix(row, column, object);
+    protected void setValueInEncryptMatrix(int row, int column, Object object) {
+        encryptMatrix.setValueInMatrix(row, column, object);
     }
 
     /**
@@ -121,8 +121,8 @@ public abstract class Cipher implements CipherInterface, DataPrintable
     @Override
     public String toString() {
         String strCryptMatrix = "";
-        if (getCryptMatrix() != null)
-            strCryptMatrix = getCryptMatrix().toString();
+        if (getEncryptMatrix() != null)
+            strCryptMatrix = getEncryptMatrix().toString();
 
         return "DECODED/ENCOED TEXT: " + getProcessedText() +
                 "\nCRYPT MATRIX:\n" + strCryptMatrix +

@@ -1,7 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.polygraphic;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
-import org.pitrecki.cipher.utils.CryptMatrixGenerator;
+import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
 import org.pitrecki.cipher.utils.CryptVariant;
 import org.pitrecki.cipher.utils.math.Algorithms;
 import org.pitrecki.cipher.utils.math.Matrix;
@@ -36,16 +36,16 @@ public class HillCipher extends Cipher
 
     public HillCipher(int size) throws ArithmeticException {
         super();
-        cryptMatrixGenerator(size);
+        encryptMatrixGenerator(size);
     }
 
-    public HillCipher(Matrix cryptMatrix) throws IllegalArgumentException {
+    public HillCipher(Matrix encryptMatrix) throws IllegalArgumentException {
         super();
 
-        if (cryptMatrix.getData().length != cryptMatrix.getData()[0].length)
+        if (encryptMatrix.getData().length != encryptMatrix.getData()[0].length)
             throw new IllegalArgumentException("Key size not matched!");
 
-            setCryptMatrix(cryptMatrix);
+            setEncryptMatrix(encryptMatrix);
 
     }
 
@@ -53,16 +53,16 @@ public class HillCipher extends Cipher
         this(new Matrix(key));
     }
 
-    private void cryptMatrixGenerator(int size) {
-        CryptMatrixGenerator cryptMatrixGenerator =
-                new CryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Integer.class).withSize(size).build();
+    private void encryptMatrixGenerator(int size) {
+        EncryptMatrixGenerator encryptMatrixGenerator =
+                new EncryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Integer.class).withSize(size).build();
 
         Integer[] values = new Integer[size*size];
         for (int i = 0; i < size*size; i++)
             values[i] = generateRandomValue();
 
-        cryptMatrixGenerator.fill(values);
-        setCryptMatrix(cryptMatrixGenerator.getGenereratedCryptMatrix());
+        encryptMatrixGenerator.fill(values);
+        setEncryptMatrix(encryptMatrixGenerator.getGenereratedCryptMatrix());
 
     }
 
@@ -78,7 +78,7 @@ public class HillCipher extends Cipher
     @Override
     public void encrypt(String inputText) {
         try {
-            cipherProccessing(inputText, CryptVariant.ENCRYPT);
+            cipherProcessing(inputText, CryptVariant.ENCRYPT);
         } catch (MatrixException e) {
             e.printStackTrace();
         }
@@ -97,7 +97,7 @@ public class HillCipher extends Cipher
     @Override
     public void decrypt(String inputText) {
         try {
-            cipherProccessing(inputText, CryptVariant.DECRYPT);
+            cipherProcessing(inputText, CryptVariant.DECRYPT);
         } catch (MatrixException e) {
             e.printStackTrace();
         }
@@ -109,9 +109,9 @@ public class HillCipher extends Cipher
      * @param cryptVariant enum contains enumerated types like ENCRYPT or DECRYPT
      */
 
-    private void cipherProccessing(String text, CryptVariant cryptVariant) throws MatrixException {
+    private void cipherProcessing(String text, CryptVariant cryptVariant) throws MatrixException {
         text = textProcessing(text);
-        Matrix A =  new Matrix(getCryptMatrix());
+        Matrix A =  new Matrix(getEncryptMatrix());
 
         if (cryptVariant.equals(CryptVariant.DECRYPT)) {
             double determinantValue = A.determinant(A);

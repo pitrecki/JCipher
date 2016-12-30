@@ -144,7 +144,7 @@ class CeasarCipherTest implements TestContainer
     void testNullField() {
         assertThrows(NullPointerException.class, () -> ceaser.toString());
         assertNull(ceaser.getProcessedText(), () -> "passed, null");
-        assertNull(ceaser.getCryptMatrix(), () -> "passed, null");
+        assertNull(ceaser.getEncryptMatrix(), () -> "passed, null");
     }
 
 }
