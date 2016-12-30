@@ -78,9 +78,9 @@ public class BaconianCipher extends Cipher
                 Generate MAP shown above
             */
             if (variant.equals(Variant.STANDARD)) {
-                if (currentLetter.matches("[JVK-U]"))
+                if (currentLetter.matches("[JK-U]"))
                     value -= 1;
-                else if (currentLetter.matches("[W-Z]"))
+                else if (currentLetter.matches("[VW-Z]"))
                     value -= 2;
             }
 
@@ -129,7 +129,12 @@ public class BaconianCipher extends Cipher
         for (int i = 0; i < inpuText.length(); i+= FIX_LENGTH)
             builder.append(getKeyByValue(alphabetMap, inpuText.substring(i, (i + FIX_LENGTH))));
 
-        setProcessedText(builder.toString());
+        String decryptedText = textProcessing(builder.toString());
+
+        if (alphabetMap.get('J').equals(alphabetMap.get('I')) || alphabetMap.get('U').equals(alphabetMap.get('V')))
+            decryptedText = decryptedText.replaceAll("[JV]", "");
+
+        setProcessedText(decryptedText);
     }
 
     //For more info please look here: http://stackoverflow.com/questions/1383797/java-hashmap-how-to-get-key-from-value
