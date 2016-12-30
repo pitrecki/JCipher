@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  * method of deciphering a Vigenère cipher, in 1863.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.5
+ * @version 0.5.8
  * Created by Pitrecki on 2016-12-11.
  */
 public class VinegereCipher extends Cipher

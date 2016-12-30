@@ -9,7 +9,7 @@ import org.pitrecki.cipher.utils.CryptVariant;
  * Vigenere cipher.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.5
+ * @version 0.5.8
  * Created by Pitrecki on 2016-11-07.
  * @see VinegereCipher
  */

@@ -17,7 +17,7 @@ import org.pitrecki.cipher.utils.CryptVariant;
  * <b>For more information look at:</b> <a href="https://en.wikipedia.org/wiki/Caesar_cipher"> LINK </a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.5
+ * @version 0.5.8
  * @see SimpleSubstitutionCipher
  */
 public class CeasarCipher extends SimpleSubstitutionCipher
