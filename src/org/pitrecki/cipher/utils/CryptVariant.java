@@ -23,7 +23,7 @@ public enum CryptVariant
      * {@link SimpleSubstitutionCipher#textShifting(String, CryptVariant)}
      *
      * @see HillCipher
-     * {@link HillCipher#cipherProccessing(String, CryptVariant)}
+     * {@link HillCipher#cipherProcessing(String, CryptVariant)}
      */
     ENCRYPT, DECRYPT,
     //endregion

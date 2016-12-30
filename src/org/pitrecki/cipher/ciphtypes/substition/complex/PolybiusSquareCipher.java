@@ -68,12 +68,12 @@ public class PolybiusSquareCipher extends Cipher
      */
 
     private void encryptMatrixGenerator(String key) {
-        EncryptMatrixGenerator<Character> cmg = new EncryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Character.class).build();
+        EncryptMatrixGenerator<Character> cmg = new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Character.class).build();
 
         Character[] characterKeyArray = key.chars().mapToObj(value ->(char) value).toArray(Character[]::new);
 
         cmg.fill(characterKeyArray);
-        setEncryptMatrix(cmg.getGenereratedCryptMatrix());
+        setEncryptMatrix(cmg.getGenereratedEncryptMatrix());
     }
 
     /**

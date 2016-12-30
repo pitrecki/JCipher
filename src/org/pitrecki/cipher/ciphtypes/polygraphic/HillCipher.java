@@ -55,14 +55,14 @@ public class HillCipher extends Cipher
 
     private void encryptMatrixGenerator(int size) {
         EncryptMatrixGenerator encryptMatrixGenerator =
-                new EncryptMatrixGenerator.CryptMatrixGeneratorBuilder<>(Integer.class).withSize(size).build();
+                new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Integer.class).withSize(size).build();
 
         Integer[] values = new Integer[size*size];
         for (int i = 0; i < size*size; i++)
             values[i] = generateRandomValue();
 
         encryptMatrixGenerator.fill(values);
-        setEncryptMatrix(encryptMatrixGenerator.getGenereratedCryptMatrix());
+        setEncryptMatrix(encryptMatrixGenerator.getGenereratedEncryptMatrix());
 
     }
 

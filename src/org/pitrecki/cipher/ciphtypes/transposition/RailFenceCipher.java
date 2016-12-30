@@ -90,11 +90,11 @@ public class RailFenceCipher extends TranspositionCipher
     public void encrypt(String inputText) {
         cryptArrayGenerator(inputText);
 
-        Character[][] tmpCryptMatrix = (Character[][]) getEncryptMatrix().getData();
+        Character[][] tmpEncryptMatrix = (Character[][]) getEncryptMatrix().getData();
         StringBuilder builder = new StringBuilder();
 
-        for (int i = 0; i < tmpCryptMatrix.length; i++)
-            builder.append(Arrays.toString(tmpCryptMatrix[i]));
+        for (int i = 0; i < tmpEncryptMatrix.length; i++)
+            builder.append(Arrays.toString(tmpEncryptMatrix[i]));
 
         setProcessedText(builder.toString());
     }
@@ -105,21 +105,21 @@ public class RailFenceCipher extends TranspositionCipher
         cryptArrayGenerator(inputText);
         //TODO Poprawic implentacje, nie dziala jak nalezy
         //FIXME Napraw to wreszcie!
-        Character[][] tmpCryptMatrix = ((Character[][]) getEncryptMatrix().getData());
+        Character[][] tmpEncryptMatrix = ((Character[][]) getEncryptMatrix().getData());
         StringBuilder builder = new StringBuilder();
 
 //       += (2*RAIL_KEY) - 2
-//        for (int i = 0; i < tmpCryptMatrix.length; i++) {
-//            for (int j = i; j < tmpCryptMatrix[i].length; j ++) {
+//        for (int i = 0; i < tmpEncryptMatrix.length; i++) {
+//            for (int j = i; j < tmpEncryptMatrix[i].length; j ++) {
 ////                if (builder.length() < RAIL_KEY)
-//                builder.append(tmpCryptMatrix[i][j]);
+//                builder.append(tmpEncryptMatrix[i][j]);
 //
 //            }
 //        }
 
-        for (int i = 0; i < tmpCryptMatrix[0].length; i++) {
-            for (int j = 0; j < tmpCryptMatrix.length; j++) {
-                builder.append(tmpCryptMatrix[j][i]);
+        for (int i = 0; i < tmpEncryptMatrix[0].length; i++) {
+            for (int j = 0; j < tmpEncryptMatrix.length; j++) {
+                builder.append(tmpEncryptMatrix[j][i]);
             }
         }
 

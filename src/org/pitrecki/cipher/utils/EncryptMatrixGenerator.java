@@ -19,17 +19,17 @@ public final class EncryptMatrixGenerator<T>
     private int row;
     private Matrix matrix;
 
-    private EncryptMatrixGenerator(CryptMatrixGeneratorBuilder<T> builder) {
+    private EncryptMatrixGenerator(EncryptMatrixGeneratorBuilder<T> builder) {
         this.clazzType = builder.clazzType;
         this.column= builder.column;
         this.row = builder.row;
-        createCryptMatrix();
+        createEncryptMatrix();
     }
 
     @SuppressWarnings("T casting can cause problems")
-    private void createCryptMatrix() {
-        T[][] genericCryptMatrix = ((T[][]) Array.newInstance(clazzType, row, column));
-        matrix = new Matrix(genericCryptMatrix);
+    private void createEncryptMatrix() {
+        T[][] genericEncryptMatrix = ((T[][]) Array.newInstance(clazzType, row, column));
+        matrix = new Matrix(genericEncryptMatrix);
     }
 
     public void fill(T ... values) {
@@ -44,11 +44,11 @@ public final class EncryptMatrixGenerator<T>
         matrix.setData(tmpGenericData);
     }
 
-    public Matrix getGenereratedCryptMatrix() {
+    public Matrix getGenereratedEncryptMatrix() {
         return matrix;
     }
 
-    public static class CryptMatrixGeneratorBuilder<T>
+    public static class EncryptMatrixGeneratorBuilder<T>
     {
         //default values
         private int column = 5;
@@ -57,7 +57,7 @@ public final class EncryptMatrixGenerator<T>
         private final Class<T> clazzType;
 
 
-        public CryptMatrixGeneratorBuilder(Class<T> clazzType) {
+        public EncryptMatrixGeneratorBuilder(Class<T> clazzType) {
             if (clazzType == null)
                 throw new IllegalArgumentException("Type can not be null");
 
@@ -65,7 +65,7 @@ public final class EncryptMatrixGenerator<T>
 
         }
 
-        public CryptMatrixGeneratorBuilder withSize(int size) {
+        public EncryptMatrixGeneratorBuilder withSize(int size) {
             if (size <= 0)
                 throw new IllegalArgumentException("Size can not be negative");
             this.column = this.row = size;
@@ -73,7 +73,7 @@ public final class EncryptMatrixGenerator<T>
             return  this;
         }
 
-        public CryptMatrixGeneratorBuilder withColumn(int column) {
+        public EncryptMatrixGeneratorBuilder withColumn(int column) {
             if (column < 0)
                 throw new IllegalArgumentException("Column size can not be negative");
             this.column = column;
@@ -82,7 +82,7 @@ public final class EncryptMatrixGenerator<T>
         }
 
 
-        public CryptMatrixGeneratorBuilder withRow(int row) {
+        public EncryptMatrixGeneratorBuilder withRow(int row) {
             if (row < 0)
                 throw new IllegalArgumentException("Row size can to be negative");
             this.row = row;

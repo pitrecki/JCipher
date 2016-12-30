@@ -120,12 +120,12 @@ public abstract class Cipher implements CipherInterface, DataPrintable
 
     @Override
     public String toString() {
-        String strCryptMatrix = "";
+        String strEncryptMatrix = "";
         if (getEncryptMatrix() != null)
-            strCryptMatrix = getEncryptMatrix().toString();
+            strEncryptMatrix = getEncryptMatrix().toString();
 
         return "DECODED/ENCOED TEXT: " + getProcessedText() +
-                "\nCRYPT MATRIX:\n" + strCryptMatrix +
+                "\nENCRYPT MATRIX:\n" + strEncryptMatrix +
                 "STATISTICS: "  + frequencyTextAnalysis(getProcessedText());
     }
 }
