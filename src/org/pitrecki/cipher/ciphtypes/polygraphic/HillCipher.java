@@ -1,8 +1,8 @@
 package org.pitrecki.cipher.ciphtypes.polygraphic;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
-import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
 import org.pitrecki.cipher.utils.CryptVariant;
+import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
 import org.pitrecki.cipher.utils.math.Algorithms;
 import org.pitrecki.cipher.utils.math.Matrix;
 import org.pitrecki.cipher.utils.math.MatrixException;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * length of the module.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.8
+ * @version 0.6.0
  * Created by Pitrecki on 2016-11-10.
  */
 public class HillCipher extends Cipher
@@ -33,15 +33,18 @@ public class HillCipher extends Cipher
     //equals 26
     private final int MOD_VAL = ASCII_TABLE.length;
 
+     /**
+     * In this case constructor generate NxN size matrix with random values
+     * @param size square matrix size
+     */
 
-    public HillCipher(int size) throws ArithmeticException {
+    public HillCipher(int size)  {
         super();
         encryptMatrixGenerator(size);
     }
 
     public HillCipher(Matrix encryptMatrix) throws IllegalArgumentException {
         super();
-
         if (encryptMatrix.getData().length != encryptMatrix.getData()[0].length)
             throw new IllegalArgumentException("Key size not matched!");
 
@@ -117,7 +120,8 @@ public class HillCipher extends Cipher
             double determinantValue = A.determinant(A);
             double calculatedModInvValue = Algorithms.modInverse((long) determinantValue, MOD_VAL);
 
-            A = A.adjugate().modular(MOD_VAL).scalarMultiply(calculatedModInvValue).convertDoubleDataToInteger();
+            A = A.adjugate().modular(MOD_VAL).scalarMultiply(calculatedModInvValue);
+            A = convertDoubleDataToInteger(A);
         }
 
         int matrixARowNumber = A.getRow();
@@ -147,7 +151,8 @@ public class HillCipher extends Cipher
             try {
                 Matrix B = new Matrix(matrixBData).transpose();
                 B = A.multiply(B);
-                B = B.transpose().convertDoubleDataToInteger();
+                B = B.transpose();
+                B = convertDoubleDataToInteger(B);
                 Arrays.stream(B.getData()[0]).forEach(o -> procesedData.add((Integer) o));
             } catch (MatrixException | NumberFormatException e) {
                 e.printStackTrace();
@@ -160,6 +165,24 @@ public class HillCipher extends Cipher
         integers.stream().map(integer -> ASCII_TABLE[integer]).forEach(stringBuilder::append);
 
         setProcessedText(stringBuilder.toString());
+    }
+
+    /**
+     * Convert Double type data values into Integer type data values
+     *
+     * @return matrix with changed data type.
+     */
+
+    private Matrix convertDoubleDataToInteger(Matrix A) {
+        Integer[][] newMatrixData = new Integer[A.getRow()][A.getColumn()];
+        for (int i = 0; i < newMatrixData.length; i++) {
+            for (int j = 0; j < newMatrixData[i].length; j++) {
+                long  roundValue =  Math.round((Double) A.getData()[i][j]);
+                newMatrixData[i][j] = ((int) roundValue);
+            }
+        }
+        A.setData(newMatrixData);
+        return A;
     }
 
 }

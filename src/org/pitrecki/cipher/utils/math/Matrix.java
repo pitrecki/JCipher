@@ -1,8 +1,5 @@
 package org.pitrecki.cipher.utils.math;
 
-import org.pitrecki.cipher.ciphtypes.polygraphic.HillCipher;
-import org.pitrecki.cipher.utils.CryptVariant;
-
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -19,7 +16,7 @@ import java.util.stream.Stream;
  * {@link #inverse()}
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.8
+ * @version 0.6.0
  * Created by Pitrecki on 2016-11-10.
  */
 public class Matrix
@@ -296,6 +293,17 @@ public class Matrix
             return (transpose().cofactor(this).scalarMultiply(1.0/determinant(this)));
          */
 
+        /*
+            Check if data in Matrix are numbers and NOT double. If true convert this do Double type by parsing
+            to String, othherwise skip and jump to 311 line
+        */
+        if (getData()[0][0].getClass().getSuperclass().equals(Number.class) && !(getData()[0][0].getClass().equals(Double.class))) {
+            Double[][] convertedTypeArray = Arrays.stream(getData()).map(objects ->
+                    Arrays.stream(objects).map(o -> Double.valueOf(o.toString())).toArray(Double[]::new)).toArray(Double[][]::new);
+            setData(convertedTypeArray);
+        }
+
+
         double[][] tmpMatrixVals = Arrays.stream((Double[][]) getData()).map(doubles ->
                 Arrays.stream(doubles).mapToDouble(Double::doubleValue).toArray()).toArray(double[][]::new);
 
@@ -346,26 +354,6 @@ public class Matrix
         this.column = matrix.getColumn();
         this.row = matrix.getRow();
         this.data = matrix.getData();
-    }
-
-    /**
-     * Convert Double type data values into Integer type data values
-     * @see HillCipher
-     * {@link HillCipher#cipherProccessing(String, CryptVariant)}
-     *
-     * @return matrix with changed data type.
-     */
-
-    public Matrix convertDoubleDataToInteger() {
-        Integer[][] intVals = new Integer[getRow()][getColumn()];
-        for (int i = 0; i < getRow(); i++) {
-            for (int j = 0; j < getColumn(); j++) {
-                long  roundValue =  Math.round((Double) getData()[i][j]);
-                intVals[i][j] = ((int) roundValue);
-            }
-        }
-        setData(intVals);
-        return this;
     }
 
     /**

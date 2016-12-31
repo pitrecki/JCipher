@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /**
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.8
+ * @version 0.6.0
  * Created by Pitrecki on 2016-10-22.
  */
 public class CheckFileException extends IOException

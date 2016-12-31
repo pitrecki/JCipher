@@ -29,7 +29,7 @@ import java.util.*;
  *
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.8
+ * @version 0.6.0
  * @see CipherInterface
  * @see DataPrintable
  *

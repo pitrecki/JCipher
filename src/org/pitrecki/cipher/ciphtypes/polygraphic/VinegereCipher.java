@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  * method of deciphering a Vigenère cipher, in 1863.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.8
+ * @version 0.6.0
  * Created by Pitrecki on 2016-12-11.
  */
 public class VinegereCipher extends Cipher
@@ -96,11 +96,7 @@ public class VinegereCipher extends Cipher
         for (int i = 0; i < keyword.length(); i++) {
             int keywordCurrentLetter = keyword.charAt(i);
             int inputTextCurrentLetter = plaintext.charAt(i);
-            int result = 0;
-            if (cryptVariant.equals(CryptVariant.ENCRYPT))
-                result = calculateCoordinate(cryptVariant, keywordCurrentLetter, inputTextCurrentLetter);
-            else
-                result = calculateCoordinate(cryptVariant, keywordCurrentLetter, inputTextCurrentLetter);
+            int result = calculateCoordinate(cryptVariant, keywordCurrentLetter, inputTextCurrentLetter);
 
             builder.append(ASCII_TABLE[result]);
         }
@@ -117,9 +113,8 @@ public class VinegereCipher extends Cipher
      void keywordRepeater(int cryptTextLength) {
         if (cryptTextLength > keyword.length()) {
             int fixLength = cryptTextLength - keyword.length();
-            String keyword = Stream.generate(() ->
-                    this.keyword).limit(fixLength).collect(Collectors.joining()).substring(0, fixLength);
-            this.keyword = keyword;
+            keyword = Stream.generate(() ->
+                    keyword).limit(fixLength).collect(Collectors.joining()).substring(0, fixLength);
         }
         else if (cryptTextLength < keyword.length()) {
             keyword = keyword.substring(0, cryptTextLength);

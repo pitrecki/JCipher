@@ -2,7 +2,7 @@ package org.pitrecki.cipher.utils.math;
 
 /**
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.8
+ * @version 0.6.0
  * Created by Pitrecki on 2016-11-11.
  */
 public class MatrixException extends Exception

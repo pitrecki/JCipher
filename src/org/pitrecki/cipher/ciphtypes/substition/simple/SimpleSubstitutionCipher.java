@@ -19,7 +19,7 @@ import java.util.Arrays;
  * <b>For more information look at:</b> <a href="https://en.wikipedia.org/wiki/Substitution_cipher"> LINK </a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.5.8
+ * @version 0.6.0
  * @see CipherInterface
  * @see DataPrintable
  * Created by Pitrecki on 2016-10-24.
