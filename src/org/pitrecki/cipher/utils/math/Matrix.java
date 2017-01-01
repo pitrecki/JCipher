@@ -86,7 +86,8 @@ public class Matrix
      * This method fill matrix with default values eqauls 0.0
      */
     private void emptyMatrixInit() {
-        Arrays.stream(getData()).forEach(objects -> Arrays.fill(objects, null));
+        Arrays.stream(getData())
+                .forEach(objects -> Arrays.fill(objects, null));
     }
 
     /**
@@ -197,8 +198,11 @@ public class Matrix
                 return (Double.parseDouble(matrix.getData()[0][0].toString()) * Double.parseDouble(matrix.getData()[1][1].toString())) - (Double.parseDouble(getData()[0][1].toString())
                         * Double.parseDouble(matrix.getData()[1][0].toString()));
             default:
-                double[][] primitiveData = Arrays.stream((Double[][]) getData()).map(doubles ->
-                        Arrays.stream(doubles).mapToDouble(Double::doubleValue).toArray()).toArray(double[][]::new);
+                double[][] primitiveData = Arrays.stream((Double[][]) getData())
+                        .map(doubles -> Arrays.stream(doubles)
+                                .mapToDouble(Double::doubleValue)
+                                .toArray())
+                        .toArray(double[][]::new);
                 return new Jama.Matrix(primitiveData).det();
         }
     }
@@ -298,19 +302,29 @@ public class Matrix
             to String, othherwise skip and jump to 311 line
         */
         if (getData()[0][0].getClass().getSuperclass().equals(Number.class) && !(getData()[0][0].getClass().equals(Double.class))) {
-            Double[][] convertedTypeArray = Arrays.stream(getData()).map(objects ->
-                    Arrays.stream(objects).map(o -> Double.valueOf(o.toString())).toArray(Double[]::new)).toArray(Double[][]::new);
+            Double[][] convertedTypeArray = Arrays.stream(getData())
+                    .map(objects -> Arrays.stream(objects)
+                            .map(String::valueOf)
+                            .map(Double::valueOf)
+                            .toArray(Double[]::new))
+                    .toArray(Double[][]::new);
             setData(convertedTypeArray);
         }
 
 
-        double[][] tmpMatrixVals = Arrays.stream((Double[][]) getData()).map(doubles ->
-                Arrays.stream(doubles).mapToDouble(Double::doubleValue).toArray()).toArray(double[][]::new);
+        double[][] tmpMatrixVals = Arrays.stream((Double[][]) getData())
+                .map(doubles -> Arrays.stream(doubles)
+                        .mapToDouble(Double::doubleValue)
+                        .toArray())
+                .toArray(double[][]::new);
 
         tmpMatrixVals = new Jama.Matrix(tmpMatrixVals).inverse().getArray();
 
-        Double[][] tmpMatrixConvertedToObject = Arrays.stream(tmpMatrixVals).map(doubles ->
-                Arrays.stream(doubles).boxed().toArray(Double[]::new)).toArray(Double[][]::new);
+        Double[][] tmpMatrixConvertedToObject = Arrays.stream(tmpMatrixVals)
+                .map(doubles -> Arrays.stream(doubles)
+                        .boxed()
+                        .toArray(Double[]::new))
+                .toArray(Double[][]::new);
 
         setData(tmpMatrixConvertedToObject);
         return this;
@@ -403,7 +417,9 @@ public class Matrix
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        Stream.of(getData()).map(Arrays::toString).forEach(line -> builder.append(line + System.lineSeparator()));
+        Stream.of(getData())
+                .map(Arrays::toString)
+                .forEach(line -> builder.append(line + System.lineSeparator()));
         return builder.toString();
     }
 

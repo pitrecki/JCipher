@@ -70,7 +70,9 @@ public class PolybiusSquareCipher extends Cipher
     private void encryptMatrixGenerator(String key) {
         EncryptMatrixGenerator<Character> cmg = new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Character.class).build();
 
-        Character[] characterKeyArray = key.chars().mapToObj(value ->(char) value).toArray(Character[]::new);
+        Character[] characterKeyArray = key.chars()
+                .mapToObj(value ->(char) value)
+                .toArray(Character[]::new);
 
         cmg.fill(characterKeyArray);
         setEncryptMatrix(cmg.getGenereratedEncryptMatrix());

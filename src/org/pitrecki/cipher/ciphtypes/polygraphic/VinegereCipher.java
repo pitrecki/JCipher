@@ -113,8 +113,10 @@ public class VinegereCipher extends Cipher
      void keywordRepeater(int cryptTextLength) {
         if (cryptTextLength > keyword.length()) {
             int fixLength = cryptTextLength - keyword.length();
-            keyword = Stream.generate(() ->
-                    keyword).limit(fixLength).collect(Collectors.joining()).substring(0, fixLength);
+            keyword = Stream.generate(() -> keyword)
+                    .limit(fixLength)
+                    .collect(Collectors.joining())
+                    .substring(0, fixLength);
         }
         else if (cryptTextLength < keyword.length()) {
             keyword = keyword.substring(0, cryptTextLength);

@@ -26,8 +26,9 @@ class CeasarCipherTest implements TestContainer
     }
 
     private List<String> listInit(String ... params) {
-        List<String> strList = Arrays.stream(params).map(s ->
-                s.toUpperCase().replaceAll("[\\s\\p{Punct}\\p{Digit}]", "")).collect(Collectors.toList());
+        List<String> strList = Arrays.stream(params)
+                .map(s -> s.toUpperCase().replaceAll("[\\s\\p{Punct}\\p{Digit}]", ""))
+                .collect(Collectors.toList());
         return strList;
     }
 
@@ -43,10 +44,12 @@ class CeasarCipherTest implements TestContainer
         final List<String> expectedList = listInit(expLongMessage, expShortMessage, expAlphabetMessage);
         final List<String> plaintextList = listInit(LONG_MESSAGE, SHORT_MESSAGE, ALPHABET);
 
-        final List<String> actualList = plaintextList.stream().map(s -> {
-            ceaser.encrypt(s);
-            return s = ceaser.getProcessedText();
-        }).collect(Collectors.toList());
+        final List<String> actualList = plaintextList.stream()
+                .map(s -> {
+                    ceaser.encrypt(s);
+                    return ceaser.getProcessedText();
+                })
+                .collect(Collectors.toList());
 
 
         assertAll("Multi encrypt", () ->{
@@ -85,10 +88,12 @@ class CeasarCipherTest implements TestContainer
         final List<String> plaintextList = listInit(plainLongMessage, plainShortMessage, plainAlphabetMessage);
         final List<String> expectedList = listInit(LONG_MESSAGE, SHORT_MESSAGE, ALPHABET);
 
-        final List<String> actualList = plaintextList.stream().map(s -> {
-            ceaser.decrypt(s);
-            return s = ceaser.getProcessedText();
-        }).collect(Collectors.toList());
+        final List<String> actualList = plaintextList.stream()
+                .map(s -> {
+                    ceaser.decrypt(s);
+                    return ceaser.getProcessedText();
+                })
+                .collect(Collectors.toList());
 
 
         assertAll("Multi decrpt", () -> {

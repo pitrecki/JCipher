@@ -89,7 +89,9 @@ public class HillCipher extends Cipher
 
 
     private List<Integer> modDivide(List<Integer> data) {
-        return data.stream().map(integer -> integer%MOD_VAL).collect(Collectors.toList());
+        return data.stream()
+                .map(integer -> integer%MOD_VAL)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -153,7 +155,9 @@ public class HillCipher extends Cipher
                 B = A.multiply(B);
                 B = B.transpose();
                 B = convertDoubleDataToInteger(B);
-                Arrays.stream(B.getData()[0]).forEach(o -> procesedData.add((Integer) o));
+                Arrays.stream(B.getData()[0])
+                        .map(o -> (Integer) o)
+                        .collect(Collectors.toCollection(()  -> procesedData));
             } catch (MatrixException | NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -162,7 +166,9 @@ public class HillCipher extends Cipher
         List<Integer> integers = modDivide(procesedData);
 
         StringBuilder stringBuilder = new StringBuilder();
-        integers.stream().map(integer -> ASCII_TABLE[integer]).forEach(stringBuilder::append);
+        integers.stream()
+                .map(integer -> ASCII_TABLE[integer])
+                .forEach(stringBuilder::append);
 
         setProcessedText(stringBuilder.toString());
     }

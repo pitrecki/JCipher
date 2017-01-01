@@ -23,8 +23,9 @@ class BaconianCipherTest
     private Cipher baconianCipher;
 
     private List<String> listInit(String... params) {
-        return Arrays.stream(params).map(s ->
-                s.replaceAll("[\\W\\p{Digit}\\p{Punct}]", "").toUpperCase()).collect(Collectors.toList());
+        return Arrays.stream(params)
+                .map(s -> s.replaceAll("[\\W\\p{Digit}\\p{Punct}]", "").toUpperCase())
+                .collect(Collectors.toList());
     }
 
     @Test
@@ -44,11 +45,13 @@ class BaconianCipherTest
 
         List<String> expectedList = listInit(expectedAlphabet, expectedShortMessage, expectedLongMessage);
 
-        List<String> actualList = Stream.of(plaintextList).flatMap(strings ->
-                strings.stream().map(s -> {
-                    baconianCipher.encrypt(s);
-                    return baconianCipher.getProcessedText();
-                } )).collect(Collectors.toList());
+        List<String> actualList = Stream.of(plaintextList)
+                .flatMap(strings -> strings.stream()
+                        .map(s -> {
+                            baconianCipher.encrypt(s);
+                            return baconianCipher.getProcessedText();
+                        }))
+                .collect(Collectors.toList());
 
         assertEquals(expectedList, actualList);
     }
@@ -70,11 +73,13 @@ class BaconianCipherTest
 
         List<String> expectedList = listInit(expectedAlphabet, expectedShortMessage, expectedLongMessage);
 
-        List<String> actuaList = Stream.of(plaintextList).flatMap(strings ->
-            strings.stream().map(s -> {
-                baconianCipher.encrypt(s);
-                return baconianCipher.getProcessedText();
-            })).collect(Collectors.toList());
+        List<String> actuaList = Stream.of(plaintextList)
+                .flatMap(strings -> strings.stream()
+                        .map(s -> {
+                            baconianCipher.encrypt(s);
+                            return baconianCipher.getProcessedText();
+                        }))
+                .collect(Collectors.toList());
 
         assertEquals(expectedList, actuaList);
     }

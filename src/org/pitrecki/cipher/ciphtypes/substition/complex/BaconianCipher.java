@@ -96,7 +96,9 @@ public class BaconianCipher extends Cipher
 
             if (binaryVal.length() < FIX_LENGTH) {
                 int currentLength = FIX_LENGTH - binaryVal.length();
-                IntStream.range(0, currentLength).map(operand -> operand = 0).forEach(builder::append);
+                IntStream.range(0, currentLength)
+                        .map(operand -> operand = 0)
+                        .forEach(builder::append);
             }
 
             builder.append(Integer.toString(value, 2));
@@ -116,7 +118,10 @@ public class BaconianCipher extends Cipher
     public void encrypt(String inputText) {
         String text = textProcessing(inputText);
         StringBuilder builder = new StringBuilder();
-        text.chars().mapToObj(value -> (char) value).map(character -> alphabetMap.get(character)).forEach(builder::append);
+        text.chars()
+                .mapToObj(value -> (char) value)
+                .map(character -> alphabetMap.get(character))
+                .forEach(builder::append);
 
         String str = builder.toString().replace('0', CHARACTER_REPRESENT_BY_BINARY_ZERO).replace('1', CHARACTER_REPRESENT_BY_BINARY_ONE);
         setProcessedText(str);
@@ -140,6 +145,9 @@ public class BaconianCipher extends Cipher
     //For more info please look here: http://stackoverflow.com/questions/1383797/java-hashmap-how-to-get-key-from-value
 
     private <Character, String> Set<Character> getKeyByValue(Map<Character, String> map, String value) {
-        return map.entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), value)).map(Map.Entry::getKey).collect(Collectors.toSet());
+        return map.entrySet().stream()
+                .filter(entry -> Objects.equals(entry.getValue(), value))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
     }
 }
