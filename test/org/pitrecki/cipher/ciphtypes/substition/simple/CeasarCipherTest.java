@@ -27,7 +27,8 @@ class CeasarCipherTest implements TestContainer
 
     private List<String> listInit(String ... params) {
         List<String> strList = Arrays.stream(params)
-                .map(s -> s.toUpperCase().replaceAll("[\\s\\p{Punct}\\p{Digit}]", ""))
+                .map(s -> s.replaceAll("[\\s\\p{Punct}\\p{Digit}]", ""))
+                .map(String::toUpperCase)
                 .collect(Collectors.toList());
         return strList;
     }
@@ -45,7 +46,7 @@ class CeasarCipherTest implements TestContainer
         final List<String> plaintextList = listInit(LONG_MESSAGE, SHORT_MESSAGE, ALPHABET);
 
         final List<String> actualList = plaintextList.stream()
-                .map(s -> invokeEncryptAndGetEncryptedText(s))
+                .map(this::invokeEncryptAndGetEncryptedText)
                 .collect(Collectors.toList());
 
 
@@ -89,7 +90,7 @@ class CeasarCipherTest implements TestContainer
         final List<String> expectedList = listInit(LONG_MESSAGE, SHORT_MESSAGE, ALPHABET);
 
         final List<String> actualList = plaintextList.stream()
-                .map(s -> invokeDecryptAndReturnDeryptedText(s))
+                .map(this::invokeDecryptAndReturnDeryptedText)
                 .collect(Collectors.toList());
 
 
@@ -127,7 +128,7 @@ class CeasarCipherTest implements TestContainer
         StringBuilder builder = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < random.nextInt(50); i++)
-            builder.append(((char) random.nextInt(255)));
+            builder.append((char) random.nextInt(255));
 
         ceaser.decrypt(builder.toString());
 

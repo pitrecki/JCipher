@@ -24,7 +24,8 @@ class BaconianCipherTest
 
     private List<String> listInit(String... params) {
         return Arrays.stream(params)
-                .map(s -> s.replaceAll("[\\W\\p{Digit}\\p{Punct}]", "").toUpperCase())
+                .map(s -> s.replaceAll("[\\W\\p{Digit}\\p{Punct}]", ""))
+                .map(String::toUpperCase)
                 .collect(Collectors.toList());
     }
 
@@ -47,13 +48,15 @@ class BaconianCipherTest
 
         List<String> actualList = Stream.of(plaintextList)
                 .flatMap(strings -> strings.stream()
-                        .map(s -> {
-                            baconianCipher.encrypt(s);
-                            return baconianCipher.getProcessedText();
-                        }))
+                        .map(this::invokeEncryptionAndReturnEncryptedText))
                 .collect(Collectors.toList());
 
         assertEquals(expectedList, actualList);
+    }
+
+    private String invokeEncryptionAndReturnEncryptedText(String s) {
+        baconianCipher.encrypt(s);
+        return baconianCipher.getProcessedText();
     }
 
     @Test
@@ -75,10 +78,7 @@ class BaconianCipherTest
 
         List<String> actuaList = Stream.of(plaintextList)
                 .flatMap(strings -> strings.stream()
-                        .map(s -> {
-                            baconianCipher.encrypt(s);
-                            return baconianCipher.getProcessedText();
-                        }))
+                        .map(this::invokeEncryptionAndReturnEncryptedText))
                 .collect(Collectors.toList());
 
         assertEquals(expectedList, actuaList);

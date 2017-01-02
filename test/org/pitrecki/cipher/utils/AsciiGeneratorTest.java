@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,28 +13,36 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class AsciiGeneratorTest
 {
+    private Character[] convertPrimitiveToObject(char[] chars) {
+        return IntStream.range(0, chars.length)
+                .mapToObj(value -> chars[value])
+                .toArray(Character[]::new);
+    }
+
     @Test
     @DisplayName("Testing of correct generating an array of large letters")
     void testOfCorrectGeneratingArrayOfLargeLetters() {
-        char[] acutal = AsciiGenerator.upperCaseAlphabetGenerator();
+        Character[] acutal =  convertPrimitiveToObject(AsciiGenerator.upperCaseAlphabetGenerator());
         Character[] expected = new Character[26];
+
         Arrays.setAll(expected, i -> (char) ('A' + i));
-        assertEquals(Arrays.toString(expected), Arrays.toString(acutal));
+        assertArrayEquals(expected, acutal);
     }
 
     @Test
     @DisplayName("Testing of correct generating an array of small letters")
     void testOfCorrectGeneratingArrayOfSmallLetters() {
-        char[] acutal = AsciiGenerator.lowerCaseAlphabetGenerator();
+        Character[] acutal =  convertPrimitiveToObject(AsciiGenerator.lowerCaseAlphabetGenerator());
         Character[] expected = new Character[26];
         Arrays.setAll(expected, i -> (char) ('a' + i));
-        assertEquals(Arrays.toString(expected), Arrays.toString(acutal));
+
+        assertArrayEquals(expected, acutal);
     }
 
     @Test
     @DisplayName("Testing of correct generating an array of both type letters")
     void testOfCorrectGeneratingArrayOfBothTypeLetters() {
-        char[] acutal = AsciiGenerator.bothCaseAlphabetGenerator();
+        Character[] acutal =  convertPrimitiveToObject(AsciiGenerator.bothCaseAlphabetGenerator());
         Character[] expected = new Character[26*2];
 
         for (int i = 0; i < expected.length /2; i++) {
@@ -41,11 +50,11 @@ class AsciiGeneratorTest
             expected[i + 26] = ((char) ('a' + i));
         }
 
-        assertEquals(Arrays.toString(expected), Arrays.toString(acutal));
+        assertArrayEquals(expected, acutal);
     }
 
     @Test
-    @DisplayName("Testing of generating values are not nul")
+    @DisplayName("Testing of generating values are not null")
     void testOfGeneratedValuesAreNotNull() {
         assertAll("Test of values", () -> {
                 assertNotNull(AsciiGenerator.bothCaseAlphabetGenerator());
