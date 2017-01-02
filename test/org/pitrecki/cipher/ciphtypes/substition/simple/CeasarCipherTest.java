@@ -45,10 +45,7 @@ class CeasarCipherTest implements TestContainer
         final List<String> plaintextList = listInit(LONG_MESSAGE, SHORT_MESSAGE, ALPHABET);
 
         final List<String> actualList = plaintextList.stream()
-                .map(s -> {
-                    ceaser.encrypt(s);
-                    return ceaser.getProcessedText();
-                })
+                .map(s -> invokeEncryptAndGetEncryptedText(s))
                 .collect(Collectors.toList());
 
 
@@ -57,12 +54,15 @@ class CeasarCipherTest implements TestContainer
         });
     }
 
+    private String invokeEncryptAndGetEncryptedText(String s) {
+        ceaser.encrypt(s);
+        return ceaser.getProcessedText();
+    }
+
     @Test
     @DisplayName("Testing a null argument in encrypt")
     void testNullEncryptArgument() {
-        assertThrows(NullPointerException.class, () -> {
-            ceaser.encrypt(null);
-        });
+        assertThrows(NullPointerException.class, () -> ceaser.encrypt(null));
     }
 
     @Test
@@ -89,16 +89,18 @@ class CeasarCipherTest implements TestContainer
         final List<String> expectedList = listInit(LONG_MESSAGE, SHORT_MESSAGE, ALPHABET);
 
         final List<String> actualList = plaintextList.stream()
-                .map(s -> {
-                    ceaser.decrypt(s);
-                    return ceaser.getProcessedText();
-                })
+                .map(s -> invokeDecryptAndReturnDeryptedText(s))
                 .collect(Collectors.toList());
 
 
         assertAll("Multi decrpt", () -> {
             assertEquals(expectedList, actualList);
         });
+    }
+
+    private String invokeDecryptAndReturnDeryptedText(String s) {
+        ceaser.decrypt(s);
+        return ceaser.getProcessedText();
     }
 
     @Test

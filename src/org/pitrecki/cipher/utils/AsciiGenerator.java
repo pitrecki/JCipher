@@ -26,7 +26,7 @@ public final class AsciiGenerator
     public static char[] upperCaseAlphabetGenerator() {
         //size should be 26, beacuse dec 90 in ASCII Table is Z, and dec 65 is A
         //for more info look on wikipedia
-        char[] upperCase = new char[90 - 65 + 1];
+        char[] upperCase = new char[26];
         for (int i = 0; i < upperCase.length; i++)
             upperCase[i] = (char) ('A' + i);
 
@@ -40,7 +40,7 @@ public final class AsciiGenerator
     public static char[] lowerCaseAlphabetGenerator() {
         //size should be 26, beacuse dec 122 in ASCII Table is z, and dec 97 is a
         //for more info look on wikipedia
-        char[] lowrCase = new char[122-97+1];
+        char[] lowrCase = new char[26];
         for (int i = 0; i < lowrCase.length; i++)
             lowrCase[i] = (char) ('a' + i);
 
