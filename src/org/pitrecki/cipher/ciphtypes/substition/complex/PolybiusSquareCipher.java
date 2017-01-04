@@ -47,7 +47,7 @@ public class PolybiusSquareCipher extends Cipher
         if (key.length() != KEY_LENGTH)
             throw new InvalidKeyException("Invalid cipherKey length: " + key.length() + " , expected length: 25");
         else if (!isUnigue(key))
-            throw new InvalidKeyException("Cinpher key is not unique");
+            throw new InvalidKeyException("Cipher key is not unique");
         else if (key.matches("[Jj0-9]"))
             throw new InvalidKeyException("Key contains illegal character");
         else
