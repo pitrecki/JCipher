@@ -6,6 +6,8 @@ import org.pitrecki.cipher.ciphtypes.Cipher;
 
 import java.security.InvalidKeyException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author Piotr 'pitrecki' Nowak
  *         Created by Pitrecki on 2017-01-04.
@@ -22,11 +24,22 @@ class BifidCipherTest
 
     @Test
     void testTextEncryption() {
+        String expected = "ffywaliaykhczaoeucplrlrleasr".toUpperCase();
+        bifid.encrypt("defend the east wall of the castle");
 
+        String atual = bifid.getProcessedText();
+
+        assertEquals(expected, atual);
     }
 
     @Test
     void testTextDecryption() {
+        String expected = "defendtheeastwallofthecastle".toUpperCase();
 
+        String plaintext = "ffywaliaykhczaoeucplrlrleasr";
+        bifid.decrypt(plaintext);
+        String actual = bifid.getProcessedText();
+
+        assertEquals(expected, actual);
     }
 }

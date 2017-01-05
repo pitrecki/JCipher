@@ -139,7 +139,6 @@ public class PolybiusSquareCipher extends Cipher
                 if (textToEncode.matches(".*[0-9].*") && isEncodingSetToNumeric)
                     return textToEncode;
                 else {
-                    int indexOf = -1;
                     for (int i = 0; i < textToEncode.length(); i++) {
                         for (int j = 0; j < chKeyArray.length; j++) {
                             if (textToEncode.charAt(i) == chKeyArray[j])
@@ -178,15 +177,15 @@ public class PolybiusSquareCipher extends Cipher
     }
 
     @Override
-    public void decrypt(String inpuText) {
+    public void decrypt(String inputText) {
         StringBuilder builder = new StringBuilder();
-        if (inpuText.matches(".*[A-Z].*"))
-            inpuText = encodingTranslator(inpuText, Encoding.NUMERICAL);
+        if (inputText.matches(".*[A-Z].*"))
+            inputText = encodingTranslator(inputText, Encoding.NUMERICAL);
         int index = 0;
-        while ((inpuText.length() / 2) != builder.length()) {
-            int x = Integer.parseInt(inpuText.substring(index, index + 1));
+        while ((inputText.length() / 2) != builder.length()) {
+            int x = Integer.parseInt(inputText.substring(index, index + 1));
             index ++;
-            int y = Integer.parseInt(inpuText.substring(index, index + 1));
+            int y = Integer.parseInt(inputText.substring(index, index + 1));
             index ++;
 
             builder.append(getValueFromEncryptMatrix(x, y));
