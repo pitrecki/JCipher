@@ -125,8 +125,8 @@ public class PolybiusSquareCipher extends Cipher
      */
 
     protected String encodingTranslator(String textToEncode, Encoding encoding) {
-        char[] chKeyArray = new char[5];
-        System.arraycopy(ASCII_TABLE, 0, chKeyArray, 0, chKeyArray.length);
+        char[] chKeyArray = {'A', 'B', 'C', 'D', 'E'};
+//        System.arraycopy(ASCII_TABLE, 0, chKeyArray, 0, chKeyArray.length);
 
         StringBuilder builder = new StringBuilder();
 
@@ -139,6 +139,7 @@ public class PolybiusSquareCipher extends Cipher
                 if (textToEncode.matches(".*[0-9].*") && isEncodingSetToNumeric)
                     return textToEncode;
                 else {
+                    int indexOf = -1;
                     for (int i = 0; i < textToEncode.length(); i++) {
                         for (int j = 0; j < chKeyArray.length; j++) {
                             if (textToEncode.charAt(i) == chKeyArray[j])
@@ -162,9 +163,9 @@ public class PolybiusSquareCipher extends Cipher
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < inputText.length(); i++) {
-            for (int j = 0; j < getEncryptMatrix().getData().length; j++) {
-                for (int k = 0; k < getEncryptMatrix().getData()[j].length; k++) {
-                    if (getEncryptMatrix().getData()[j][k].equals(inputText.charAt(i)))
+            for (int j = 0; j < getEncryptMatrix().getRow(); j++) {
+                for (int k = 0; k < getEncryptMatrix().getColumn(); k++) {
+                    if (getValueFromEncryptMatrix(j, k).equals(inputText.charAt(i)))
                         builder.append(j).append(k);
                 }
             }
@@ -188,7 +189,7 @@ public class PolybiusSquareCipher extends Cipher
             int y = Integer.parseInt(inpuText.substring(index, index + 1));
             index ++;
 
-            builder.append(getEncryptMatrix().getData()[x][y]);
+            builder.append(getValueFromEncryptMatrix(x, y));
         }
 
         String translatedString =

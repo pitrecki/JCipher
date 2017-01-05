@@ -68,6 +68,10 @@ public abstract class Cipher implements CipherInterface, DataPrintable
         encryptMatrix.setValueInMatrix(row, column, object);
     }
 
+    protected Object getValueFromEncryptMatrix(int row, int column) {
+        return encryptMatrix.getData()[row][column];
+    }
+
     /**
      * This method provide basic functionality of counting appearance of each letter and percentage
      * usage of character in entire word
@@ -87,6 +91,16 @@ public abstract class Cipher implements CipherInterface, DataPrintable
         }
 
         List<String> percentList = new ArrayList<>(frequencyOcurencyMap.size());
+
+//        List<String> percentList = frequencyOcurencyMap.entrySet()
+//                .stream()
+//                .map(Map.Entry::getValue)
+//                .map(value -> Double.valueOf(value) / textToAnalyze.length())
+//                .map(divResult -> String.format(Locale.UK, "%.2f", divResult))
+//                .collect(Collectors.toList());
+
+
+
         for (Integer number : frequencyOcurencyMap.values()) {
             Double divResult = Double.valueOf(number) / textToAnalyze.length();
             percentList.add(String.format(Locale.UK, "%.2f", divResult));
