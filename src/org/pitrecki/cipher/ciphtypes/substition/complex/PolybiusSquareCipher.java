@@ -21,28 +21,19 @@ import java.util.*;
  */
 public class PolybiusSquareCipher extends Cipher
 {
-    enum Encoding {ALPHABETICAL, NUMERICAL}
-
     //Length ====> 25
     private final int KEY_LENGTH = ASCII_TABLE.length - 1;
 
-    //is true if encoding choosen to NUMERICAL, please see constructors arguments
     private String cipherKey;
-    private boolean isEncodingSetToNumeric;
 
-    /**
-     * Specify in what form result will be printed
-     * @param encoding ALPHABETILCAL OR NUMERICAL
-     */
 
-    public PolybiusSquareCipher(Encoding encoding) {
+    public PolybiusSquareCipher() {
         super();
         randomKeyGenerator();
         encryptMatrixGenerator(getCipherKey());
-        isEncodingSetToNumeric = setEncoding(encoding);
     }
 
-    public PolybiusSquareCipher(String key, Encoding encoding) throws InvalidKeyException {
+    public PolybiusSquareCipher(String key) throws InvalidKeyException {
         super();
         if (key.length() != KEY_LENGTH)
             throw new InvalidKeyException("Invalid cipherKey length: " + key.length() + " , expected length: 25");
@@ -53,8 +44,6 @@ public class PolybiusSquareCipher extends Cipher
         else
             cipherKey = key.toUpperCase();
         encryptMatrixGenerator(getCipherKey());
-
-        isEncodingSetToNumeric = setEncoding(encoding);
     }
 
     public String getCipherKey() {
@@ -107,51 +96,6 @@ public class PolybiusSquareCipher extends Cipher
         return key.length() == characterSet.size();
     }
 
-    /**
-     * Set {@see #isEncodingSetToNumeric} value
-     * @param encoding enum encoding type
-     * @return true of false
-     */
-
-    private boolean setEncoding(Encoding encoding) {
-        return encoding.equals(Encoding.NUMERICAL);
-    }
-
-    /**
-     * Translating decoded/encoded result of cipher processing to numeric or alphabetic answer
-     *
-     * @param textToEncode text to translate
-     * @return translated text
-     */
-
-    protected String encodingTranslator(String textToEncode, Encoding encoding) {
-        char[] chKeyArray = {'A', 'B', 'C', 'D', 'E'};
-//        System.arraycopy(ASCII_TABLE, 0, chKeyArray, 0, chKeyArray.length);
-
-        StringBuilder builder = new StringBuilder();
-
-        switch (encoding) {
-            case ALPHABETICAL:
-                for (int i = 0; i < textToEncode.length(); i++)
-                    builder.append(chKeyArray[Character.getNumericValue(textToEncode.charAt(i))]);
-                break;
-            case NUMERICAL:
-                if (textToEncode.matches(".*[0-9].*") && isEncodingSetToNumeric)
-                    return textToEncode;
-                else {
-                    for (int i = 0; i < textToEncode.length(); i++) {
-                        for (int j = 0; j < chKeyArray.length; j++) {
-                            if (textToEncode.charAt(i) == chKeyArray[j])
-                                builder.append(j);
-                        }
-                    }
-                }
-                break;
-        }
-
-        return builder.toString();
-    }
-
     @Override
     @SuppressWarnings("Work only with alphabetic plaintext")
     public void encrypt(String inputText) throws IllegalFormatException {
@@ -159,42 +103,46 @@ public class PolybiusSquareCipher extends Cipher
             throw new IllegalArgumentException("Only letters, your input: " + inputText);
 
         inputText = textProcessing(inputText);
-        StringBuilder builder = new StringBuilder();
+        List<Integer> coordinates = new ArrayList<>();
 
+        fillListWithCoordinates(inputText, coordinates, coordinates);
+        setProcessedText(coordinates.toString().replaceAll("[\\p{Punct}\\W]", ""));
+    }
+
+    /**
+     * Search for coordinates in polybius sqaure and fill list with XY points
+     *
+     * @param inputText plaintext
+     * @param rows list which store y arugments
+     * @param columns list which store x arguments
+     */
+
+    protected void fillListWithCoordinates(String inputText, List<Integer> rows, List<Integer> columns) {
         for (int i = 0; i < inputText.length(); i++) {
             for (int j = 0; j < getEncryptMatrix().getRow(); j++) {
                 for (int k = 0; k < getEncryptMatrix().getColumn(); k++) {
-                    if (getValueFromEncryptMatrix(j, k).equals(inputText.charAt(i)))
-                        builder.append(j).append(k);
+                    if (getValueFromEncryptMatrix(j, k).equals(inputText.charAt(i))) {
+                        rows.add(j);
+                        columns.add(k);
+                    }
                 }
             }
         }
-
-        String translatedString =
-                isEncodingSetToNumeric ? builder.toString() : encodingTranslator(builder.toString(), Encoding.ALPHABETICAL);
-
-        setProcessedText(translatedString);
     }
 
     @Override
     public void decrypt(String inputText) {
+        if (inputText.matches(".*[A-Za-z].*"))
+            throw new IllegalArgumentException("Text to decrypt should constains only letters");
         StringBuilder builder = new StringBuilder();
-        if (inputText.matches(".*[A-Z].*"))
-            inputText = encodingTranslator(inputText, Encoding.NUMERICAL);
-        int index = 0;
-        while ((inputText.length() / 2) != builder.length()) {
-            int x = Integer.parseInt(inputText.substring(index, index + 1));
-            index ++;
-            int y = Integer.parseInt(inputText.substring(index, index + 1));
-            index ++;
 
+        for (int i = 0; i < inputText.length(); i+= 2) {
+            int x = Character.getNumericValue(inputText.charAt(i));
+            int y = Character.getNumericValue(inputText.charAt(i + 1));
             builder.append(getValueFromEncryptMatrix(x, y));
         }
 
-        String translatedString =
-                isEncodingSetToNumeric ? encodingTranslator(builder.toString(), Encoding.NUMERICAL) : builder.toString();
-
-        setProcessedText(translatedString);
+        setProcessedText(builder.toString());
     }
 
     @Override

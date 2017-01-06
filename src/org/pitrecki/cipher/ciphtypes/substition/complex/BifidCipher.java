@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.pitrecki.cipher.ciphtypes.substition.complex.PolybiusSquareCipher.Encoding.ALPHABETICAL;
-
 /**
  * Bifid is a cipher which combines the Polybius square with transposition, and uses
  * fractionation to achieve diffusion. It was invented by Felix Delastelle. Delastelle
@@ -23,11 +21,11 @@ import static org.pitrecki.cipher.ciphtypes.substition.complex.PolybiusSquareCip
 public class BifidCipher extends PolybiusSquareCipher
 {
     public BifidCipher() {
-        super(ALPHABETICAL);
+        super();
     }
 
     public BifidCipher(String key) throws InvalidKeyException {
-        super(key, ALPHABETICAL);
+        super(key);
     }
 
     private String checkIfInputTextContainsOnlyLetter(String text) {
@@ -44,8 +42,7 @@ public class BifidCipher extends PolybiusSquareCipher
 
         List<Integer> rows = new ArrayList<>();
         List<Integer> columns = new ArrayList<>();
-        fillListsWithCoordinates(inputText, rows, columns);
-
+        fillListWithCoordinates(inputText, rows, columns);
 
         List<Integer> merged = Stream.concat(rows.stream(), columns.stream())
                 .collect(Collectors.toList());
@@ -61,27 +58,13 @@ public class BifidCipher extends PolybiusSquareCipher
         setProcessedText(builder.toString());
     }
 
-    private void fillListsWithCoordinates(String inputText, List<Integer> rows, List<Integer> columns) {
-        for (int i = 0; i < inputText.length(); i++) {
-            for (int j = 0; j < getEncryptMatrix().getRow(); j++) {
-                for (int k = 0; k < getEncryptMatrix().getColumn(); k++) {
-                    if (getValueFromEncryptMatrix(j, k).equals(inputText.charAt(i))) {
-                        rows.add(j);
-                        columns.add(k);
-                    }
-                }
-            }
-        }
-    }
-
-
     @Override
     public void decrypt(String inputText) {
         inputText = checkIfInputTextContainsOnlyLetter(inputText);
 
         List<Integer> coordinates = new ArrayList<>();
 
-        fillListsWithCoordinates(inputText, coordinates, coordinates);
+        fillListWithCoordinates(inputText, coordinates, coordinates);
 
         List<Integer> rows = coordinates.subList(0, coordinates.size()/2);
         List<Integer> columns = coordinates.subList(coordinates.size()/2, coordinates.size());
