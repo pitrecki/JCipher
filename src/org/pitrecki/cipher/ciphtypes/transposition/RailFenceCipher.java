@@ -1,8 +1,12 @@
 package org.pitrecki.cipher.ciphtypes.transposition;
 
-import org.pitrecki.cipher.utils.math.Matrix;
+import org.pitrecki.cipher.ciphtypes.Cipher;
+import org.pitrecki.cipher.utils.AlphanumericComparator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The <b>rail fence cipher </b> (also called a zigzag cipher) is a form of transposition cipher.
@@ -26,14 +30,18 @@ import java.util.Arrays;
  * Created by Pitrecki on 2016-10-28.
  *
  */
-@Deprecated
-public class RailFenceCipher extends TranspositionCipher
+public class RailFenceCipher extends Cipher
 {
-    private final int RAIL_KEY;
+    //Numbers 221 equals Ý
+    private final char SPECIAL_SIGN = 221;
+
+    private int railKey;
+    private char[][] railArray;
 
     public RailFenceCipher(int key) {
-        super();
-        RAIL_KEY = key;
+        if (key < 0)
+            throw new IllegalArgumentException("Entered key cannot be negative");
+        this.railKey = key;
     }
 
     /**
@@ -50,83 +58,71 @@ public class RailFenceCipher extends TranspositionCipher
      *    . . A . . . I . . . V . . . D . . . E . . . N . .
      *
      *
-     * @param textToDecode is entered text
+     * @param text  entered text
      */
 
-    @Override
-    protected void cryptArrayGenerator(String textToDecode) {
-        String temp = textToDecode.replaceAll(" ", "");
-        setEncryptMatrix(new Matrix(new Character[RAIL_KEY][temp.length()]));
+    private void generateRailFenceArray(String text) {
+        railArray = new char[railKey][text.length()];
+        Arrays.stream(railArray)
+                .forEach(chars -> Arrays.fill(chars, SPECIAL_SIGN));
+    }
 
-        int textCharIndex = 0;
-        try {
-            for (int j = 0; j < getEncryptMatrix().getData()[0].length; j += RAIL_KEY + 1) {
-                int row = 0;
-                int column = j;
-                do {
-                    char letter = temp.charAt(textCharIndex);
-                    setValueInEncryptMatrix(row, column, letter);
-                    row++;
-                    column++;
-                    textCharIndex++;
-                } while (row < getEncryptMatrix().getData().length);
-
-                row -= 1;
-                column -= 1;
-
-                do {
-                    row--;
-                    column++;
-                    char letter = temp.charAt(textCharIndex);
-                    setValueInEncryptMatrix(row, column, letter);
-                    textCharIndex++;
-                } while (row > 1);
+    private void calculateCoordinates(List<String> coordinates, String text) {
+        int rowIndex = 0;
+        int sign = 1;
+        for (int i = 0; i < text.length(); i++) {
+            coordinates.add("[" + rowIndex + "," + i + "]");
+            rowIndex += sign;
+            if (rowIndex == railKey || rowIndex < 0) {
+                sign = -sign;
+                rowIndex += sign * 2;
             }
-        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {}
-
+        }
     }
 
     @Override
     public void encrypt(String inputText) {
-        cryptArrayGenerator(inputText);
+        generateRailFenceArray(inputText);
+        List<String> coordinates = new ArrayList<>();
+        calculateCoordinates(coordinates, inputText);
 
-        Character[][] tmpEncryptMatrix = (Character[][]) getEncryptMatrix().getData();
+
+        fillRailFenceArrayWithText(inputText, coordinates);
         StringBuilder builder = new StringBuilder();
+        Arrays.stream(railArray)
+                .forEach(builder::append);
 
-        for (int i = 0; i < tmpEncryptMatrix.length; i++)
-            builder.append(Arrays.toString(tmpEncryptMatrix[i]));
-
-        setProcessedText(builder.toString());
+        setProcessedText(builder.toString().replaceAll("[Ý]", ""));
     }
 
     @Override
-    @SuppressWarnings("Not working yet")
     public void decrypt(String inputText) {
-        cryptArrayGenerator(inputText);
-        //TODO Poprawic implentacje, nie dziala jak nalezy
-        //FIXME Napraw to wreszcie!
-        Character[][] tmpEncryptMatrix = ((Character[][]) getEncryptMatrix().getData());
+        generateRailFenceArray(inputText);
+        List<String> coordinates = new ArrayList<>();
+        calculateCoordinates(coordinates, inputText);
+
+        List<String> sortedCoordinates = coordinates.stream()
+                .sorted((s1, s2) -> new AlphanumericComparator().compare(s1, s2))
+                .collect(Collectors.toList());
+
+        fillRailFenceArrayWithText(inputText, sortedCoordinates);
+
         StringBuilder builder = new StringBuilder();
-
-//       += (2*RAIL_KEY) - 2
-//        for (int i = 0; i < tmpEncryptMatrix.length; i++) {
-//            for (int j = i; j < tmpEncryptMatrix[i].length; j ++) {
-////                if (builder.length() < RAIL_KEY)
-//                builder.append(tmpEncryptMatrix[i][j]);
-//
-//            }
-//        }
-
-        for (int i = 0; i < tmpEncryptMatrix[0].length; i++) {
-            for (int j = 0; j < tmpEncryptMatrix.length; j++) {
-                builder.append(tmpEncryptMatrix[j][i]);
-            }
+        for (String coordinate : coordinates) {
+            int row = Integer.valueOf(coordinate.substring(1, coordinate.indexOf(',')));
+            int column = Integer.valueOf(coordinate.substring(coordinate.indexOf(',') + 1, coordinate.lastIndexOf(']')));
+            builder.append(railArray[row][column]);
         }
-
-
-
-
         setProcessedText(builder.toString());
     }
 
+
+    private void fillRailFenceArrayWithText(String inputText, List<String> coordinates) {
+        for (int i = 0; i < inputText.length(); i++) {
+            String str = coordinates.get(i);
+            int row = Integer.valueOf(str.substring(1, str.indexOf(',')));
+            int column = Integer.valueOf(str.substring(str.indexOf(',') + 1, str.lastIndexOf(']')));
+            railArray[row][column] = inputText.charAt(i);
+        }
+    }
 }
