@@ -17,7 +17,7 @@ import org.pitrecki.cipher.utils.math.Algorithms;
  * <b>THIS CLASS EXTEND SimpleSubstitutionCipher</b>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.0
+ * @version 0.6.2
  * @see SimpleSubstitutionCipher
  * Created by Pitrecki on 2016-10-20.
  */

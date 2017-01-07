@@ -7,7 +7,7 @@ import java.math.BigInteger;
  * the codes processing.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.0
+ * @version 0.6.2
  * Created by Pitrecki on 2016-11-25.
  */
 public final class Algorithms

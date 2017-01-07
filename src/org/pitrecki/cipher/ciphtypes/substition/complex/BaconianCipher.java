@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
  * {@link #generateAlphabetMap(Variant)}
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.0
+ * @version 0.6.2
  * Created by Pitrecki on 2016-11-02.
  * @see Cipher
  */

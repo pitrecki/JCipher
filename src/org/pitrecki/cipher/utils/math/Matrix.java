@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  * {@link #inverse()}
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.0
+ * @version 0.6.2
  * Created by Pitrecki on 2016-11-10.
  */
 public class Matrix
