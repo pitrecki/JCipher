@@ -2,11 +2,15 @@ package org.pitrecki.cipher.ciphtypes.transposition;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
 import org.pitrecki.cipher.utils.AlphanumericComparator;
+import org.pitrecki.cipher.utils.CryptVariant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.pitrecki.cipher.utils.CryptVariant.DECRYPT;
+import static org.pitrecki.cipher.utils.CryptVariant.ENCRYPT;
 
 /**
  * The <b>rail fence cipher </b> (also called a zigzag cipher) is a form of transposition cipher.
@@ -67,6 +71,15 @@ public class RailFenceCipher extends Cipher
                 .forEach(chars -> Arrays.fill(chars, SPECIAL_SIGN));
     }
 
+    /**
+     * Fill the list with calculeted coordinates in format [x,y],
+     * where:
+     *  x -> row index
+     *  y -> column index
+     * @param coordinates   list is passed by reference
+     * @param text          only length is needed
+     */
+
     private void calculateCoordinates(List<String> coordinates, String text) {
         int rowIndex = 0;
         int sign = 1;
@@ -87,7 +100,7 @@ public class RailFenceCipher extends Cipher
         calculateCoordinates(coordinates, inputText);
 
 
-        fillRailFenceArrayWithText(inputText, coordinates);
+        fillRailFenceArrayWithText(new StringBuilder(inputText), coordinates, ENCRYPT);
         StringBuilder builder = new StringBuilder();
         Arrays.stream(railArray)
                 .forEach(builder::append);
@@ -100,29 +113,44 @@ public class RailFenceCipher extends Cipher
         generateRailFenceArray(inputText);
         List<String> coordinates = new ArrayList<>();
         calculateCoordinates(coordinates, inputText);
-
+        /*
+        *   Transform list with ooordinates to stream, execute sorting coordinates in
+        *   the natural order. And return as new list.
+        */
         List<String> sortedCoordinates = coordinates.stream()
                 .sorted((s1, s2) -> new AlphanumericComparator().compare(s1, s2))
                 .collect(Collectors.toList());
 
-        fillRailFenceArrayWithText(inputText, sortedCoordinates);
+        fillRailFenceArrayWithText(new StringBuilder(inputText), sortedCoordinates, ENCRYPT);
 
-        StringBuilder builder = new StringBuilder();
-        for (String coordinate : coordinates) {
-            int row = Integer.valueOf(coordinate.substring(1, coordinate.indexOf(',')));
-            int column = Integer.valueOf(coordinate.substring(coordinate.indexOf(',') + 1, coordinate.lastIndexOf(']')));
-            builder.append(railArray[row][column]);
-        }
-        setProcessedText(builder.toString());
+        //pass by reference
+        StringBuilder decrpytedText = new StringBuilder(inputText);
+        fillRailFenceArrayWithText(decrpytedText, coordinates, DECRYPT);
+        String decrypt = decrpytedText.substring(decrpytedText.length()/2,  decrpytedText.length());
+
+        setProcessedText(decrypt);
     }
 
+    /**
+     * Fill rail-fence array with plaintext
+     *
+     * @param text          text what will be use to fill array
+     * @param coordinates   list with calculated coordinates
+     * @param cryptVariant  ENCRYPT - fill array with entered text
+     *                      DECRYPT - returns letters {@link #decrypt(String)}
+     */
 
-    private void fillRailFenceArrayWithText(String inputText, List<String> coordinates) {
-        for (int i = 0; i < inputText.length(); i++) {
-            String str = coordinates.get(i);
-            int row = Integer.valueOf(str.substring(1, str.indexOf(',')));
-            int column = Integer.valueOf(str.substring(str.indexOf(',') + 1, str.lastIndexOf(']')));
-            railArray[row][column] = inputText.charAt(i);
+
+    private void fillRailFenceArrayWithText(StringBuilder text, List<String> coordinates, CryptVariant cryptVariant) {
+        int index = 0;
+        for (String coordinate : coordinates) {
+            int row = Integer.valueOf(coordinate.substring(1, coordinate.indexOf(',')));
+            int column = Integer.valueOf(coordinate.substring(coordinate.indexOf(',') + 1, coordinate.length() - 1));
+
+            if (cryptVariant == ENCRYPT)
+                railArray[row][column] = text.charAt(index++);
+            else
+                text.append(railArray[row][column]);
         }
     }
 }

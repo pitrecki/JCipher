@@ -121,7 +121,7 @@ public abstract class Cipher implements AbstractCipher, DataPrintable
 
     @Override
     public String prepareDataToPrint() {
-        return getProcessedText();
+        return "Text: " + getProcessedText();
     }
 
     /**
