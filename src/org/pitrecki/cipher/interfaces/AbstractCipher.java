@@ -11,7 +11,7 @@ import org.pitrecki.cipher.ciphtypes.Cipher;
  * @see Cipher
  * Created by Pitrecki on 2016-10-15.
  */
-public interface CipherInterface
+public interface AbstractCipher
 {
     /**
      * In cryptography, encryption is the process of encoding messages or information

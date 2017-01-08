@@ -1,7 +1,7 @@
 package org.pitrecki.cipher.ciphtypes;
 
 import org.pitrecki.cipher.ciphtypes.substition.simple.SimpleSubstitutionCipher;
-import org.pitrecki.cipher.interfaces.CipherInterface;
+import org.pitrecki.cipher.interfaces.AbstractCipher;
 import org.pitrecki.cipher.interfaces.DataPrintable;
 import org.pitrecki.cipher.utils.AsciiGenerator;
 import org.pitrecki.cipher.utils.math.Matrix;
@@ -30,14 +30,14 @@ import java.util.*;
  *
  * @author Piotr 'pitrecki' Nowak
  * @version 0.6.2
- * @see CipherInterface
+ * @see AbstractCipher
  * @see DataPrintable
  *
  * @see SimpleSubstitutionCipher
  * @see Matrix
  * Created by Pitrecki on 2016-11-04.
  */
-public abstract class Cipher implements CipherInterface, DataPrintable
+public abstract class Cipher implements AbstractCipher, DataPrintable
 {
     public final char[] ASCII_TABLE;
 

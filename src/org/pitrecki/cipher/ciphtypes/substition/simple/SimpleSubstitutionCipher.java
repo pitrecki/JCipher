@@ -1,7 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.substition.simple;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
-import org.pitrecki.cipher.interfaces.CipherInterface;
+import org.pitrecki.cipher.interfaces.AbstractCipher;
 import org.pitrecki.cipher.interfaces.DataPrintable;
 import org.pitrecki.cipher.utils.CryptVariant;
 
@@ -20,7 +20,7 @@ import java.util.Arrays;
  *
  * @author Piotr 'pitrecki' Nowak
  * @version 0.6.2
- * @see CipherInterface
+ * @see AbstractCipher
  * @see DataPrintable
  * Created by Pitrecki on 2016-10-24.
  */
