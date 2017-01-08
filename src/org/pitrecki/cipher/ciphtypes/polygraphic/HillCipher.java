@@ -39,16 +39,14 @@ public class HillCipher extends Cipher
      */
 
     public HillCipher(int size)  {
-        super();
         encryptMatrixGenerator(size);
     }
 
     public HillCipher(Matrix encryptMatrix) throws IllegalArgumentException {
-        super();
         if (encryptMatrix.getData().length != encryptMatrix.getData()[0].length)
             throw new IllegalArgumentException("Key size not matched!");
 
-            setEncryptMatrix(encryptMatrix);
+        setEncryptMatrix(encryptMatrix);
 
     }
 
@@ -118,59 +116,68 @@ public class HillCipher extends Cipher
         text = textProcessing(text);
         Matrix A =  new Matrix(getEncryptMatrix());
 
-        if (cryptVariant.equals(CryptVariant.DECRYPT)) {
-            double determinantValue = A.determinant(A);
-            double calculatedModInvValue = Algorithms.modInverse((long) determinantValue, MOD_VAL);
-
-            A = A.adjugate().modular(MOD_VAL).scalarMultiply(calculatedModInvValue);
-            A = convertDoubleDataToInteger(A);
-        }
-
-        int matrixARowNumber = A.getRow();
+        if (cryptVariant.equals(CryptVariant.DECRYPT))
+            A = inverseKeyMatrix(A);
 
         text = text.length()%2 == 0 ? text : text.concat(" ");
         int fixedInputTextLength = text.length();
 
-        Integer[][] matrixBData = new Integer[1][matrixARowNumber];
-        List<Integer> procesedData = new ArrayList<>();
+        Integer[][] tmpMatrixBData = new Integer[1][A.getRow()];
+        List<Integer> resultOfMultiplication = new ArrayList<>();
 
         int iterator = 0;
         while (iterator != fixedInputTextLength) {
-            for (int matrixBIterator = 0; matrixBIterator < matrixARowNumber; matrixBIterator++) {
-                for (int asciIndex = 0; asciIndex < ASCII_TABLE.length; asciIndex++) {
-                    if (text.charAt(iterator) == ASCII_TABLE[asciIndex]) {
-                        matrixBData[0][matrixBIterator] = asciIndex;
-                        iterator++;
+            for (int matrixBColumn = 0; matrixBColumn < A.getRow(); matrixBColumn++) {
+                for (int i = 0; i < ASCII_TABLE.length; i++) {
+                    if (text.charAt(iterator) == ASCII_TABLE[i]) {
+                        tmpMatrixBData[0][matrixBColumn] = i;
                         break;
                     }
                     else if (text.charAt(iterator) == ' ') {
-                        matrixBData[0][matrixBIterator] = (int) SPECIAL_SIGN;
-                        iterator++;
+                        tmpMatrixBData[0][matrixBColumn] = (int) SPECIAL_SIGN;
                         break;
                     }
                 }
+                iterator++;
             }
-            try {
-                Matrix B = new Matrix(matrixBData).transpose();
-                B = A.multiply(B);
-                B = B.transpose();
-                B = convertDoubleDataToInteger(B);
-                Arrays.stream(B.getData()[0])
-                        .map(o -> (Integer) o)
-                        .collect(Collectors.toCollection(()  -> procesedData));
-            } catch (MatrixException | NumberFormatException e) {
-                e.printStackTrace();
-            }
+
+            Matrix B = new Matrix(tmpMatrixBData).transpose();
+            B = A.multiply(B);
+            B = B.transpose();
+            B = convertDoubleDataToInteger(B);
+            Arrays.stream(B.getData()[0])
+                    .map(o -> (Integer) o)
+                    .collect(Collectors.toCollection(()  -> resultOfMultiplication));
+
         }
 
-        List<Integer> integers = modDivide(procesedData);
+        List<Integer> modularDividedInts = modDivide(resultOfMultiplication);
 
         StringBuilder stringBuilder = new StringBuilder();
-        integers.stream()
+        modularDividedInts.stream()
                 .map(integer -> ASCII_TABLE[integer])
                 .forEach(stringBuilder::append);
 
         setProcessedText(stringBuilder.toString());
+    }
+
+    /**
+     * To find K-1 we have to use a bit of maths. It turns out that K-1 above can be calculated from our
+     * key. A lengthy discussion will not be included here, but we will give a short example. The important
+     * things to know are inverses (mod m), determinants of matrices, and matrix adjugates.
+     *
+     * @param matrix key matrix
+     * @return inverted key matrix
+     * @throws MatrixException if problem occurs with conversion
+     */
+
+    private Matrix inverseKeyMatrix(Matrix matrix) throws MatrixException {
+        double determinantValue = matrix.determinant(matrix);
+        double calculatedModInvValue = Algorithms.modInverse((long) determinantValue, MOD_VAL);
+
+        matrix = matrix.adjugate().modular(MOD_VAL).scalarMultiply(calculatedModInvValue);
+        matrix = convertDoubleDataToInteger(matrix);
+        return matrix;
     }
 
     /**
