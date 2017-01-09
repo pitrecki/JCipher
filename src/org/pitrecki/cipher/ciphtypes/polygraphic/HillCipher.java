@@ -1,6 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.polygraphic;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
+import org.pitrecki.cipher.interfaces.GenerateEncryptMatrix;
 import org.pitrecki.cipher.utils.CryptVariant;
 import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
 import org.pitrecki.cipher.utils.math.Algorithms;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
  * @version 0.6.2
  * Created by Pitrecki on 2016-11-10.
  */
-public class HillCipher extends Cipher
+public class HillCipher extends Cipher implements GenerateEncryptMatrix
 {
 
     //Numbers 221 is Ý,only true if word lenght is ODD!
@@ -39,7 +40,7 @@ public class HillCipher extends Cipher
      */
 
     public HillCipher(int size)  {
-        encryptMatrixGenerator(size);
+        generateEncryptMatrix(new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Integer.class).withSize(size).build());
     }
 
     public HillCipher(Matrix encryptMatrix) throws IllegalArgumentException {
@@ -54,16 +55,15 @@ public class HillCipher extends Cipher
         this(new Matrix(key));
     }
 
-    private void encryptMatrixGenerator(int size) {
-        EncryptMatrixGenerator encryptMatrixGenerator =
-                new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Integer.class).withSize(size).build();
-
-        Integer[] values = new Integer[size*size];
+    @Override
+    public void generateEncryptMatrix(EncryptMatrixGenerator generator) {
+        int size = generator.getSize();
+        Integer[] values = new Integer[size];
         for (int i = 0; i < size*size; i++)
             values[i] = generateRandomValue();
 
-        encryptMatrixGenerator.fill(values);
-        setEncryptMatrix(encryptMatrixGenerator.getGenereratedEncryptMatrix());
+        generator.fill(values);
+        setEncryptMatrix(generator.getMatrix());
 
     }
 

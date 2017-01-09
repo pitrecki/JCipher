@@ -1,6 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.substition.complex;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
+import org.pitrecki.cipher.interfaces.GenerateEncryptMatrix;
 import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
 
 import java.security.InvalidKeyException;
@@ -19,7 +20,7 @@ import java.util.*;
  * @see Cipher
  * Created by Pitrecki on 2016-10-30.
  */
-public class PolybiusSquareCipher extends Cipher
+public class PolybiusSquareCipher extends Cipher implements GenerateEncryptMatrix
 {
     //Length ====> 25
     private final int KEY_LENGTH = ASCII_TABLE.length - 1;
@@ -30,7 +31,7 @@ public class PolybiusSquareCipher extends Cipher
     public PolybiusSquareCipher() {
         super();
         randomKeyGenerator();
-        encryptMatrixGenerator(getCipherKey());
+        generateEncryptMatrix(new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Character.class).build());
     }
 
     public PolybiusSquareCipher(String key) throws InvalidKeyException {
@@ -43,7 +44,8 @@ public class PolybiusSquareCipher extends Cipher
             throw new InvalidKeyException("Key contains illegal character");
         else
             cipherKey = key.toUpperCase();
-        encryptMatrixGenerator(getCipherKey());
+
+        generateEncryptMatrix(new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Character.class).build());
     }
 
     public String getCipherKey() {
@@ -53,18 +55,17 @@ public class PolybiusSquareCipher extends Cipher
 
     /**
      * Create 5x5 cryptoghraphy Matrix and fill with enteted key
-     * @param key entered by user
+     * @param generator entered by user
      */
 
-    private void encryptMatrixGenerator(String key) {
-        EncryptMatrixGenerator<Character> cmg = new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Character.class).build();
-
-        Character[] characterKeyArray = key.chars()
+    @Override
+    public void generateEncryptMatrix(EncryptMatrixGenerator generator) {
+        Character[] characterKeyArray = cipherKey.chars()
                 .mapToObj(value ->(char) value)
                 .toArray(Character[]::new);
 
-        cmg.fill(characterKeyArray);
-        setEncryptMatrix(cmg.getGenereratedEncryptMatrix());
+        generator.fill(characterKeyArray);
+        setEncryptMatrix(generator.getMatrix());
     }
 
     /**

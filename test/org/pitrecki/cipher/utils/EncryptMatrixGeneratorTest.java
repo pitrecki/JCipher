@@ -26,8 +26,8 @@ class EncryptMatrixGeneratorTest
         int expectedRowNumber = 10;
         int expectedColumnNumber = 10;
 
-        int actualRowNumber = encryptMatrixGenerator.getGenereratedEncryptMatrix().getRow();
-        int actualColumnNumber = encryptMatrixGenerator.getGenereratedEncryptMatrix().getColumn();
+        int actualRowNumber = encryptMatrixGenerator.getMatrix().getRow();
+        int actualColumnNumber = encryptMatrixGenerator.getMatrix().getColumn();
 
         assertAll("Testing of dimension", () -> {
             assertEquals(expectedRowNumber, actualRowNumber);
@@ -42,8 +42,8 @@ class EncryptMatrixGeneratorTest
         int expectedRowNumber = 5;
         int expectedColumnNumber = 3;
 
-        int actualRowNumber = encryptMatrixGenerator.getGenereratedEncryptMatrix().getRow();
-        int actualColumnNumber = encryptMatrixGenerator.getGenereratedEncryptMatrix().getColumn();
+        int actualRowNumber = encryptMatrixGenerator.getMatrix().getRow();
+        int actualColumnNumber = encryptMatrixGenerator.getMatrix().getColumn();
 
         assertAll("Testing of dimension", () -> {
             assertEquals(expectedRowNumber, actualRowNumber);
@@ -58,8 +58,8 @@ class EncryptMatrixGeneratorTest
         int expectedRowNumber = 2;
         int expectedColumnNumber = 5;
 
-        int actualRowNumber = encryptMatrixGenerator.getGenereratedEncryptMatrix().getRow();
-        int actualColumnNumber = encryptMatrixGenerator.getGenereratedEncryptMatrix().getColumn();
+        int actualRowNumber = encryptMatrixGenerator.getMatrix().getRow();
+        int actualColumnNumber = encryptMatrixGenerator.getMatrix().getColumn();
 
         assertAll("Testing of dimension", () -> {
             assertEquals(expectedRowNumber, actualRowNumber);
@@ -106,7 +106,7 @@ class EncryptMatrixGeneratorTest
         String expectedMatrix = "[2, 2]\r\n" +
                                 "[-3, -1]\r\n";
 
-        String actualMatrix = encryptMatrixGenerator.getGenereratedEncryptMatrix().toString();
+        String actualMatrix = encryptMatrixGenerator.getMatrix().toString();
 
         assertEquals(expectedMatrix, actualMatrix);
     }

@@ -26,6 +26,24 @@ public final class EncryptMatrixGenerator<T>
         createEncryptMatrix();
     }
 
+    public Matrix getMatrix() {
+        return matrix;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getSize() {
+        if (column == row)
+            return column;
+        return  -1;
+    }
+
     @SuppressWarnings("T casting can cause problems")
     private void createEncryptMatrix() {
         T[][] genericEncryptMatrix = ((T[][]) Array.newInstance(clazzType, row, column));
@@ -44,9 +62,7 @@ public final class EncryptMatrixGenerator<T>
         matrix.setData(tmpGenericData);
     }
 
-    public Matrix getGenereratedEncryptMatrix() {
-        return matrix;
-    }
+
 
     public static class EncryptMatrixGeneratorBuilder<T>
     {
