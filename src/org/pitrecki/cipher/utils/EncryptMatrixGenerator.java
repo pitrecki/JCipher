@@ -44,12 +44,13 @@ public final class EncryptMatrixGenerator<T>
         return  -1;
     }
 
-    @SuppressWarnings("T casting can cause problems")
+    @SuppressWarnings("unchecked T cast")
     private void createEncryptMatrix() {
         T[][] genericEncryptMatrix = ((T[][]) Array.newInstance(clazzType, row, column));
         matrix = new Matrix(genericEncryptMatrix);
     }
 
+    @SuppressWarnings("unchecked T cast")
     public void fill(T ... values) {
         T[][] tmpGenericData = (T[][]) matrix.getData();
         int index = 0;
