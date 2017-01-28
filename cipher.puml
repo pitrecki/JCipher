@@ -1,0 +1,185 @@
+@startuml
+'idea.partialRender
+
+Abstract Cipher {
++ d
++ a
++ z
++  a
+}
+
+DataPrintable <|....  Cipher : implements
+CipherInterface  <|....  Cipher : implements
+
+package interfaces {
+    Interface CipherInterface {
+    + encrypt(String inputText) : void
+    + decrypt(String inputText) : void
+    }
+
+    Interface DataPrintable {
+    + prepareDataToPrint() : String
+    + default printProccesedData() : void
+    }
+}
+
+package ciphertypes {
+    package substitution {
+        package simple {
+            Abstract  SimpleSubstitutionCipher {
+            - text : String;
+            - cryptArray : char[]
+            - asciiTable : char[]
+            + SimpleSubstitutionCipher()
+            + encrypt(String inputText) : void
+            + decrypt(String inputText) : void
+            - shift(letter : char, sign : Sign) : void
+            - textShfting(text : String, sign : Sign) : void
+            + prepareDataToPrint() : String
+            }
+
+            SimpleSubstitutionCipher -|>  Cipher : extends
+
+            class AffineCipher {
+            - final KEY : int[]
+            + AffineCipher(key : int[])
+            + AffineCipher(a : int, b : int)
+            + moveValueToLeft(int value) : int
+            + moveValueToRight(int value) : int
+            }
+
+             AffineCipher --|> SimpleSubstitutionCipher : extends
+
+            class AtbashCipher {
+            + AtbashCipher()
+            + moveValueToLeft(int value) : int
+            + moveValueToRight(int value) : int
+            }
+
+            AtbashCipher -|> SimpleSubstitutionCipher : extends
+
+            class CeasarCipher {
+            + final KEY : short
+            + AtbashCipher()
+            + moveValueToLeft(int value) : int
+            + moveValueToRight(int value) : int
+            }
+
+            CeasarCipher --|> SimpleSubstitutionCipher : extend
+        }
+
+        package complex {
+            Abstract ComplexSubstitutionCipher {
+            }
+
+            ComplexSubstitutionCipher -|> Cipher : extends
+
+            class PolybiusSquareCipher {
+            - final KEY_LENGTH : int
+            - key : String
+            + PolybiusSquareCipher()
+            + PolybiusSquareCipher(key : String) : throws InvalidKeyException
+            + getKey() : String
+            - squareGenerator(key : String) : void
+            - keyGenerator() : void
+            - isUnique(key : String) : boolean
+            + decrypt(inputText : String) : void
+            + encrypt(inputText : String) : void
+            + prepareDataToPrint() : String
+            }
+
+            PolybiusSquareCipher -|> ComplexSubstitutionCipher : extends
+
+            class BaconianCipher {
+            }
+
+            BaconianCipher -|> ComplexSubstitutionCipher : extends
+        }
+    }
+
+    package transposition {
+    Abstract class TranspositionCipher {
+    - text : String
+    - cryptMatrix : char[][]
+
+    + TranspositionCipher()
+    + getText() : String
+    + setText(text : String)
+    + getCryptMatrix : char[][]
+    + setCryptMatrix(cryptMatrix : char[][]) : void
+    + setValueInCryptMatrix(row : int, column : int, letter : char) : void
+    # abstract cryptArrayGenerator(strText : String)
+    + abstract decrypt(inputText : String) : void
+    + abstract encrypt(inputText : String) : void
+    + prepareDataToPrint() : String
+    }
+
+    TranspositionCipher -|> Cipher : extends
+
+    class RailFenceCipher {
+    - final RAIL_KEY  : int
+    + RailFenceCipher(key : int)
+
+    # cryptArrayGenerator(textToDecode : String) : void
+    + encrypt(String inputText) : void
+    + decrypt(String inputText) : void
+    }
+
+    TranspositionCipher <|- RailFenceCipher : extends
+    }
+}
+
+
+
+
+package otherStuff.utils {
+class AsciiGenerator {
+- AsciiGenerator()
++ static upperCaseAlphabetGenerator() : char[]
++ static lowerCaseAlphabetGenerator() : char[]
++ static bothCaseAlphabetGenerator() : char[]
+}
+AsciiGenerator -- Cipher
+
+enum Sign {
+PLUS
+MINUS
+}
+
+enum Variant {
+S
+D
+}
+
+SimpleSubstitutionCipher -- Sign
+ComplexSubstitutionCipher -- Variant
+
+package file {
+class EmptyFileException {
++ EmptyFileException()
+}
+
+class FileOperator {
+- final INPUT_FILE : String
+- final OUTPUT_FILE : String
+
+- file : File
+- text : String
+
++ FileOperator(file : File)
++ FileOperator(path : String)
+
++ getText() : String
++ open() : void : throws IOException
++ append(str : String) : void
++ save(text : String) : void : throws IOException
+}
+
+EmptyFileException -o FileOperator
+}
+
+
+}
+
+
+@enduml

@@ -1,0 +1,7 @@
+przypadek dla metody encrypt
+
+1. Pobranie tekstu wpisanego przez uzytkownika
+2. Zadeklarowanie wygenerowanego tekstu/podanego przez uzytkownika tekstu do macierzy A
+3. Wpakowanie logiki do pętli while np. obliczanie iteracji za pomoca reszty
+3a. Macierz B  - wielkosc -> dlugosc macierzy klucza; pobranie n elementow do macierzy B
+3b. Jeśli brak znaku, podmień literą X -> LETTER_FOR_BLANK_FIELD <-

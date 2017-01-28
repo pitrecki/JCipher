@@ -1,0 +1,7 @@
+1. U¿ytkownik wpisuje tekst
+ - wybranie odpowiedniej opcji (tzn. wybrac typu szyfru)
+1.A. Mo¿liwoœæ wczytania tekstu z pliku tekstowego lub o dowolnym rozrzerzeniu? <bez rozszerzenia>
+2. U¿ytkownik wybiera czy tekst ma byæ zaszyfrowany, czy zdekodowany
+3. Wyœwietlenie odpowiedniego komunikatu, czy proces zakoñczy³ siê sukcesem lub b³êdem
+4. U¿ytkownik ma mo¿liwoœæ zapisanie 'wiadomoœci' w zewnêtrznym pliku lub pozostawienie jej na ekranie.
+4.AA. <Zapisanie tego do bazy>? 
