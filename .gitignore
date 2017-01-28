@@ -168,4 +168,4 @@ local.properties
 src/test/java/otherStuff
 *.png
 *.txt
-*przypadek*
+przypadek*
