@@ -169,3 +169,4 @@ src/test/java/otherStuff
 *.png
 *.txt
 przypadek*
+*.puml
