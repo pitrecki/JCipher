@@ -175,7 +175,7 @@ public class HillCipher extends Cipher implements GenerateEncryptMatrix
         double determinantValue = matrix.determinant(matrix);
         double calculatedModInvValue = Algorithms.modInverse((long) determinantValue, MOD_VAL);
 
-        matrix = matrix.adjugate().modular(MOD_VAL).scalarMultiply(calculatedModInvValue);
+        matrix = matrix.adjugate().modularDivide(MOD_VAL).scalarMultiply(calculatedModInvValue);
         matrix = convertDoubleDataToInteger(matrix);
         return matrix;
     }

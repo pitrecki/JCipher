@@ -371,17 +371,17 @@ public class Matrix
     }
 
     /**
-     * Replace every element with mod value divide by modul
-     * @param value
-     * @return this matrix with divide values by modular
+     * Replace every element with mod modValue divide by modul
+     * @param modValue
+     * @return this matrix with divide values by modularDivide
      */
 
-    public Matrix modular(double value) {
+    public Matrix modularDivide(double modValue) {
         for (int i = 0; i < getRow(); i++) {
             for (int j = 0; j < getColumn(); j++) {
-                Double modResult = ((Double) getData()[i][j]) % value;
+                Double modResult = ((Double) getData()[i][j]) % modValue;
                 if (modResult < 0)
-                    modResult += value;
+                    modResult += modValue;
                 setValueInMatrix(i, j, modResult);
             }
         }

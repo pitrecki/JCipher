@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Created by Pitrecki on 2016-12-27.
  */
 
-//todo modular test
+//todo modularDivide test
 class MatrixTest
 {
     private Matrix A;
@@ -96,7 +96,7 @@ class MatrixTest
     }
 
     @Test
-    @DisplayName("Testing of cakcuation modular matrix, modulo number is 1.0")
+    @DisplayName("Testing of cakcuation modularDivide matrix, modulo number is 1.0")
     void testModularMatrix() {
         Matrix expectedMatrix = new Matrix(new Double[][] {
                 {0d, 0d},
@@ -108,7 +108,7 @@ class MatrixTest
                 {2d, 1d}
         });
 
-        assertArrayEquals(expectedMatrix.getData(), A.modular(1).getData());
+        assertArrayEquals(expectedMatrix.getData(), A.modularDivide(1).getData());
     }
 
     @Test

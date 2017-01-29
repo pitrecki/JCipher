@@ -77,7 +77,7 @@ class AlgorithmsTest
     }
 
     @Test
-    @DisplayName("Testing of computing modular inversion of number")
+    @DisplayName("Testing of computing modularDivide inversion of number")
     void testModularInverseResultComuputing() {
         long expected = 21;
         long acutal = Algorithms.modInverse(5, 26);
