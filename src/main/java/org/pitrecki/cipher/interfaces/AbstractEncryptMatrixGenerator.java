@@ -14,7 +14,7 @@ import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
  * @see PolybiusSquareCipher
  * Created by Pitrecki on 2017-01-09.
  */
-public interface GenerateEncryptMatrix
+public interface AbstractEncryptMatrixGenerator
 {
     /**
      * Generate encrypted matrix

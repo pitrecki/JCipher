@@ -1,7 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.substition.complex;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
-import org.pitrecki.cipher.interfaces.GenerateEncryptMatrix;
+import org.pitrecki.cipher.interfaces.AbstractEncryptMatrixGenerator;
 import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
 
 import java.security.InvalidKeyException;
@@ -20,7 +20,7 @@ import java.util.*;
  * @see Cipher
  * Created by Pitrecki on 2016-10-30.
  */
-public class PolybiusSquareCipher extends Cipher implements GenerateEncryptMatrix
+public class PolybiusSquareCipher extends Cipher implements AbstractEncryptMatrixGenerator
 {
     //Length ====> 25
     private final int KEY_LENGTH = ASCII_TABLE.length - 1;

@@ -1,7 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.polygraphic;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
-import org.pitrecki.cipher.interfaces.GenerateEncryptMatrix;
+import org.pitrecki.cipher.interfaces.AbstractEncryptMatrixGenerator;
 import org.pitrecki.cipher.utils.CryptVariant;
 import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
 import org.pitrecki.cipher.utils.math.Algorithms;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * @version 0.6.2
  * Created by Pitrecki on 2016-11-10.
  */
-public class HillCipher extends Cipher implements GenerateEncryptMatrix
+public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
 {
 
     //Numbers 221 is Ý,only true if word lenght is ODD!
