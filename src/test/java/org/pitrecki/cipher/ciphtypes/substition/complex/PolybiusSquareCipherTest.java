@@ -7,7 +7,7 @@ import org.pitrecki.cipher.ciphtypes.Cipher;
 
 import java.security.InvalidKeyException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -41,7 +41,7 @@ class PolybiusSquareCipherTest
         String expected = "DEFENDTHEEASTWALLOFTHECASTLE";
         String actual = polybiusCipher.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
 
@@ -54,7 +54,7 @@ class PolybiusSquareCipherTest
         String expected = "24122312212441011212134041431320202223410112331340412012";
         String actual = polybiusCipher.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
 }

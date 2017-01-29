@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.pitrecki.cipher.ciphtypes.substition.complex.BaconianCipher.Variant.DISTINCT;
 import static org.pitrecki.cipher.ciphtypes.substition.complex.BaconianCipher.Variant.STANDARD;
 import static org.pitrecki.cipher.utils.TestContainer.*;
@@ -51,7 +51,7 @@ class BaconianCipherTest
                         .map(this::invokeEncryptionAndReturnEncryptedText))
                 .collect(Collectors.toList());
 
-        assertEquals(expectedList, actualList);
+        assertThat(actualList).isEqualTo(expectedList);
     }
 
     private String invokeEncryptionAndReturnEncryptedText(String s) {
@@ -76,12 +76,12 @@ class BaconianCipherTest
 
         List<String> expectedList = listInit(expectedAlphabet, expectedShortMessage, expectedLongMessage);
 
-        List<String> actuaList = Stream.of(plaintextList)
+        List<String> actualList = Stream.of(plaintextList)
                 .flatMap(strings -> strings.stream()
                         .map(this::invokeEncryptionAndReturnEncryptedText))
                 .collect(Collectors.toList());
 
-        assertEquals(expectedList, actuaList);
+        assertThat(actualList).isEqualTo(expectedList);
     }
 
     @Test
@@ -96,7 +96,7 @@ class BaconianCipherTest
         baconianCipher.decrypt(plaintext);
         String actual = baconianCipher.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -111,6 +111,6 @@ class BaconianCipherTest
         baconianCipher.decrypt(plaintext);
         String actual = baconianCipher.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

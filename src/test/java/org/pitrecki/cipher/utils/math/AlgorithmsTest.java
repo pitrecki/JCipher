@@ -3,7 +3,9 @@ package org.pitrecki.cipher.utils.math;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 /**
  * @author Piotr 'pitrecki' Nowak
@@ -17,11 +19,12 @@ class AlgorithmsTest
     void testNegativeArgumentsInGCDMethod() {
         double expected = 12;
 
-        assertAll("Negative arguments tests", () -> {
-            assertEquals(expected, Algorithms.gcd(-48, 180));
-            assertEquals(expected, Algorithms.gcd(48, -180));
-            assertEquals(expected, Algorithms.gcd(-48, -180));
+        assertSoftly(softly -> {
+            assertThat(Algorithms.gcd(-48, 180)).isEqualTo(expected);
+            assertThat(Algorithms.gcd(48, -180)).isEqualTo(expected);
+            assertThat(Algorithms.gcd(-48, -180)).isEqualTo(expected);
         });
+
     }
 
     @Test
@@ -29,12 +32,14 @@ class AlgorithmsTest
     void testMoreThanTwoNegativeArgumentInGCDMethod() {
         double expected = 3;
 
-        assertAll("Multi negative argumets tests", () -> {
-            assertEquals(expected, Algorithms.gcd(-48,-180,-15));
-            assertEquals(expected, Algorithms.gcd(-48, -180, 15));
-            assertEquals(expected, Algorithms.gcd(-48, 180, 15));
 
-            assertEquals(expected, Algorithms.gcd(48, 180, -15));
+        assertSoftly(softly -> {
+            assertThat(Algorithms.gcd(-48,-180,-15)).isEqualTo(expected);
+            assertThat(Algorithms.gcd(-48,-180, 15)).isEqualTo(expected);
+            assertThat(Algorithms.gcd(-48, 180, 15)).isEqualTo(expected);
+
+            assertThat(Algorithms.gcd(48, 180, -15)).isEqualTo(expected);
+
         });
     }
 
@@ -44,7 +49,7 @@ class AlgorithmsTest
         double expected = 6;
         double actual = Algorithms.gcd(54, 24);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -52,7 +57,7 @@ class AlgorithmsTest
     void testGcdResultForMoreThanTwoNumbers() {
         double expected = 1;
         double actual = Algorithms.gcd(1514564654,1212465645,563464533,12312);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -60,10 +65,10 @@ class AlgorithmsTest
     void testNegtiveArgumentsForLCM() {
         double expected = 720;
 
-        assertAll("LCM computing", () -> {
-            assertEquals(expected, Algorithms.lcm(-48, -180));
-            assertEquals(expected, Algorithms.lcm(-48, 180));
-            assertEquals(expected, Algorithms.lcm(48, -180));
+        assertSoftly(softly -> {
+            assertThat(Algorithms.lcm(-48, -180)).isEqualTo(expected);
+            assertThat(Algorithms.lcm(-48, 180)).isEqualTo(expected);
+            assertThat(Algorithms.lcm(48, -180)).isEqualTo(expected);
         });
     }
 
@@ -73,7 +78,7 @@ class AlgorithmsTest
         double expected = 1.592437747744106E30;
         double acutal = Algorithms.lcm(1514564654,1212465645,563464533,12312);
 
-        assertEquals(expected, acutal);
+        assertThat(acutal).isEqualTo(expected);
     }
 
     @Test
@@ -82,12 +87,13 @@ class AlgorithmsTest
         long expected = 21;
         long acutal = Algorithms.modInverse(5, 26);
 
-        assertEquals(expected, acutal);
+        assertThat(acutal).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("Same arguments should throws expection, when moudlar inverse is computing")
     void testSameArgumentsShouldThorwsExceptionWhenModularInverseIsComputing() {
-        assertThrows(ArithmeticException.class, () -> Algorithms.modInverse(2, 2));
+        assertThatThrownBy(() ->Algorithms.modInverse(2, 2))
+                .isInstanceOf(ArithmeticException.class);
     }
 }

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.pitrecki.cipher.ciphtypes.Cipher;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.pitrecki.cipher.utils.TestContainer.ALPHABET;
 
 /**
@@ -29,7 +29,7 @@ class AtbashCipherTest
         atbash.encrypt(ALPHABET);
         String actual = atbash.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -41,6 +41,6 @@ class AtbashCipherTest
         atbash.decrypt(plaintext);
         String actual = atbash.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

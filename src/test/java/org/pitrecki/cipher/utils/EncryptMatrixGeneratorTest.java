@@ -3,7 +3,9 @@ package org.pitrecki.cipher.utils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 /**
  * Created by Pitrecki on 2016-12-26.
@@ -16,7 +18,8 @@ class EncryptMatrixGeneratorTest
     @DisplayName("Testing of crypt matrix object instantion")
     void testOfCratingCryptMatrixInstantion() {
         encryptMatrixGenerator = new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).build();
-        assertNotNull(encryptMatrixGenerator);
+        assertThat(encryptMatrixGenerator).isNotNull();
+
     }
 
     @Test
@@ -29,9 +32,9 @@ class EncryptMatrixGeneratorTest
         int actualRowNumber = encryptMatrixGenerator.getMatrix().getRow();
         int actualColumnNumber = encryptMatrixGenerator.getMatrix().getColumn();
 
-        assertAll("Testing of dimension", () -> {
-            assertEquals(expectedRowNumber, actualRowNumber);
-            assertEquals(expectedColumnNumber, actualColumnNumber);
+        assertSoftly(softly-> {
+            assertThat(expectedRowNumber).isEqualTo(actualRowNumber);
+            assertThat(expectedColumnNumber).isEqualTo(actualColumnNumber);
         });
     }
 
@@ -45,9 +48,9 @@ class EncryptMatrixGeneratorTest
         int actualRowNumber = encryptMatrixGenerator.getMatrix().getRow();
         int actualColumnNumber = encryptMatrixGenerator.getMatrix().getColumn();
 
-        assertAll("Testing of dimension", () -> {
-            assertEquals(expectedRowNumber, actualRowNumber);
-            assertEquals(expectedColumnNumber, actualColumnNumber);
+        assertSoftly(softly-> {
+            assertThat(expectedRowNumber).isEqualTo(actualRowNumber);
+            assertThat(expectedColumnNumber).isEqualTo(actualColumnNumber);
         });
     }
 
@@ -61,38 +64,44 @@ class EncryptMatrixGeneratorTest
         int actualRowNumber = encryptMatrixGenerator.getMatrix().getRow();
         int actualColumnNumber = encryptMatrixGenerator.getMatrix().getColumn();
 
-        assertAll("Testing of dimension", () -> {
-            assertEquals(expectedRowNumber, actualRowNumber);
-            assertEquals(expectedColumnNumber, actualColumnNumber);
+        assertSoftly(softly -> {
+            assertThat(expectedRowNumber).isEqualTo(actualRowNumber);
+            assertThat(expectedColumnNumber).isEqualTo(actualColumnNumber);
         });
+
     }
 
     @Test
     @DisplayName("Testing of throwing IllegalArgumentException, when fist argument is null")
     void testOfThrowingExpectionWhenClassTArgumentIsNull() {
-        assertThrows(IllegalArgumentException.class, () ->
-                new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(null).build());
+        assertThatThrownBy(() ->  new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(null).build())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasNoCause();
     }
 
     @Test
     @DisplayName("Testing of throwing IllegalArgumentException, when size is negative")
     void testOfThrowingExpectionWhenSizeIsNegative() {
-        assertThrows(IllegalArgumentException.class, () ->
-                new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).withSize(-1).build());
+        assertThatThrownBy(() -> new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).withSize(-1).build())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasNoCause();
+
     }
 
     @Test
     @DisplayName("Testing of throwing IllegalArgumentException, when column size is argument is negative")
     void testOfThrowingExpectionWhenColumnIsNegative() {
-        assertThrows(IllegalArgumentException.class, () ->
-                new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).withColumn(-5).build());
+        assertThatThrownBy(() -> new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).withColumn(-5).build())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasNoCause();
     }
 
     @Test
     @DisplayName("Testing of throwing IllegalArgumentException,  when row size is argument is negative")
     void testOfThrowingExpectionWhenRowSizeIsNegative() {
-        assertThrows(IllegalArgumentException.class, () ->
-                new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).withRow(-1).build());
+        assertThatThrownBy(() -> new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).withRow(-1).build())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasNoCause();
     }
 
     @Test
@@ -108,6 +117,6 @@ class EncryptMatrixGeneratorTest
 
         String actualMatrix = encryptMatrixGenerator.getMatrix().toString();
 
-        assertEquals(expectedMatrix, actualMatrix);
+        assertThat(actualMatrix).isEqualTo(expectedMatrix);
     }
 }

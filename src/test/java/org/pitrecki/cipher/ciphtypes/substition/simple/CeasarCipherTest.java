@@ -1,5 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.substition.simple;
 
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Created by Pitrecki on 2016-12-24.
@@ -50,9 +53,7 @@ class CeasarCipherTest implements TestContainer
                 .collect(Collectors.toList());
 
 
-        assertAll("Multi encrypt", () ->{
-            assertEquals(expectedList, actualList);
-        });
+        assertThat(actualList).isEqualTo(expectedList);
     }
 
     private String invokeEncryptAndGetEncryptedText(String s) {
@@ -73,7 +74,7 @@ class CeasarCipherTest implements TestContainer
 
         String actual = ceaser.getProcessedText();
         String excepted = "";
-        assertEquals(excepted, actual);
+        assertThat(actual).isEqualTo(excepted);
     }
     //endregion
 
@@ -94,9 +95,7 @@ class CeasarCipherTest implements TestContainer
                 .collect(Collectors.toList());
 
 
-        assertAll("Multi decrpt", () -> {
-            assertEquals(expectedList, actualList);
-        });
+        assertThat(actualList).isEqualTo(expectedList);
     }
 
     private String invokeDecryptAndReturnDeryptedText(String s) {
@@ -107,9 +106,8 @@ class CeasarCipherTest implements TestContainer
     @Test
     @DisplayName("Testing a null argument in decrypt")
     void testNullDecrypttArgumentExpectThrows() {
-        assertThrows(NullPointerException.class, () -> {
-            ceaser.decrypt(null);
-        });
+        Assertions.assertThatThrownBy(() -> ceaser.decrypt(null))
+                .isInstanceOf(NullPointerException.class);
     }
 
     @Test
@@ -119,7 +117,7 @@ class CeasarCipherTest implements TestContainer
 
         String actual = ceaser.getProcessedText();
         String excepted = "";
-        assertEquals(excepted, actual);
+        assertThat(actual).isEqualTo(excepted);;
     }
 
     @Test
@@ -132,7 +130,7 @@ class CeasarCipherTest implements TestContainer
 
         ceaser.decrypt(builder.toString());
 
-        assertNotNull(ceaser.getProcessedText());
+        assertThat(ceaser.getProcessedText()).isNotNull();
 
     }
     //endregion
@@ -144,15 +142,18 @@ class CeasarCipherTest implements TestContainer
         ceaser.encrypt(LONG_MESSAGE);
         String actual = ceaser.toString();
 
-        assertNotNull(actual, () -> "passed, not null");
+        assertThat(actual).isNotNull();
     }
 
     @Test
     @DisplayName("Testing of empty/null class fields")
     void testNullField() {
-        assertThrows(NullPointerException.class, () -> ceaser.toString());
-        assertNull(ceaser.getProcessedText(), () -> "passed, null");
-        assertNull(ceaser.getEncryptMatrix(), () -> "passed, null");
+        SoftAssertions.assertSoftly(softly -> {
+            Assertions.assertThatThrownBy(() -> ceaser.toString())
+                    .isInstanceOf(NullPointerException.class);
+            assertThat(ceaser.getEncryptMatrix()).isNull();
+            assertThat(ceaser.getProcessedText()).isNull();
+        });
     }
 
 }

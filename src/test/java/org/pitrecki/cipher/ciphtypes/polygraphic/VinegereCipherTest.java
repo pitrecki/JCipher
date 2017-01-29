@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.pitrecki.cipher.ciphtypes.Cipher;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.pitrecki.cipher.utils.TestContainer.LONG_MESSAGE;
 
 /**
@@ -29,7 +29,7 @@ class VinegereCipherTest
         vinegereCipher.encrypt(LONG_MESSAGE.replaceAll("[\\W]", ""));
         String actual = vinegereCipher.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -40,6 +40,6 @@ class VinegereCipherTest
         vinegereCipher.decrypt("BMBYYNCNGQQTWHXEWMGAKX");
         String actual = vinegereCipher.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

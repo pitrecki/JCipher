@@ -1,6 +1,6 @@
 package org.pitrecki.cipher.utils.math;
 
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Piotr 'pitrecki' Nowak
@@ -31,10 +32,10 @@ class MatrixTest
     @Test
     @DisplayName("Testing of correct computing determinant of matrix 3x3")
     void testCorrectDetValue() throws MatrixException {
-        double expect = 0;
+        double expected = 0;
         double actual = A.determinant(A);
 
-        assertEquals(expect, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -46,7 +47,8 @@ class MatrixTest
                 {3.0, 6.0, 9.0}
         });
 
-        assertArrayEquals(expectedTransposition.getData(), A.transpose().getData());
+        assertThat(A.transpose().getData()).isEqualTo(expectedTransposition.getData());
+
     }
 
     @Test
@@ -58,7 +60,8 @@ class MatrixTest
                 {102d, 126d, 150d}
         });
 
-        assertArrayEquals(expectedResult.getData(), A.multiply(A).getData());
+        assertThat(A.multiply(A).getData()).isEqualTo(expectedResult.getData());
+
     }
 
     @Test
@@ -70,29 +73,31 @@ class MatrixTest
                 {17.5, 20d, 22.5d}
         });
 
-        assertArrayEquals(expectedResult.getData(), A.scalarMultiply(2.5).getData());
+        assertThat(A.scalarMultiply(2.5).getData()).isEqualTo(expectedResult.getData());
+//        assertArrayEquals(expectedResult.getData(), A.scalarMultiply(2.5).getData());
     }
 
     @Test
     @DisplayName("Try adjugate matrix, in this case should return 0 and matrix is singular Exception is exptected")
     void testMatrixAdjugate() throws MatrixException {
-        assertThrows(RuntimeException.class, () -> A.adjugate());
+        assertThatThrownBy(() ->A.adjugate())
+                .isInstanceOf(RuntimeException.class);
     }
 
     @Test
     @DisplayName("Inverse of 2x2 Matrix")
     void testMatrixInversion() {
-        String expectedResult = "[1.0, 0.0]\r\n" +
-                                 "[0.0, 1.0]\r\n";
+        Matrix expectedMatrix = new Matrix(new Double[][] {
+                {1d, 0d},
+                {0d, 1d}
+        });
 
         A = new Matrix(new Double[][]{
                 {1d, 0d},
                 {0d, 1d}
         });
 
-        String actual = A.inverse().toString();
-
-        assertEquals(expectedResult, actual);
+        assertThat(A.inverse().getData()).isEqualTo(expectedMatrix.getData());
     }
 
     @Test
@@ -108,7 +113,8 @@ class MatrixTest
                 {2d, 1d}
         });
 
-        assertArrayEquals(expectedMatrix.getData(), A.modularDivide(1).getData());
+        assertThat(A.modularDivide(1).getData()).isEqualTo(expectedMatrix.getData());
+//        assertArrayEquals(expectedMatrix.getData(), A.modularDivide(1).getData());
     }
 
     @Test
@@ -118,8 +124,15 @@ class MatrixTest
         A = new Matrix(3);
 
 
-        assertAll("Check for every element is null", () -> {
-            Stream.of(A.getData()).forEach(objects -> Arrays.stream(objects).forEach(Assertions::assertNull));
+        SoftAssertions.assertSoftly(softly ->{
+            Stream.of(A.getData())
+                    .forEach(objects -> Arrays.stream(objects)
+                        .map(o -> assertThat(o).isNotNull()));
+
         });
+
+//        assertAll("Check for every element is null", () -> {
+//            Stream.of(A.getData()).forEach(objects -> Arrays.stream(objects).forEach(Assertions::assertNull));
+//        });
     }
 }

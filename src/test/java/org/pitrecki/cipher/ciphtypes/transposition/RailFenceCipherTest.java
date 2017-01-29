@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.pitrecki.cipher.ciphtypes.Cipher;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.pitrecki.cipher.utils.TestContainer.ALPHABET;
 
 /**
@@ -28,9 +28,9 @@ class RailFenceCipherTest
         String expected = "aeimquybdfhjlnprtvxzcgkosw".toUpperCase();
 
         railFence.encrypt(ALPHABET);
-        String acutal = railFence.getProcessedText();
+        String actual = railFence.getProcessedText();
 
-        assertEquals(expected, acutal);
+       assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("Test correct text decryption")
@@ -39,9 +39,9 @@ class RailFenceCipherTest
         String expected = ALPHABET.toLowerCase();
 
         railFence.decrypt("aeimquybdfhjlnprtvxzcgkosw");
-        String acutal = railFence.getProcessedText();
+        String actual = railFence.getProcessedText();
 
-        assertEquals(expected, acutal);
+       assertThat(actual).isEqualTo(expected);
     }
 
 }

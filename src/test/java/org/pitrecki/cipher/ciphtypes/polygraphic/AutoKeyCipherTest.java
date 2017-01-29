@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.pitrecki.cipher.ciphtypes.Cipher;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.pitrecki.cipher.utils.TestContainer.LONG_MESSAGE;
 
 /**
@@ -31,7 +31,7 @@ class AutoKeyCipherTest
         autokeyCipher.encrypt(LONG_MESSAGE);
         String actual = autokeyCipher.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -43,6 +43,6 @@ class AutoKeyCipherTest
         autokeyCipher.decrypt("yvvzwqlksucfvxkmtccrvg");
         String actual = autokeyCipher.getProcessedText();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }
