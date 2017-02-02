@@ -6,7 +6,7 @@ import org.pitrecki.cipher.ciphtypes.Cipher;
  * This interface provides the basic functionality of the encryption and decryption
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.2
+ *
  *
  * @see Cipher
  * Created by Pitrecki on 2016-10-15.

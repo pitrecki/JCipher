@@ -8,7 +8,7 @@ import org.pitrecki.cipher.utils.math.Matrix;
 /**
  * Simple enum class contains variant types
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.2
+ *
  * Created by Pitrecki on 2016-11-06.
  *
  * @see Cipher

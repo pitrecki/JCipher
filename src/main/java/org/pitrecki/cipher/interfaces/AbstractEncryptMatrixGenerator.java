@@ -8,7 +8,7 @@ import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
  * The task of this interface is generate the appropriate encryption matrix.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.2
+ *
  *
  * @see HillCipher
  * @see PolybiusSquareCipher

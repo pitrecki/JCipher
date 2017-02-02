@@ -15,7 +15,7 @@ import org.pitrecki.cipher.utils.CryptVariant;
  * FOR MORE INFORMATATION LOOK AT <a href="http://practicalcryptography.com/ciphers/classical-era/atbash-cipher/"> LINK </a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.2
+ *
  * Created by Pitrecki on 2016-10-26.
  * @see SimpleSubstitutionCipher
  */

@@ -30,7 +30,7 @@ import static org.pitrecki.cipher.utils.CryptVariant.ENCRYPT;
  * ALSO CHECK THIS <a href="https://en.wikipedia.org/wiki/Rail_fence_cipher"> WIKI </a>
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.2
+ *
  * Created by Pitrecki on 2016-10-28.
  *
  */

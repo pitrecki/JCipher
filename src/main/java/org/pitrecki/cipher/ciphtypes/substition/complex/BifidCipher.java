@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  * French Revue du Génie civil in 1895 under the name of cryptographie nouvelle.
  *
  * @author Piotr 'pitrecki' Nowak
- * @version 0.6.2
+ *
  * @see PolybiusSquareCipher
  * Created by Pitrecki on 2017-01-04.
  */
