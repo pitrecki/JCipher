@@ -19,9 +19,9 @@ import java.util.stream.Stream;
  *
  * Created by Pitrecki on 2016-11-10.
  */
-public class Matrix
+public class Matrix<T>
 {
-    private Object[][] data;
+    private T[][] data;
     private int column;
     private int row;
 
@@ -29,7 +29,7 @@ public class Matrix
      * This construcotr generate matrix from inputed data
      * @param data any type of Objects
      */
-    public Matrix(Object[][] data) {
+    public Matrix(T[][] data) {
         this.data = data;
         this.row = data.length;
         this.column = data[0].length;
@@ -40,17 +40,19 @@ public class Matrix
      * @param column -> N
      * @param row -> M
      */
+    @SuppressWarnings("unchecked T cast")
     public Matrix(int row, int column) {
         this.column = column;
         this.row = row;
-        this.data = new Object[row][column];
+        this.data = (T[][]) new Object[row][column];
         emptyMatrixInit();
     }
 
+    @SuppressWarnings("unchecked T cast")
     public Matrix(Matrix matrix) {
         this.column = matrix.getColumn();
         this.row = matrix.getRow();
-        this.data = matrix.getData();
+        this.data = (T[][]) matrix.getData();
     }
 
     /**
@@ -69,7 +71,7 @@ public class Matrix
         return row;
     }
 
-    public Object[][] getData() {
+    public T[][] getData() {
         return data;
     }
 
@@ -78,7 +80,7 @@ public class Matrix
         return getColumn() + "x" + getRow();
     }
 
-    public void setData(Object[][] data) {
+    public void setData(T[][] data) {
         this.data = data;
     }
 
@@ -96,10 +98,13 @@ public class Matrix
      * @param column  -> N
      * @param value -> Any value
      */
-    public void setValueInMatrix(int row, int column, Object value) {
+    public void setValueInMatrix(int row, int column, T value) {
         this.data[row][column] = value;
     }
 
+    public boolean dataAreNumbers() {
+        return data.getClass().isAssignableFrom(Number.class);
+    }
 
     //region Basic mathematic operation
     /**
@@ -148,10 +153,13 @@ public class Matrix
      * @return same Matrix multiplied by scalar
      */
 
+    @SuppressWarnings("unchecked T cast")
     public Matrix scalarMultiply(double scalar) {
         for (int i = 0; i < getRow(); i++)
-            for (int j = 0; j < getColumn(); j++)
-                setValueInMatrix(i, j, (scalar * Double.parseDouble(getData()[i][j].toString())));
+            for (int j = 0; j < getColumn(); j++) {
+                Double multipliedValue = scalar * (Double.parseDouble(getData()[i][j].toString()));
+                setValueInMatrix(i, j, (T) multipliedValue);
+            }
 
         return this;
     }
@@ -167,6 +175,7 @@ public class Matrix
      * @return new transposed matrix
      */
 
+    @SuppressWarnings("unchecked T cast")
     public Matrix transpose() {
         Object[][] tmpMatrix = new Object[getColumn()][getRow()];
         for (int row = 0; row < getRow(); row++) {
@@ -308,7 +317,7 @@ public class Matrix
                             .map(Double::valueOf)
                             .toArray(Double[]::new))
                     .toArray(Double[][]::new);
-            setData(convertedTypeArray);
+            setData((T[][]) convertedTypeArray);
         }
 
 
@@ -326,7 +335,7 @@ public class Matrix
                         .toArray(Double[]::new))
                 .toArray(Double[][]::new);
 
-        setData(tmpMatrixConvertedToObject);
+        setData((T[][]) tmpMatrixConvertedToObject);
         return this;
     }
 
@@ -363,11 +372,12 @@ public class Matrix
      * @param matrix changed matrix to inject
      */
 
+    @SuppressWarnings("unchecked T cast")
     public void injectFlushedData(Matrix matrix) {
         flush();
         this.column = matrix.getColumn();
         this.row = matrix.getRow();
-        this.data = matrix.getData();
+        this.data = (T[][]) matrix.getData();
     }
 
     /**
@@ -376,13 +386,14 @@ public class Matrix
      * @return this matrix with divide values by modularDivide
      */
 
+    @SuppressWarnings("unchecked T cast")
     public Matrix modularDivide(double modValue) {
         for (int i = 0; i < getRow(); i++) {
             for (int j = 0; j < getColumn(); j++) {
                 Double modResult = ((Double) getData()[i][j]) % modValue;
                 if (modResult < 0)
                     modResult += modValue;
-                setValueInMatrix(i, j, modResult);
+                setValueInMatrix(i, j, (T) modResult);
             }
         }
 
