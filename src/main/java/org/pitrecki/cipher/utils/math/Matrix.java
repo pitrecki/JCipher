@@ -312,7 +312,7 @@ public class Matrix<T>
             Check if data in Matrix are numbers and NOT double. If true convert this do Double type by parsing
             to String, othherwise skip and jump to 311 line
         */
-        if (getData()[0][0].getClass().getSuperclass().equals(Number.class) && !(getData()[0][0].getClass().equals(Double.class))) {
+        if (!(getData().getClass().isAssignableFrom(Double[][].class))) {
             Double[][] convertedTypeArray = Arrays.stream(getData())
                     .map(objects -> Arrays.stream(objects)
                             .map(String::valueOf)
