@@ -52,7 +52,7 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
     }
 
     public HillCipher(Integer[][] key) throws IllegalArgumentException {
-        this(new Matrix(key));
+        this(new Matrix<>(key));
     }
 
     @Override
@@ -114,7 +114,7 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
 
     private void cipherProcessing(String text, CryptVariant cryptVariant) throws MatrixException {
         text = textProcessing(text);
-        Matrix A =  new Matrix(getEncryptMatrix());
+        Matrix<Integer> A =  new Matrix<>(getEncryptMatrix());
 
         if (cryptVariant.equals(CryptVariant.DECRYPT))
             A = inverseKeyMatrix(A);
@@ -141,12 +141,12 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
                 iterator++;
             }
 
-            Matrix B = new Matrix(tmpMatrixBData).transpose();
+            Matrix<Integer> B = new Matrix<>(tmpMatrixBData).transpose();
             B = A.multiply(B);
             B = B.transpose();
             B = convertDoubleDataToInteger(B);
             Arrays.stream(B.getData()[0])
-                    .map(o -> (Integer) o)
+                    .map(o -> o)
                     .collect(Collectors.toCollection(()  -> resultOfMultiplication));
 
         }

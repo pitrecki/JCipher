@@ -19,14 +19,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 //todo modularDivide test
 class MatrixTest
 {
-    private Matrix A;
+    private Matrix<?> A;
 
     @BeforeEach
     void setUp() {
         Double[][] data = new Double[][]{{1d, 2d, 3d},
                                          {4d, 5d, 6d},
                                          {7d, 8d, 9d}};
-        A = new Matrix(data);
+        A = new Matrix<>(data);
     }
 
     @Test
@@ -41,7 +41,7 @@ class MatrixTest
     @Test
     @DisplayName("Testing of correct matrix transposition")
     void testMatrixTranspose() {
-        Matrix expectedTransposition = new Matrix(new Double[][]{
+        Matrix<Double> expectedTransposition = new Matrix<>(new Double[][]{
                 {1.0, 4.0, 7.0},
                 {2.0, 5.0, 8.0},
                 {3.0, 6.0, 9.0}
@@ -54,7 +54,7 @@ class MatrixTest
     @Test
     @DisplayName("Testing of multiply 2 matrices")
     void testMatrixMultiply() throws MatrixException {
-        Matrix expectedResult = new Matrix(new Double[][]{
+        Matrix<Double> expectedResult = new Matrix<>(new Double[][]{
                 {30d, 36d, 42d},
                 {66d, 81d, 96d},
                 {102d, 126d, 150d}
@@ -67,7 +67,7 @@ class MatrixTest
     @Test
     @DisplayName("Multiply matrix by 2.5")
     void testMultiplyByScalar() {
-        Matrix expectedResult = new Matrix(new Double[][]{
+        Matrix<Double> expectedResult = new Matrix<>(new Double[][]{
                 {2.5, 5d, 7.5d},
                 {10d, 12.5, 15d},
                 {17.5, 20d, 22.5d}
@@ -87,12 +87,12 @@ class MatrixTest
     @Test
     @DisplayName("Inverse of 2x2 Matrix")
     void testMatrixInversion() {
-        Matrix expectedMatrix = new Matrix(new Double[][] {
+        Matrix<Double> expectedMatrix = new Matrix<>(new Double[][] {
                 {1d, 0d},
                 {0d, 1d}
         });
 
-        A = new Matrix(new Double[][]{
+        A = new Matrix<>(new Double[][]{
                 {1d, 0d},
                 {0d, 1d}
         });
@@ -103,12 +103,12 @@ class MatrixTest
     @Test
     @DisplayName("Testing of cakcuation modularDivide matrix, modulo number is 1.0")
     void testModularMatrix() {
-        Matrix expectedMatrix = new Matrix(new Double[][] {
+        Matrix<Double> expectedMatrix = new Matrix<>(new Double[][] {
                 {0d, 0d},
                 {0d, 0d}
         });
 
-        A= new Matrix(new Double[][] {
+        A= new Matrix<>(new Double[][] {
                 {1d, 2d},
                 {2d, 1d}
         });

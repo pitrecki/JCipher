@@ -1,5 +1,6 @@
 package org.pitrecki.cipher.utils.math;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -177,7 +178,8 @@ public class Matrix<T>
 
     @SuppressWarnings("unchecked T cast")
     public Matrix transpose() {
-        Object[][] tmpMatrix = new Object[getColumn()][getRow()];
+        T[][] tmpMatrix = (T[][]) Array.newInstance(data.getClass().getComponentType().getComponentType(),
+                getColumn(), getRow());
         for (int row = 0; row < getRow(); row++) {
             for (int column = 0; column < getColumn(); column++) {
                 tmpMatrix[column][row] = getData()[row][column];

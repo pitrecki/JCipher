@@ -17,7 +17,7 @@ public final class EncryptMatrixGenerator<T>
 
     private int column;
     private int row;
-    private Matrix matrix;
+    private Matrix<T> matrix;
 
     private EncryptMatrixGenerator(EncryptMatrixGeneratorBuilder<T> builder) {
         this.clazzType = builder.clazzType;
@@ -52,7 +52,7 @@ public final class EncryptMatrixGenerator<T>
 
     @SuppressWarnings("unchecked T cast")
     public void fill(T ... values) {
-        T[][] tmpGenericData = (T[][]) matrix.getData();
+        T[][] tmpGenericData = matrix.getData();
         int index = 0;
         for (int i = 0; i < tmpGenericData.length; i++) {
             for (int j = 0; j < tmpGenericData[i].length; j++) {
