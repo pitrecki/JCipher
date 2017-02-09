@@ -190,12 +190,13 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
         Integer[][] newMatrixData = new Integer[A.getRow()][A.getColumn()];
         for (int i = 0; i < newMatrixData.length; i++) {
             for (int j = 0; j < newMatrixData[i].length; j++) {
-                long  roundValue =  Math.round((Double) A.getData()[i][j]);
+                long  roundValue =  Math.round((Double) A.getValue(i, j));
                 newMatrixData[i][j] = ((int) roundValue);
             }
         }
         A.setData(newMatrixData);
         return A;
+        
     }
 
 }

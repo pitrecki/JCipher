@@ -69,7 +69,7 @@ public abstract class Cipher implements AbstractCipher, DataPrintable
     }
 
     protected Object getValueFromEncryptMatrix(int row, int column) {
-        return encryptMatrix.getData()[row][column];
+        return encryptMatrix.getValue(row, column);
     }
 
     /**

@@ -76,6 +76,9 @@ public class Matrix<T>
         return data;
     }
 
+    public T getValue(int row, int index) {
+        return data[row][index];
+    }
 
     public String getDimension() {
         return getColumn() + "x" + getRow();
@@ -132,7 +135,7 @@ public class Matrix<T>
             for (int rowIndexMatrixA = 0; rowIndexMatrixA < getRow(); rowIndexMatrixA++) {
                 for (int columnIndexMatrixB = 0; columnIndexMatrixB < B.getColumn(); columnIndexMatrixB++) {
                     for (int columnIndexMatrixA = 0; columnIndexMatrixA < getColumn(); columnIndexMatrixA++) {
-                        value += (Double.parseDouble(getData()[rowIndexMatrixA][columnIndexMatrixA].toString()) * (Double.parseDouble(B.getData()[columnIndexMatrixA][columnIndexMatrixB].toString())));
+                        value += (Double.parseDouble(getValue(rowIndexMatrixA, columnIndexMatrixA).toString()) * (Double.parseDouble(B.getData()[columnIndexMatrixA][columnIndexMatrixB].toString())));
                     }
                     tmpArray[rowIndexMatrixA][columnIndexMatrixB] = value;
                     value = 0;
@@ -158,7 +161,7 @@ public class Matrix<T>
     public Matrix scalarMultiply(double scalar) {
         for (int i = 0; i < getRow(); i++)
             for (int j = 0; j < getColumn(); j++) {
-                Double multipliedValue = scalar * (Double.parseDouble(getData()[i][j].toString()));
+                Double multipliedValue = scalar * (Double.parseDouble(getValue(i, j).toString()));
                 setValueInMatrix(i, j, (T) multipliedValue);
             }
 
@@ -182,7 +185,7 @@ public class Matrix<T>
                 getColumn(), getRow());
         for (int row = 0; row < getRow(); row++) {
             for (int column = 0; column < getColumn(); column++) {
-                tmpMatrix[column][row] = getData()[row][column];
+                tmpMatrix[column][row] = getValue(row, column);
             }
         }
         injectFlushedData(new Matrix(tmpMatrix));
@@ -204,10 +207,10 @@ public class Matrix<T>
             case 0:
                throw new MatrixException("Size can not be 0");
             case 1:
-                return Double.parseDouble(matrix.getData()[0][0].toString());
+                return Double.parseDouble(matrix.getValue(0,0).toString());
             case 2:
-                return (Double.parseDouble(matrix.getData()[0][0].toString()) * Double.parseDouble(matrix.getData()[1][1].toString())) - (Double.parseDouble(getData()[0][1].toString())
-                        * Double.parseDouble(matrix.getData()[1][0].toString()));
+                return (Double.parseDouble(matrix.getValue(0,0).toString()) * Double.parseDouble(matrix.getValue(1,1).toString())) - (Double.parseDouble(getValue(0,1).toString())
+                        * Double.parseDouble(matrix.getValue(1,0).toString()));
             default:
                 double[][] primitiveData = Arrays.stream((Double[][]) getData())
                         .map(doubles -> Arrays.stream(doubles)
@@ -239,7 +242,7 @@ public class Matrix<T>
             for (int j = 0; j < matrix.getColumn(); j++) {
                 if (j == column)
                     continue;
-                tmpData[rowNumber][++columnNumber] = Double.parseDouble(matrix.getData()[i][j].toString());
+                tmpData[rowNumber][++columnNumber] = Double.parseDouble(matrix.getValue(i, j).toString());
             }
 
         }
@@ -392,7 +395,7 @@ public class Matrix<T>
     public Matrix modularDivide(double modValue) {
         for (int i = 0; i < getRow(); i++) {
             for (int j = 0; j < getColumn(); j++) {
-                Double modResult = ((Double) getData()[i][j]) % modValue;
+                Double modResult = ((Double) getValue(i, j)) % modValue;
                 if (modResult < 0)
                     modResult += modValue;
                 setValueInMatrix(i, j, (T) modResult);
