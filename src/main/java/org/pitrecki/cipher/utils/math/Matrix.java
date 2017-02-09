@@ -1,5 +1,8 @@
 package org.pitrecki.cipher.utils.math;
 
+import org.pitrecki.cipher.utils.typewrappers.AnyNumberArrayConventer;
+import org.pitrecki.cipher.utils.typewrappers.DoubleArrayConverter;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -311,36 +314,27 @@ public class Matrix<T>
             return (transpose().cofactor(this).scalarMultiply(1.0/determinant(this)));
          */
 
+        Double[][] tmpObjMatrixValues;
+
         /*
             Check if data in Matrix are numbers and NOT double. If true convert this do Double type by parsing
             to String, othherwise skip and jump to 311 line
         */
         if (!(getData().getClass().isAssignableFrom(Double[][].class))) {
-            Double[][] convertedTypeArray = Arrays.stream(getData())
-                    .map(objects -> Arrays.stream(objects)
-                            .map(String::valueOf)
-                            .map(Double::valueOf)
-                            .toArray(Double[]::new))
-                    .toArray(Double[][]::new);
-            setData((T[][]) convertedTypeArray);
+            AnyNumberArrayConventer<Number, Double> anyNumberArrayConventer = new AnyNumberArrayConventer<>(Double.class);
+            tmpObjMatrixValues = anyNumberArrayConventer.convertArray((Number[][]) getData());
+            setData(((T[][]) tmpObjMatrixValues));
         }
 
+        DoubleArrayConverter doubleArrayConverter = new DoubleArrayConverter();
 
-        double[][] tmpMatrixVals = Arrays.stream((Double[][]) getData())
-                .map(doubles -> Arrays.stream(doubles)
-                        .mapToDouble(Double::doubleValue)
-                        .toArray())
-                .toArray(double[][]::new);
+        double[][] tmpPrMatrixVals = doubleArrayConverter.primitiveDoubleArrayConvert((Double[][]) data);
 
-        tmpMatrixVals = new Jama.Matrix(tmpMatrixVals).inverse().getArray();
+        tmpPrMatrixVals = new Jama.Matrix(tmpPrMatrixVals).inverse().getArray();
 
-        Double[][] tmpMatrixConvertedToObject = Arrays.stream(tmpMatrixVals)
-                .map(doubles -> Arrays.stream(doubles)
-                        .boxed()
-                        .toArray(Double[]::new))
-                .toArray(Double[][]::new);
+        tmpObjMatrixValues = doubleArrayConverter.objectDoubleArrayConvert(tmpPrMatrixVals);
 
-        setData((T[][]) tmpMatrixConvertedToObject);
+        setData((T[][]) tmpObjMatrixValues);
         return this;
     }
 
