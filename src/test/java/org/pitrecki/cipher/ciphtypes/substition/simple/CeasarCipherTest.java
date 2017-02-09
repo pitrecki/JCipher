@@ -1,6 +1,5 @@
 package org.pitrecki.cipher.ciphtypes.substition.simple;
 
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Created by Pitrecki on 2016-12-24.
@@ -64,7 +63,9 @@ class CeasarCipherTest implements TestContainer
     @Test
     @DisplayName("Testing a null argument in encrypt")
     void testNullEncryptArgument() {
-        assertThrows(NullPointerException.class, () -> ceaser.encrypt(null));
+        assertThatThrownBy(() -> ceaser.encrypt(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasNoCause();
     }
 
     @Test
@@ -106,7 +107,7 @@ class CeasarCipherTest implements TestContainer
     @Test
     @DisplayName("Testing a null argument in decrypt")
     void testNullDecrypttArgumentExpectThrows() {
-        Assertions.assertThatThrownBy(() -> ceaser.decrypt(null))
+        assertThatThrownBy(() -> ceaser.decrypt(null))
                 .isInstanceOf(NullPointerException.class);
     }
 
@@ -149,7 +150,7 @@ class CeasarCipherTest implements TestContainer
     @DisplayName("Testing of empty/null class fields")
     void testNullField() {
         SoftAssertions.assertSoftly(softly -> {
-            Assertions.assertThatThrownBy(() -> ceaser.toString())
+            assertThatThrownBy(() -> ceaser.toString())
                     .isInstanceOf(NullPointerException.class);
             assertThat(ceaser.getEncryptMatrix()).isNull();
             assertThat(ceaser.getProcessedText()).isNull();
