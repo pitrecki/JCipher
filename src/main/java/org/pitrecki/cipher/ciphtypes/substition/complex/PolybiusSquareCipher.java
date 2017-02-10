@@ -8,9 +8,9 @@ import java.security.InvalidKeyException;
 import java.util.*;
 
 /**
- * The Polybius Square is essentially identical to the simple substitution org.pitrecki.cipher,
+ * The Polybius Square is essentially identical to the simple substitution cipher,
  * except that each plaintext character is enciphered as 2 ciphertext characters.
- * It can ususally be detected if there are only 5 or 6 different characters in the
+ * It can usually be detected if there are only 5 or 6 different characters in the
  * ciphertext. This algorithm offers very little communication security, and can be
  * easily broken even by hand, especially as the messages become longer (more than
  * several hundred ciphertext characters).
@@ -38,7 +38,7 @@ public class PolybiusSquareCipher extends Cipher implements AbstractEncryptMatri
         super();
         if (key.length() != KEY_LENGTH)
             throw new InvalidKeyException("Invalid cipherKey length: " + key.length() + " , expected length: 25");
-        else if (!isUnigue(key))
+        else if (!isUnique(key))
             throw new InvalidKeyException("Cipher key is not unique");
         else if (key.matches("[Jj0-9]"))
             throw new InvalidKeyException("Key contains illegal character");
@@ -54,7 +54,7 @@ public class PolybiusSquareCipher extends Cipher implements AbstractEncryptMatri
 
 
     /**
-     * Create 5x5 cryptoghraphy Matrix and fill with enteted key
+     * Create 5x5 cryptography Matrix and fill with eenteredkey
      * @param generator entered by user
      */
 
@@ -85,11 +85,11 @@ public class PolybiusSquareCipher extends Cipher implements AbstractEncryptMatri
     }
 
     /**
-     * This method is responosbile for check is typed key by user is unique
+     * This method is responsible for check is typed key by user is unique
      * @param key input key by user
-     * @return true if key length is same, Set colection
+     * @return true if key length is same, Set collection
      */
-    private boolean isUnigue(String key) {
+    private boolean isUnique(String key) {
         Set<Character> characterSet = new HashSet<>();
         for (char letter : key.toCharArray())
             characterSet.add(letter);
@@ -111,10 +111,10 @@ public class PolybiusSquareCipher extends Cipher implements AbstractEncryptMatri
     }
 
     /**
-     * Search for coordinates in polybius sqaure and fill list with XY points
+     * Search for coordinates in polybius square and fill list with XY points
      *
      * @param inputText plaintext
-     * @param rows list which store y arugments
+     * @param rows list which store y arguments
      * @param columns list which store x arguments
      */
 
@@ -134,7 +134,7 @@ public class PolybiusSquareCipher extends Cipher implements AbstractEncryptMatri
     @Override
     public void decrypt(String inputText) {
         if (inputText.matches(".*[A-Za-z].*"))
-            throw new IllegalArgumentException("Text to decrypt should constains only letters");
+            throw new IllegalArgumentException("Text to decrypt should constrains only letters");
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < inputText.length(); i+= 2) {

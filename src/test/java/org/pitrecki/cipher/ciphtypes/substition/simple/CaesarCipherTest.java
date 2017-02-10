@@ -18,13 +18,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * Created by Pitrecki on 2016-12-24.
  */
-class CeasarCipherTest implements TestContainer
+class CaesarCipherTest implements TestContainer
 {
-    private Cipher ceaser;
+    private Cipher caser;
 
     @BeforeEach
     void setUp() {
-        ceaser = new CeasarCipher();
+        caser = new CaesarCipher();
     }
 
     private List<String> listInit(String ... params) {
@@ -38,7 +38,7 @@ class CeasarCipherTest implements TestContainer
     //region Encryption test section
 
     @Test
-    @DisplayName("Encrypt test with diferent length of parameters")
+    @DisplayName("Encrypt test with different length of parameters")
     void testStandardEncrypt() {
         String expLongMessage = "wkh jrog lv exulhg lq rurqr";
         String expShortMessage = "vwulnh qrz";
@@ -56,14 +56,14 @@ class CeasarCipherTest implements TestContainer
     }
 
     private String invokeEncryptAndGetEncryptedText(String s) {
-        ceaser.encrypt(s);
-        return ceaser.getProcessedText();
+        caser.encrypt(s);
+        return caser.getProcessedText();
     }
 
     @Test
     @DisplayName("Testing a null argument in encrypt")
     void testNullEncryptArgument() {
-        assertThatThrownBy(() -> ceaser.encrypt(null))
+        assertThatThrownBy(() -> caser.encrypt(null))
                 .isInstanceOf(NullPointerException.class)
                 .hasNoCause();
     }
@@ -71,9 +71,9 @@ class CeasarCipherTest implements TestContainer
     @Test
     @DisplayName("Testing an empty argument in encrypt")
     void testEmptyEncryptArgument() {
-        ceaser.encrypt("");
+        caser.encrypt("");
 
-        String actual = ceaser.getProcessedText();
+        String actual = caser.getProcessedText();
         String excepted = "";
         assertThat(actual).isEqualTo(excepted);
     }
@@ -82,7 +82,7 @@ class CeasarCipherTest implements TestContainer
 
     //region Decryption test section
     @Test
-    @DisplayName("Decryption test with diferent parameters")
+    @DisplayName("Decryption test with different parameters")
     void testStandardDecrypt() {
         String plainLongMessage = "wkh jrog lv exulhg lq rurqr";
         String plainShortMessage = "vwulnh qrz";
@@ -92,46 +92,46 @@ class CeasarCipherTest implements TestContainer
         final List<String> expectedList = listInit(LONG_MESSAGE, SHORT_MESSAGE, ALPHABET);
 
         final List<String> actualList = plaintextList.stream()
-                .map(this::invokeDecryptAndReturnDeryptedText)
+                .map(this::invokeDecryptAndReturnDecryptedText)
                 .collect(Collectors.toList());
 
 
         assertThat(actualList).isEqualTo(expectedList);
     }
 
-    private String invokeDecryptAndReturnDeryptedText(String s) {
-        ceaser.decrypt(s);
-        return ceaser.getProcessedText();
+    private String invokeDecryptAndReturnDecryptedText(String s) {
+        caser.decrypt(s);
+        return caser.getProcessedText();
     }
 
     @Test
     @DisplayName("Testing a null argument in decrypt")
-    void testNullDecrypttArgumentExpectThrows() {
-        assertThatThrownBy(() -> ceaser.decrypt(null))
+    void testNullDecryptArgumentExpectThrows() {
+        assertThatThrownBy(() -> caser.decrypt(null))
                 .isInstanceOf(NullPointerException.class);
     }
 
     @Test
     @DisplayName("Testing an empty argument in decrypt")
     void testEmptyDecryptArgument() {
-        ceaser.decrypt("");
+        caser.decrypt("");
 
-        String actual = ceaser.getProcessedText();
+        String actual = caser.getProcessedText();
         String excepted = "";
         assertThat(actual).isEqualTo(excepted);;
     }
 
     @Test
     @DisplayName("Test of not alphabet input argument for decrypt")
-    void testNotAlphaberInputDecrypt() {
+    void testNotAlphabetInputDecrypt() {
         StringBuilder builder = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < random.nextInt(50); i++)
             builder.append((char) random.nextInt(255));
 
-        ceaser.decrypt(builder.toString());
+        caser.decrypt(builder.toString());
 
-        assertThat(ceaser.getProcessedText()).isNotNull();
+        assertThat(caser.getProcessedText()).isNotNull();
 
     }
     //endregion
@@ -140,8 +140,8 @@ class CeasarCipherTest implements TestContainer
     @Test
     @DisplayName("Testing toString()")
     void testToString() {
-        ceaser.encrypt(LONG_MESSAGE);
-        String actual = ceaser.toString();
+        caser.encrypt(LONG_MESSAGE);
+        String actual = caser.toString();
 
         assertThat(actual).isNotNull();
     }
@@ -150,10 +150,10 @@ class CeasarCipherTest implements TestContainer
     @DisplayName("Testing of empty/null class fields")
     void testNullField() {
         SoftAssertions.assertSoftly(softly -> {
-            assertThatThrownBy(() -> ceaser.toString())
+            assertThatThrownBy(() -> caser.toString())
                     .isInstanceOf(NullPointerException.class);
-            assertThat(ceaser.getEncryptMatrix()).isNull();
-            assertThat(ceaser.getProcessedText()).isNull();
+            assertThat(caser.getEncryptMatrix()).isNull();
+            assertThat(caser.getProcessedText()).isNull();
         });
     }
 

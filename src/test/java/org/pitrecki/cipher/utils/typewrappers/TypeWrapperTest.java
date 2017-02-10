@@ -28,7 +28,7 @@ class TypeWrapperTest
     }
 
     @Test
-    @DisplayName("Test non primitve type is not primitive")
+    @DisplayName("Test non primitive type is not primitive")
     void testOFNotPrimitiveTypeShouldReturnFalse() {
         typeWrapper = new TypeWrapper(Integer.class);
 

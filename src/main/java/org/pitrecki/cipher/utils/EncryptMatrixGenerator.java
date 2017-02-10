@@ -5,7 +5,7 @@ import org.pitrecki.cipher.utils.math.Matrix;
 import java.lang.reflect.Array;
 
 /**
- * Creating encrpytion matrix with selected parameters
+ * Creating encryption matrix with selected parameters
  *
  * @author Piotr 'pitrecki' Nowak
  *

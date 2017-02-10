@@ -78,7 +78,7 @@ class MatrixTest
     }
 
     @Test
-    @DisplayName("Try adjugate matrix, in this case should return 0 and matrix is singular Exception is exptected")
+    @DisplayName("Try adjugate matrix, in this case should return 0 and matrix is singular Exception is expected")
     void testMatrixAdjugate() throws MatrixException {
         assertThatThrownBy(() ->A.adjugate())
                 .isInstanceOf(RuntimeException.class);
@@ -101,7 +101,7 @@ class MatrixTest
     }
 
     @Test
-    @DisplayName("Testing of cakcuation modularDivide matrix, modulo number is 1.0")
+    @DisplayName("Testing of calculation modularDivide matrix, modulo number is 1.0")
     void testModularMatrix() {
         Matrix<Double> expectedMatrix = new Matrix<>(new Double[][] {
                 {0d, 0d},
@@ -118,8 +118,8 @@ class MatrixTest
     }
 
     @Test
-    @DisplayName("Matrix is created by enetered size, every elements should be set to null")
-    void testForGenerateEmyptyMatrix() {
+    @DisplayName("Matrix is created by entered size, every elements should be set to null")
+    void testForGenerateEmptyMatrix() {
         A = null;
         A = new Matrix(3);
 

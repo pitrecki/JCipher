@@ -27,7 +27,7 @@ class PolybiusSquareCipherTest
 
     @Test
     @DisplayName("Entered plaintext which contains numbers, should throws exception in encrypt method")
-    void testNumeraicalInputShouldThrwonExceptionInEncryptMethod() {
+    void testNumericalInputShouldThrownExceptionInEncryptMethod() {
         String plaintext = "11222331123123123";
         assertThrows(IllegalArgumentException.class, () -> polybiusCipher.encrypt(plaintext));
     }
@@ -46,7 +46,7 @@ class PolybiusSquareCipherTest
 
 
     @Test
-    @DisplayName("Check for correct encrpyted text")
+    @DisplayName("Check for correct encrypted text")
     void testCorrectEncryption() {
         String plaintext = "defend the east wall of the castle";
         polybiusCipher.encrypt(plaintext);

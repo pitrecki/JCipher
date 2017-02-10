@@ -35,7 +35,7 @@ public class TypeWrapper
     /**
      * Check if type contains own primitive type
      *
-     * @return true if connstains
+     * @return true if contains
      *         false if not
      */
     public boolean havePrimitiveType() {

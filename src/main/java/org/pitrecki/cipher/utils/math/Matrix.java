@@ -1,6 +1,6 @@
 package org.pitrecki.cipher.utils.math;
 
-import org.pitrecki.cipher.utils.typewrappers.AnyNumberArrayConventer;
+import org.pitrecki.cipher.utils.typewrappers.AnyNumberArrayConverter;
 import org.pitrecki.cipher.utils.typewrappers.DoubleArrayConverter;
 
 import java.lang.reflect.Array;
@@ -30,7 +30,7 @@ public class Matrix<T>
     private int row;
 
     /**
-     * This construcotr generate matrix from inputed data
+     * This constructor generate matrix from imputed data
      * @param data any type of Objects
      */
     public Matrix(T[][] data) {
@@ -92,7 +92,7 @@ public class Matrix<T>
     }
 
     /**
-     * This method fill matrix with default values eqauls 0.0
+     * This method fill matrix with default values equals 0.0
      */
     private void emptyMatrixInit() {
         Arrays.stream(getData())
@@ -113,9 +113,9 @@ public class Matrix<T>
         return data.getClass().isAssignableFrom(Number.class);
     }
 
-    //region Basic mathematic operation
+    //region Basic mathematics operation
     /**
-     * ================ ATENTION USE ONLY WHEN MATRIX CONTATINS ANY TYPE OF NUMBERS =========
+     * ================ ATTENTION USE ONLY WHEN MATRIX CONTAINS ANY TYPE OF NUMBERS =========
      * In mathematics, matrix multiplication or the matrix product is a binary operation that
      * produces a matrix from two matrices. The definition is motivated by linear equations
      * and linear transformations on vectors, which have numerous applications in applied
@@ -127,7 +127,7 @@ public class Matrix<T>
      *
      * @param B Matrix
      * @return result of the multiplication of two matrices
-     * @throws MatrixException only when matrix A M dim not equls matrix B dim N.
+     * @throws MatrixException only when matrix A M dim not equals matrix B dim N.
      */
 
     @SuppressWarnings("works only for numbers!")
@@ -147,7 +147,7 @@ public class Matrix<T>
             B.setData(tmpArray);
         }
         else {
-            throw new MatrixException("Incorect dimenesion, expected value: " + getDimension());
+            throw new MatrixException("Incorrect dimenesion, expected value: " + getDimension());
         }
 
         return B;
@@ -196,7 +196,7 @@ public class Matrix<T>
     }
 
     /**
-     *  Determinat is value calculated fromthe elements of the square matrix.
+     *  Determinant is value calculated from the elements of the square matrix.
      *  det(A); detA or |A|
      *  Good examples for calculating the determinant, visit:
      *  1. <a href="http://www.mathsisfun.com/algebra/matrix-determinant.html"> mathisfun </a>
@@ -254,7 +254,7 @@ public class Matrix<T>
 
     /**
      * Changes sign of specified index in matrix
-     * @param index current index to change sigm
+     * @param index current index to change sign
      * @return sign changed sign
      */
 
@@ -309,20 +309,15 @@ public class Matrix<T>
      */
 
     public Matrix inverse() {
-        /*
-            Old code here
-            return (transpose().cofactor(this).scalarMultiply(1.0/determinant(this)));
-         */
-
-        Double[][] tmpObjMatrixValues;
+        Double[][] tmpObjMatrixValues = null;
 
         /*
             Check if data in Matrix are numbers and NOT double. If true convert this do Double type by parsing
-            to String, othherwise skip and jump to 311 line
+            to String, otherwise skip and jump to 311 line
         */
         if (!(getData().getClass().isAssignableFrom(Double[][].class))) {
-            AnyNumberArrayConventer<Number, Double> anyNumberArrayConventer = new AnyNumberArrayConventer<>(Double.class);
-            tmpObjMatrixValues = anyNumberArrayConventer.convertArray((Number[][]) getData());
+            AnyNumberArrayConverter<Number, Double> anyNumberArrayConverter = new AnyNumberArrayConverter<>(Double.class);
+            tmpObjMatrixValues = anyNumberArrayConverter.convertArray((Number[][]) getData());
             setData(((T[][]) tmpObjMatrixValues));
         }
 
@@ -380,7 +375,7 @@ public class Matrix<T>
     }
 
     /**
-     * Replace every element with mod modValue divide by modul
+     * Replace every element with mod modValue divide by modulo
      * @param modValue
      * @return this matrix with divide values by modularDivide
      */
@@ -402,26 +397,26 @@ public class Matrix<T>
     /**
      * Protection before make any computing especially {@link #multiply(Matrix)}
      * @param B is matrix
-     * @return true if  matrix A row lengths equals matrix B colmums
+     * @return true if  matrix A row lengths equals matrix B columns
      */
     private boolean checkDimension(Matrix B) {
         return this.getColumn() == B.getRow();
     }
 
     /**
-     * Protection agains jagged arrays in inputed data
+     * Protection against jagged arrays of entered data
      * @param data 2D-array to check
      * @return true only when every row lengths of 2D-Array is same
      */
 
-    private boolean isDataAreJagged (Object[][] data) {
-        int epectedAmountOfElements = data.length * data[0].length;
+    private boolean isDataAreJagged (T[][] data) {
+        int expectedAmountOfElements = data.length * data[0].length;
 
-        int actutalAmountOfElements = 0;
-        for (Object[] objArray : data)
-            actutalAmountOfElements += objArray.length;
+        int actualAmountOfElements = 0;
+        for (T[] objArray : data)
+            actualAmountOfElements += objArray.length;
 
-        return epectedAmountOfElements == actutalAmountOfElements;
+        return expectedAmountOfElements == actualAmountOfElements;
     }
 
     @Override

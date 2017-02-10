@@ -34,13 +34,13 @@ class AffineCipherTest
     }
 
     @Test
-    @DisplayName("Tesing of correct decryption")
+    @DisplayName("Testing of correct decryption")
     void testTextDecryption() {
         //the gold is buried in orono
         String expected = LONG_MESSAGE;
 
-        String plainttext = "karxvmodhinedrodsvevsv";
-        affine.decrypt(plainttext);
+        String plaintext = "karxvmodhinedrodsvevsv";
+        affine.decrypt(plaintext);
         String actual = affine.getProcessedText();
 
         assertThat(actual).isEqualTo(expected);
@@ -67,8 +67,8 @@ class AffineCipherTest
         //the gold is buried in orono
         String expected = LONG_MESSAGE;
 
-        String plainttext = expected;
-        affine.decrypt(plainttext);
+        String plaintext = expected;
+        affine.decrypt(plaintext);
         String actual = affine.getProcessedText();
 
         assertThat(actual).isEqualTo(expected);

@@ -28,7 +28,7 @@ class AlgorithmsTest
     }
 
     @Test
-    @DisplayName("Arrays of negative values shold return same gcd value")
+    @DisplayName("Arrays of negative values should return same gcd value")
     void testMoreThanTwoNegativeArgumentInGCDMethod() {
         double expected = 3;
 
@@ -62,7 +62,7 @@ class AlgorithmsTest
 
     @Test
     @DisplayName("Negative arguments should give same result of lcm")
-    void testNegtiveArgumentsForLCM() {
+    void testNegativeArgumentsForLCM() {
         double expected = 720;
 
         assertSoftly(softly -> {
@@ -76,22 +76,22 @@ class AlgorithmsTest
     @DisplayName("Testing of correct lcm value computing for more than 2 arguments")
     void testResultLCMForMoreThanTwoArguments() {
         double expected = 1.592437747744106E30;
-        double acutal = Algorithms.lcm(1514564654,1212465645,563464533,12312);
+        double actual = Algorithms.lcm(1514564654,1212465645,563464533,12312);
 
-        assertThat(acutal).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("Testing of computing modularDivide inversion of number")
-    void testModularInverseResultComuputing() {
+    void testModularInverseResultComputing() {
         long expected = 21;
-        long acutal = Algorithms.modInverse(5, 26);
+        long actual = Algorithms.modInverse(5, 26);
 
-        assertThat(acutal).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    @DisplayName("Same arguments should throws expection, when moudlar inverse is computing")
+    @DisplayName("Same arguments should throws exception, when modular inverse is computing")
     void testSameArgumentsShouldThorwsExceptionWhenModularInverseIsComputing() {
         assertThatThrownBy(() ->Algorithms.modInverse(2, 2))
                 .isInstanceOf(ArithmeticException.class);

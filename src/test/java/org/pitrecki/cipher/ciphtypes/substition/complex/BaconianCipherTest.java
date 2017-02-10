@@ -60,7 +60,7 @@ class BaconianCipherTest
     }
 
     @Test
-    @DisplayName("Testing of correct encryption using distinct mode (26 letterss, full alphabet).")
+    @DisplayName("Testing of correct encryption using distinct mode (26 letters, full alphabet).")
     void testDistinctEncryption() {
         this.baconianCipher = new BaconianCipher(DISTINCT);
 
@@ -85,7 +85,7 @@ class BaconianCipherTest
     }
 
     @Test
-    @DisplayName("Testing of correct decyption using standard mode")
+    @DisplayName("Testing of correct decryption using standard mode")
     void testStandardDecryption() {
         this.baconianCipher = new BaconianCipher(STANDARD);
 
@@ -100,7 +100,7 @@ class BaconianCipherTest
     }
 
     @Test
-    @DisplayName("Testing of correct decyption using distinct mode")
+    @DisplayName("Testing of correct decryption using distinct mode")
     void testDistinctDecryption() {
         this.baconianCipher = new BaconianCipher(DISTINCT);
 

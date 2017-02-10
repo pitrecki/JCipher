@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- *  The Running Key org.pitrecki.cipher has the same internal workings as the Vigenere org.pitrecki.cipher. The difference lies in
+ *  The Running Key cipher has the same internal workings as the Vigenere cipher. The difference lies in
  *  how the key is chosen; the Vigenere org.pitrecki.cipher uses a short key that repeats, whereas the running key
  *  org.pitrecki.cipher uses a long key such as an excerpt from a book. This means the key does not repeat, making
  *  cryptanalysis more difficult. The org.pitrecki.cipher can still be broken though, as there are statistical patterns

@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * <b>Substitution</b> of single letters separately—simple substitution—can be demonstrated
  * by writing out the alphabet in some order to represent the substitution. This is termed
- * a substitution alphabet. The org.pitrecki.cipher alphabet may be shifted or reversed (creating the
+ * a substitution alphabet. The cipher alphabet may be shifted or reversed (creating the
  * Caesar and Atbash ciphers, respectively) or scrambled in a more complex fashion, in
  * which case it is called a mixed alphabet or deranged alphabet. Traditionally, mixed
  * alphabets may be created by first writing out a keyword, removing repeated letters in it,
@@ -37,8 +37,8 @@ public abstract class SimpleSubstitutionCipher extends Cipher
     }
 
     /**
-     * Empty constructor argument set key eqauls 0
-     * requiremnt implmenetatnions in
+     * Empty constructor argument set key equals 0
+     * requirement implmenetatnions in
      * @see AtbashCipher
      */
     public SimpleSubstitutionCipher() {
@@ -48,7 +48,7 @@ public abstract class SimpleSubstitutionCipher extends Cipher
     /**
      * This method
      * @return first key from array
-     * @see CeasarCipher
+     * @see CaesarCipher
      * @see AtbashCipher
      */
     int getMasterKEY() {
@@ -65,12 +65,12 @@ public abstract class SimpleSubstitutionCipher extends Cipher
     }
 
     @Override
-    public void decrypt(String inpuText) {
-        textShifting(inpuText, CryptVariant.DECRYPT);
+    public void decrypt(String inputText) {
+        textShifting(inputText, CryptVariant.DECRYPT);
     }
 
-    private void textShifting(String inpuText, CryptVariant cryptVariant) {
-        char[] strToCharArray = inpuText.toUpperCase().toCharArray();
+    private void textShifting(String inputText, CryptVariant cryptVariant) {
+        char[] strToCharArray = inputText.toUpperCase().toCharArray();
 
         for (int i = 0; i < strToCharArray.length; i++) {
             for (int j = 0; j < ASCII_TABLE.length; j++) {
@@ -88,9 +88,9 @@ public abstract class SimpleSubstitutionCipher extends Cipher
 
 
 /*
-    This group of method provide default encrypt and decrypt functional specifed to THIS type of org.pitrecki.cipher alghorithm
+    This group of method provide default encrypt and decrypt functional specified to THIS type of cipher alghorithm
 
-    SO PLEAEE DONT MISMATCH WITH METHODS OF CIPHER INTERFACE
+    SO PLEAEE DON'T MISSMATCH WITH METHODS OF CIPHER INTERFACE
  */
 
     /**

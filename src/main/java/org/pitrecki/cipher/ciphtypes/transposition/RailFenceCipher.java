@@ -13,17 +13,17 @@ import static org.pitrecki.cipher.utils.CryptVariant.DECRYPT;
 import static org.pitrecki.cipher.utils.CryptVariant.ENCRYPT;
 
 /**
- * The <b>rail fence org.pitrecki.cipher </b> (also called a zigzag org.pitrecki.cipher) is a form of transposition org.pitrecki.cipher.
+ * The <b>rail fence cipher </b> (also called a zigzag cipher) is a form of transposition org.pitrecki.cipher.
  * It derives its name from the way in which it is encoded.
  *
- * The railfence org.pitrecki.cipher is a very simple, easy to crack org.pitrecki.cipher. It is a transposition org.pitrecki.cipher that
+ * The railfence cipher is a very simple, easy to crack cipher. It is a transposition org.pitrecki.cipher that
  * follows a simple rule for mixing up the characters in the plaintext to form the ciphertext. The
- * railfence org.pitrecki.cipher offers essentially no communication security, and it will be shown that it can
+ * railfence cipher offers essentially no communication security, and it will be shown that it can
  * be easily broken even by hand. Although weak on its own, it can be combined with other ciphers,
- * such as a substitution org.pitrecki.cipher, the combination of which is more difficult to break than either
- * org.pitrecki.cipher on it's own. Many websites claim that the rail-fence org.pitrecki.cipher is a simpler "write down the
- * columns, read along the rows" org.pitrecki.cipher. This is equivalent to using an un-keyed columnar
- * transposition org.pitrecki.cipher
+ * such as a substitution cipher, the combination of which is more difficult to break than either
+ * cipher on it's own. Many websites claim that the rail-fence cipher is a simpler "write down the
+ * columns, read along the rows" cipher. This is equivalent to using an un-keyed columnar
+ * transposition cipher
  *
  * FOR MORE INFORMATION LOOK AT: <a href="http://practicalcryptography.com/ciphers/classical-era/rail-fence/">LINK</a>
  *
@@ -49,7 +49,7 @@ public class RailFenceCipher extends Cipher
     }
 
     /**
-     * In the rail fence org.pitrecki.cipher, the plaintext is written downwards and diagonally on successive
+     * In the rail fence cipher, the plaintext is written downwards and diagonally on successive
      * "rails" of an imaginary fence, then moving up when we reach the bottom rail. When we reach
      * the top rail, the message is written downwards again until the whole plaintext is written out.
      * The message is then read off in rows. For example, if we have 3 "rails" and a message
@@ -72,7 +72,7 @@ public class RailFenceCipher extends Cipher
     }
 
     /**
-     * Fill the list with calculeted coordinates in format [x,y],
+     * Fill the list with calculated coordinates in format [x,y],
      * where:
      *  x -> row index
      *  y -> column index
@@ -114,7 +114,7 @@ public class RailFenceCipher extends Cipher
         List<String> coordinates = new ArrayList<>();
         calculateCoordinates(coordinates, inputText);
         /*
-        *   Transform list with ooordinates to stream, execute sorting coordinates in
+        *   Transform list with coordinates to stream, execute sorting coordinates in
         *   the natural order. And return as new list.
         */
         List<String> sortedCoordinates = coordinates.stream()
@@ -124,9 +124,9 @@ public class RailFenceCipher extends Cipher
         fillRailFenceArrayWithText(new StringBuilder(inputText), sortedCoordinates, ENCRYPT);
 
         //pass by reference
-        StringBuilder decrpytedText = new StringBuilder(inputText);
-        fillRailFenceArrayWithText(decrpytedText, coordinates, DECRYPT);
-        String decrypt = decrpytedText.substring(decrpytedText.length()/2,  decrpytedText.length());
+        StringBuilder decryptedText = new StringBuilder(inputText);
+        fillRailFenceArrayWithText(decryptedText, coordinates, DECRYPT);
+        String decrypt = decryptedText.substring(decryptedText.length()/2,  decryptedText.length());
 
         setProcessedText(decrypt);
     }

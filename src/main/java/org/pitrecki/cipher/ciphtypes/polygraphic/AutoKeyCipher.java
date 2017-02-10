@@ -3,10 +3,10 @@ package org.pitrecki.cipher.ciphtypes.polygraphic;
 import org.pitrecki.cipher.utils.CryptVariant;
 
 /**
- * The Autokey Cipher is a polyalphabetic substitution org.pitrecki.cipher. It is closely related
- * to the Vigenere org.pitrecki.cipher, but uses a different method of generating the key. It was
+ * The Autokey Cipher is a polyalphabetic substitution cipher. It is closely related
+ * to the Vigenere cipher, but uses a different method of generating the key. It was
  * invented by Blaise de Vigenère in 1586, and is in general more secure than the
- * Vigenere org.pitrecki.cipher.
+ * Vigenere cipher.
  *
  * @author Piotr 'pitrecki' Nowak
  *

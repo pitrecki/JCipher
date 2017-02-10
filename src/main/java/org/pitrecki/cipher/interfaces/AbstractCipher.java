@@ -24,10 +24,10 @@ public interface AbstractCipher
      * to decrypt the message without possessing the key, but, for a well-designed encryption
      * scheme,large computational resources and skill are required. An authorized recipient
      * can easily decrypt the message with the key provided by the originator to recipients,
-     * but not tounauthorized interceptors. The purpose of encryption is to ensure that only
-     * somebodywho is authorized to access data (e.g. a text message or a file), will be able
-     * toread it, using the decryption key. Somebody who is not authorized can be excluded, because
-     * he or she does not have the required key, without which it is impossibleto read the encrypted
+     * but not to unauthorized interceptors. The purpose of encryption is to ensure that only
+     * somebody who is authorized to access data (e.g. a text message or a file), will be able
+     * to read it, using the decryption key. Somebody who is not authorized can be excluded, because
+     * he or she does not have the required key, without which it is impossible to read the encrypted
      * information.
      *
      * @param inputText text to encrypt

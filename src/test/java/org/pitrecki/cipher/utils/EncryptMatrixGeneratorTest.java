@@ -73,7 +73,7 @@ class EncryptMatrixGeneratorTest
 
     @Test
     @DisplayName("Testing of throwing IllegalArgumentException, when fist argument is null")
-    void testOfThrowingExpectionWhenClassTArgumentIsNull() {
+    void testOfThrowingExceptionWhenClassTArgumentIsNull() {
         assertThatThrownBy(() ->  new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(null).build())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasNoCause();
@@ -81,7 +81,7 @@ class EncryptMatrixGeneratorTest
 
     @Test
     @DisplayName("Testing of throwing IllegalArgumentException, when size is negative")
-    void testOfThrowingExpectionWhenSizeIsNegative() {
+    void testOfThrowingExceptionWhenSizeIsNegative() {
         assertThatThrownBy(() -> new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).withSize(-1).build())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasNoCause();
@@ -90,7 +90,7 @@ class EncryptMatrixGeneratorTest
 
     @Test
     @DisplayName("Testing of throwing IllegalArgumentException, when column size is argument is negative")
-    void testOfThrowingExpectionWhenColumnIsNegative() {
+    void testOfThrowingExceptionWhenColumnIsNegative() {
         assertThatThrownBy(() -> new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).withColumn(-5).build())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasNoCause();
@@ -98,7 +98,7 @@ class EncryptMatrixGeneratorTest
 
     @Test
     @DisplayName("Testing of throwing IllegalArgumentException,  when row size is argument is negative")
-    void testOfThrowingExpectionWhenRowSizeIsNegative() {
+    void testOfThrowingExceptionWhenRowSizeIsNegative() {
         assertThatThrownBy(() -> new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Object.class).withRow(-1).build())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasNoCause();

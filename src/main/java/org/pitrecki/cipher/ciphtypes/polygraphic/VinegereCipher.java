@@ -7,14 +7,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * The Vigenère org.pitrecki.cipher is a method of encrypting alphabetic text by using a series of different Caesar
+ * The Vigenère cipher is a method of encrypting alphabetic text by using a series of different Caesar
  * ciphers based on the letters of a keyword. It is a simple form of polyalphabetic substitution.The
- * Vigenère (French pronunciation: ​[viʒnɛːʁ]) org.pitrecki.cipher has been reinvented many times. The method was
+ * Vigenère (French pronunciation: ​[viʒnɛːʁ]) cipher has been reinvented many times. The method was
  * originally described by Giovan Battista Bellaso in his 1553 book La cifra del. Sig. Giovan Battista
  * Bellaso; however, the scheme was later misattributed to Blaise de Vigenère in the 19th century, and
- * is now widely known as the "Vigenère org.pitrecki.cipher". Though the org.pitrecki.cipher is easy to understand and implement,
+ * is now widely known as the "Vigenère cipher". Though the org.pitrecki.cipher is easy to understand and implement,
  * for three centuries it resisted all attempts to break it; this earned it the description le chiffre
- * indéchiffrable (French for 'the indecipherable org.pitrecki.cipher'). Many people have tried to implement encryption
+ * indéchiffrable (French for 'the indecipherable cipher'). Many people have tried to implement encryption
  * schemes that are essentially Vigenère ciphers.[3] Friedrich Kasiski was the first to publish a general
  * method of deciphering a Vigenère org.pitrecki.cipher, in 1863.
  *
@@ -59,7 +59,7 @@ public class VinegereCipher extends Cipher
      * To encrypt, a table of alphabets can be used, termed a tabula recta, Vigenère square, or Vigenère
      * table. It consists of the alphabet written out 26 times in different rows, each alphabet shifted
      * cyclically to the left compared to the previous alphabet, corresponding to the 26 possible Caesar
-     * ciphers. At different points in the encryption process, the org.pitrecki.cipher uses a different alphabet from
+     * ciphers. At different points in the encryption process, the cipher uses a different alphabet from
      * one of the rows. The alphabet used at each point depends on a repeating keyword.
      *
      * @return generated Vinegere matrix
@@ -138,7 +138,7 @@ public class VinegereCipher extends Cipher
     /**
      *
      * @param cryptVariant DECRYPT or ENCRYPT
-     * @param keywordLetter current letter keyowrd
+     * @param keywordLetter current letter keyword
      * @param textLetter current letter plaintext
      * @return computed integer value
      */

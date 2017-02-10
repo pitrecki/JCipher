@@ -13,7 +13,7 @@ public interface DataPrintable
 {
     String prepareDataToPrint();
 
-    default void printProccesedData() {
+    default void printProcessedData() {
         System.out.println(prepareDataToPrint());
     }
 

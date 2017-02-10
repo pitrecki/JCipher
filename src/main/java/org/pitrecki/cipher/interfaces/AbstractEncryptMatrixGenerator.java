@@ -19,7 +19,7 @@ public interface AbstractEncryptMatrixGenerator
     /**
      * Generate encrypted matrix
      *
-     * @param generator pass requiment EncryptMatrixGenerator object
+     * @param generator pass requirement EncryptMatrixGenerator object
      */
     void generateEncryptMatrix(EncryptMatrixGenerator generator);
 }

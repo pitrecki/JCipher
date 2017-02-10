@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Bifid is a org.pitrecki.cipher which combines the Polybius square with transposition, and uses
+ * Bifid is a cipher which combines the Polybius square with transposition, and uses
  * fractionation to achieve diffusion. It was invented by Felix Delastelle. Delastelle
  * was a Frenchman who invented several ciphers including the bifid, trifid, and
  * four-square ciphers. The first presentation of the bifid appeared in the

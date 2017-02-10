@@ -9,12 +9,12 @@ import java.util.Arrays;
  * @author Piotr 'pitrecki' Nowak
  *         Created by Pitrecki on 2017-02-09.
  */
-public class AnyNumberArrayConventer<T extends Number, V extends Number>
+public class AnyNumberArrayConverter<T extends Number, V extends Number>
 {
-    private Class<V> taget;
+    private Class<V> target;
 
-    public AnyNumberArrayConventer(Class<V> taget) {
-        this.taget = taget;
+    public AnyNumberArrayConverter(Class<V> target) {
+        this.target = target;
     }
 
     /**
@@ -33,9 +33,9 @@ public class AnyNumberArrayConventer<T extends Number, V extends Number>
         return Arrays.stream(array)
                 .map(ts -> Arrays.stream(ts)
                         .map(t -> invokeMethod(t, String.class, methodName, Object.class))
-                        .map(o -> invokeMethod(o, taget, methodName, o.getClass()))
-                        .toArray(value -> ((V[]) Array.newInstance(taget, column))))
-                .toArray(value -> ((V[][]) Array.newInstance(taget, row, column)));
+                        .map(o -> invokeMethod(o, target, methodName, o.getClass()))
+                        .toArray(value -> ((V[]) Array.newInstance(target, column))))
+                .toArray(value -> ((V[][]) Array.newInstance(target, row, column)));
     }
 
 

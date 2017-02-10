@@ -15,8 +15,8 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * In classical cryptography, the Hill org.pitrecki.cipher is a polygraphic substitution org.pitrecki.cipher based on linear algebra.
- * Invented by Lester S. Hill in 1929, it was the first polygraphic org.pitrecki.cipher in which it was practical (though barely)
+ * In classical cryptography, the Hill cipher is a polygraphic substitution cipher based on linear algebra.
+ * Invented by Lester S. Hill in 1929, it was the first polygraphic cipher in which it was practical (though barely)
  * to operate on more than three symbols at once. The following discussion assumes an elementary knowledge of matrices.
  *
  * Please watch for cryptographic matrix, which is the reason for the failure of the inversion of the determinant and the
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
 {
 
-    //Numbers 221 is Ý,only true if word lenght is ODD!
+    //Numbers 221 is Ý,only true if word length is ODD!
     private final short SPECIAL_SIGN = 221;
     //equals 26
     private final int MOD_VAL = ASCII_TABLE.length;
@@ -107,7 +107,7 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
     }
 
     /**
-     * The entire logic of a hill org.pitrecki.cipher
+     * The entire logic of a hill cipher
      * @param text to process
      * @param cryptVariant enum contains enumerated types like ENCRYPT or DECRYPT
      */
@@ -164,7 +164,7 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
     /**
      * To find K-1 we have to use a bit of maths. It turns out that K-1 above can be calculated from our
      * key. A lengthy discussion will not be included here, but we will give a short example. The important
-     * things to know are inverses (mod m), determinants of matrices, and matrix adjugates.
+     * things to know are inverses (mod m), determinants of matrices, and matrix adjugate.
      *
      * @param matrix key matrix
      * @return inverted key matrix

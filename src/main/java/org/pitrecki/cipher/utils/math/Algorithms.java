@@ -19,8 +19,8 @@ public final class Algorithms
     }
 
     /**
-     * <b>Greatest commonon diviser AKA gcd </b>
-     * This aloghoritm use modifided version of Euclides alghorithm
+     * <b>Greatest common divider AKA gcd </b>
+     * This algorithm use modified version of Euclides algorithm
      *
      * In arithmetic and computer programming, the extended Euclidean algorithm is an extension
      * to the Euclidean algorithm, which computes, besides the greatest common divisor of
@@ -30,7 +30,7 @@ public final class Algorithms
      * satisfy this equation and divide the inputs. It allows one to compute also, with almost no
      * extra cost, the quotients of a and b by their greatest common divisor.
      *
-     * For more inforamation look at:  <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm"> LINK </a>
+     * For more information look at:  <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm"> LINK </a>
      *
      * @param p first number
      * @param q second number

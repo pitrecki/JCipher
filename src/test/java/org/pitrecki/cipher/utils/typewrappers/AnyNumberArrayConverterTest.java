@@ -10,17 +10,17 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
  * @author Piotr 'pitrecki' Nowak
  *         Created by Pitrecki on 2017-02-09.
  */
-class AnyNumberArrayConventerTest
+class AnyNumberArrayConverterTest
 {
     @Test
     @DisplayName("Test convert Integer 2D array to Float 2D array")
     void testConvertIntegerArrayToFloatArray() {
-        AnyNumberArrayConventer<Integer, Float> anyNumberArrayConventer = new AnyNumberArrayConventer<>(Float.class);
+        AnyNumberArrayConverter<Integer, Float> anyNumberArrayConverter = new AnyNumberArrayConverter<>(Float.class);
         Integer[][] numbers = {{1, 2, 3}, {4, 5, 6}};
 
-        Float[][] actual = anyNumberArrayConventer.convertArray(numbers);
+        Float[][] actual = anyNumberArrayConverter.convertArray(numbers);
         Float[][] expected = {{1f, 2f, 3f}, {4f, 5f, 6f}};
-        assertSoftly(sofly -> {
+        assertSoftly(softly -> {
             assertThat(actual).hasSameSizeAs(expected);
             assertThat(actual).containsExactly(expected);
             assertThat(actual).isInstanceOf(Float[][].class);
@@ -31,12 +31,12 @@ class AnyNumberArrayConventerTest
     @Test
     @DisplayName("Test convert Double 2D array to Integer 2D array")
     void testConvertDoubleArrayToIntegerArray() {
-        AnyNumberArrayConventer<Double, Integer> anyNumberArrayConventer = new AnyNumberArrayConventer<>(Integer.class);
+        AnyNumberArrayConverter<Double, Integer> anyNumberArrayConverter = new AnyNumberArrayConverter<>(Integer.class);
         Double[][] numbers = {{1d, 2d, 3d}, {4d, 5d, 6d}};
 
-        Integer[][] actual = anyNumberArrayConventer.convertArray(numbers);
+        Integer[][] actual = anyNumberArrayConverter.convertArray(numbers);
         Integer[][] expected = {{1, 2, 3}, {4, 5, 6}};
-        assertSoftly(sofly -> {
+        assertSoftly(softly -> {
             assertThat(actual).hasSameSizeAs(expected);
             assertThat(actual).containsExactly(expected);
             assertThat(actual).isInstanceOf(Integer[][].class);

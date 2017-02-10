@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * The Baconian org.pitrecki.cipher is named after its inventor, Sir Francis Bacon. The Baconian org.pitrecki.cipher is
- * a substitution org.pitrecki.cipher in which each letter is replaced by a sequence of 5 characters. In the
- * original org.pitrecki.cipher, these were sequences of 'A's and 'B's e.g. the letter 'D' was replaced by 'aaabb',
- * the letter 'O' was replaced by 'abbab' etc. This org.pitrecki.cipher offers very little communication security,
- * as it is a substitution org.pitrecki.cipher. As such all the methods used to cryptanalyse substitution ciphers
- * can be used to break Baconian ciphers. The main advantage of the org.pitrecki.cipher is that it allows hiding
+ * The Baconian cipher is named after its inventor, Sir Francis Bacon. The Baconian cipher is
+ * a substitution cipher in which each letter is replaced by a sequence of 5 characters. In the
+ * original cipher, these were sequences of 'A's and 'B's e.g. the letter 'D' was replaced by 'aaabb',
+ * the letter 'O' was replaced by 'abbab' etc. This cipher offers very little communication security,
+ * as it is a substitution cipher. As such all the methods used to cryptanalyse substitution ciphers
+ * can be used to break Baconian ciphers. The main advantage of the cipher is that it allows hiding
  * the fact that a secret message has been sent at all.
  *
  * THERE ARE TWO DIFERENT VARIANT OF THIS CIPHER
@@ -40,7 +40,7 @@ public class BaconianCipher extends Cipher
 
 
     /**
-     * This constructor is responsible for craete diferent variants of Bacionaian org.pitrecki.cipher
+     * This constructor is responsible for create different variants of Bacionaian cipher
      * @param variant STANDARD or DISTINCT
      */
     public BaconianCipher(Variant variant) {
@@ -60,7 +60,7 @@ public class BaconianCipher extends Cipher
      *       f  AABAB       m    ABABB       s  BAAAB       z    BABBB
      *
      *
-     * For DISTINCT it will genratara standard ASCII MAP with standard binary number represent from 0 to 25
+     * For DISTINCT it will generate standard ASCII MAP with standard binary number represent from 0 to 25
      *
      */
 
@@ -88,9 +88,9 @@ public class BaconianCipher extends Cipher
             /*
                 If length of converted string is less than FIX_LENGTH (5) than append begin of builder with 0.
                 After all append builder with binary value
-                For exmaple:
+                For example:
                 C is 2, binary value is: 10
-                We need fixed lenegth binary represent of value, so we should fix representation of result
+                We need fixed length binary represent of value, so we should fix representation of result
                 A result of this block we recive:  ---> '000' and '10' ----> 00010
              */
 
@@ -111,7 +111,7 @@ public class BaconianCipher extends Cipher
     }
 
     /**
-     * This method is responsible for encryption logic, depaatched on {@link #generateAlphabetMap(Variant)}
+     * This method is responsible for encryption logic, dispatched on {@link #generateAlphabetMap(Variant)}
      * @param inputText standard plaintext input
      */
     @Override
@@ -128,11 +128,11 @@ public class BaconianCipher extends Cipher
     }
 
     @Override
-    public void decrypt(String inpuText) {
-        inpuText = inpuText.replace(CHARACTER_REPRESENT_BY_BINARY_ZERO, '0').replace(CHARACTER_REPRESENT_BY_BINARY_ONE, '1');
+    public void decrypt(String inputText) {
+        inputText = inputText.replace(CHARACTER_REPRESENT_BY_BINARY_ZERO, '0').replace(CHARACTER_REPRESENT_BY_BINARY_ONE, '1');
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < inpuText.length(); i+= FIX_LENGTH)
-            builder.append(getKeyByValue(alphabetMap, inpuText.substring(i, (i + FIX_LENGTH))));
+        for (int i = 0; i < inputText.length(); i+= FIX_LENGTH)
+            builder.append(getKeyByValue(alphabetMap, inputText.substring(i, (i + FIX_LENGTH))));
 
         String decryptedText = textProcessing(builder.toString());
 

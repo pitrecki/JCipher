@@ -4,7 +4,7 @@ import org.pitrecki.cipher.utils.CryptVariant;
 import org.pitrecki.cipher.utils.math.Algorithms;
 
 /**
- * The <b>affine org.pitrecki.cipher</b> is a type of monoalphabeticfamily substitution org.pitrecki.cipher, wherein each letter
+ * The <b>affine org.pitrecki.cipher</b> is a type of mono alphabetic family substitution, where in each letter
  * in an alphabet is mapped to its numeric equivalent, encrypted using a simple mathematical
  * function, and converted back to a letter. The formula used means that each letter encrypts
  * to one other letter, and back again, meaning the org.pitrecki.cipher is essentially a standard substitution
