@@ -1,5 +1,7 @@
 package org.pitrecki.cipher.utils.typewrappers;
 
+import org.pitrecki.cipher.utils.container.NonFractionalNumberContainer;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,6 +14,7 @@ import java.util.Arrays;
 public class AnyNumberArrayConverter<T extends Number, V extends Number>
 {
     private Class<V> target;
+    private Class<?> base;
 
     public AnyNumberArrayConverter(Class<V> target) {
         this.target = target;
@@ -26,6 +29,8 @@ public class AnyNumberArrayConverter<T extends Number, V extends Number>
 
     @SuppressWarnings("unchecked V cast")
     public V[][] convertArray(T[][] array) {
+        base = array.getClass().getComponentType().getComponentType();
+
         final String methodName = "valueOf";
         final int column = array[0].length;
         final int row = array.length;
@@ -33,6 +38,7 @@ public class AnyNumberArrayConverter<T extends Number, V extends Number>
         return Arrays.stream(array)
                 .map(ts -> Arrays.stream(ts)
                         .map(t -> invokeMethod(t, String.class, methodName, Object.class))
+                        .map(e -> removeFractionalPart(e.toString()))
                         .map(o -> invokeMethod(o, target, methodName, o.getClass()))
                         .toArray(value -> ((V[]) Array.newInstance(target, column))))
                 .toArray(value -> ((V[][]) Array.newInstance(target, row, column)));
@@ -58,5 +64,19 @@ public class AnyNumberArrayConverter<T extends Number, V extends Number>
             e.printStackTrace();
         }
         return o;
+    }
+
+    /**
+     * Remove fractional part if V target is non Double/FLoat type
+     * @param str number as string
+     * @return converted string
+     */
+
+    private String removeFractionalPart(String str) {
+        if ((base.getClass().isInstance(Double.class) || base.getClass().isInstance(Float.class)) && NonFractionalNumberContainer.isNumberNotFractional(target)) {
+            return str.substring(0, str.indexOf("."));
+        }
+
+        return str;
     }
 }
