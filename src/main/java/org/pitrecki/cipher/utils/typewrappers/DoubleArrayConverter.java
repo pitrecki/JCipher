@@ -11,7 +11,7 @@ public class DoubleArrayConverter
     public DoubleArrayConverter() {
     }
 
-    public double[][] primitiveDoubleArrayConvert(Double[][] array) {
+    public double[][] convertPrimitive(Double[][] array) {
         return Arrays.stream(array)
                     .map(doubles -> Arrays.stream(doubles)
                             .mapToDouble(Double::doubleValue)
@@ -19,7 +19,7 @@ public class DoubleArrayConverter
                     .toArray(double[][]::new);
     }
 
-    public Double[][] objectDoubleArrayConvert(double[][] array) {
+    public Double[][] convertObject(double[][] array) {
         return Arrays.stream(array)
                     .map(doubles -> Arrays.stream(doubles)
                             .boxed()

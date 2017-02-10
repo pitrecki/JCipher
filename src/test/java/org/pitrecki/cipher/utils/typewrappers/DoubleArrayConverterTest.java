@@ -25,7 +25,7 @@ class DoubleArrayConverterTest
     void testShouldReturnPrimitiveDoubleArray() {
         Double[][] doubles = {{2d, 1d}, {4d, 1d}};
 
-        double[][] actual = doubleArrayConverter.primitiveDoubleArrayConvert(doubles);
+        double[][] actual = doubleArrayConverter.convertPrimitive(doubles);
         double[][] expected = {{2d, 1d}, {4d, 1d}};
         assertThat(actual).containsExactly(expected);
     }
@@ -35,7 +35,7 @@ class DoubleArrayConverterTest
     void testShouldReturnObjectDoubleArray() {
         double[][] doubles = {{2d, 1d}, {4d, 1d}};
 
-        Double[][] actual = doubleArrayConverter.objectDoubleArrayConvert(doubles);
+        Double[][] actual = doubleArrayConverter.convertObject(doubles);
         Double[][] expected = {{2d, 1d}, {4d, 1d}};
         assertThat(actual).containsExactly(expected);
     }
@@ -45,7 +45,7 @@ class DoubleArrayConverterTest
     void testOtherFeatures() {
         double[][] expected = {{2d, 1d}, {4d, 1d}};
 
-        Double[][] actual = doubleArrayConverter.objectDoubleArrayConvert(expected);
+        Double[][] actual = doubleArrayConverter.convertObject(expected);
 
         SoftAssertions.assertSoftly(softly -> {
             assertThat(actual).isNotNull();
