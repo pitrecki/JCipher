@@ -1,7 +1,6 @@
 package org.pitrecki.cipher.utils.container;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,7 +12,6 @@ import java.util.Map;
 public final class NonFractionalNumberContainer
 {
     private static Map<String, Class<?>> nonFractinalMap = null;
-    private List<Class<?>> classList;
 
     static {
         generateMap();
