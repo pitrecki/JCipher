@@ -1,11 +1,11 @@
 # Implementation of classical ciphers in Java
 
-**######  Description**
+######**Description**
 
 Implementation of classical ciphers written in Java.
 The project aims to familiarize with the principle of action ciphers in the classical cryptography.
 
-**######  Implemented ciphers**
+######**Implemented ciphers**
 
 1. Autokey
 2. Hill
@@ -21,7 +21,7 @@ The project aims to familiarize with the principle of action ciphers in the clas
 
 
 
-**######  How to use**
+######**How to use**
 
 Basics
 ```java
@@ -55,10 +55,11 @@ fo.save(Paths.get("C:/MY_SECRET_FOLDER/"), cipherText);
 ```
 
 
-**######  Resources and other usefull things**
+######**Resources and other usefull things**
+
 [Books] (BOOKS)
 
-**######  Thanks to**
+###### **Thanks to**
 - Creators of JAMA : A Java Matrix Package
 - The Alphanum Algorithm made by Daniel Migowski, Andre Bogus and David Koelle
 
