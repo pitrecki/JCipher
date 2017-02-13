@@ -323,11 +323,11 @@ public class Matrix<T>
 
         DoubleArrayConverter doubleArrayConverter = new DoubleArrayConverter();
 
-        double[][] tmpPrMatrixVals = doubleArrayConverter.convertPrimitive((Double[][]) data);
+        double[][] tmpPrMatrixVals = doubleArrayConverter.convertToPrimitive((Double[][]) data);
 
         tmpPrMatrixVals = new Jama.Matrix(tmpPrMatrixVals).inverse().getArray();
 
-        tmpObjMatrixValues = doubleArrayConverter.convertObject(tmpPrMatrixVals);
+        tmpObjMatrixValues = doubleArrayConverter.convertToObject(tmpPrMatrixVals);
 
         setData((T[][]) tmpObjMatrixValues);
         return this;
