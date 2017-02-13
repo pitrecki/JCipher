@@ -309,13 +309,13 @@ public class Matrix<T>
      */
 
     public Matrix inverse() {
-        Double[][] tmpObjMatrixValues = null;
+        Double[][] tmpObjMatrixValues;
 
         /*
             Check if data in Matrix are numbers and NOT double. If true convert this do Double type by parsing
             to String, otherwise skip and jump to 311 line
         */
-        if (!(getData().getClass().isAssignableFrom(Double[][].class))) {
+        if (!isMatrixDataIsDoubleType()) {
             AnyNumberArrayConverter<Number, Double> anyNumberArrayConverter = new AnyNumberArrayConverter<>(Double.class);
             tmpObjMatrixValues = anyNumberArrayConverter.convertArray((Number[][]) getData());
             setData(((T[][]) tmpObjMatrixValues));
@@ -331,6 +331,17 @@ public class Matrix<T>
 
         setData((T[][]) tmpObjMatrixValues);
         return this;
+    }
+
+    /**
+     * Check if matrix data are doubles
+     *
+     * @return true if it is
+     *         false if not
+     */
+
+    private boolean isMatrixDataIsDoubleType() {
+        return getData().getClass().isAssignableFrom(Double[][].class);
     }
 
     /**
