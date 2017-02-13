@@ -191,7 +191,7 @@ public class Matrix<T>
                 tmpMatrix[column][row] = getValue(row, column);
             }
         }
-        injectFlushedData(new Matrix(tmpMatrix));
+        injectData(tmpMatrix);
         return this;
     }
 
@@ -372,6 +372,20 @@ public class Matrix<T>
         this.column = matrix.getColumn();
         this.row = matrix.getRow();
         this.data = (T[][]) matrix.getData();
+    }
+
+    /**
+     * This method using functionality from {@link #flush()}
+     * {@link #transpose()}
+     * Clear all data and replace objects fields with new values
+     * @param data T type 2D array
+     */
+
+    public void injectData(T[][] data) {
+        flush();
+        column = data[0].length;
+        row = data.length;
+        this.data = data;
     }
 
     /**
