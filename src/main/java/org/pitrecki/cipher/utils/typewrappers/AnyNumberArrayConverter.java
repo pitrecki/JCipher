@@ -73,10 +73,31 @@ public class AnyNumberArrayConverter<T extends Number, V extends Number>
      */
 
     private String removeFractionalPart(String str) {
-        if ((base.getClass().isInstance(Double.class) || base.getClass().isInstance(Float.class)) && NonFractionalNumberContainer.isNumberNotFractional(target)) {
+        if (isDoubleOrFloatType() && isNumberNotFractional())
             return str.substring(0, str.indexOf("."));
-        }
 
         return str;
+    }
+
+    /**
+     * Check for target type is Integer type number.
+     *
+     * @return true if map contains integer type number
+     *         false if not
+     */
+
+    private boolean isNumberNotFractional() {
+        return NonFractionalNumberContainer.isNumberNotFractional(target);
+    }
+
+    /**
+     * Check if base type is Double or Float object type.
+     *
+     * @return true if base is Double or False
+     *         false if base is other number type
+     */
+
+    private boolean isDoubleOrFloatType() {
+        return base.getClass().isInstance(Double.class) || base.getClass().isInstance(Float.class);
     }
 }
