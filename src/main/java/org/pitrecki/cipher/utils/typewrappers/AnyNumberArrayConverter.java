@@ -1,7 +1,5 @@
 package org.pitrecki.cipher.utils.typewrappers;
 
-import org.pitrecki.cipher.utils.container.NonFractionalNumberContainer;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -73,31 +71,33 @@ public class AnyNumberArrayConverter<T extends Number, V extends Number>
      */
 
     private String removeFractionalPart(String str) {
-        if (isDoubleOrFloatType() && isNumberNotFractional())
+        if (isFractionalType(base) & isNotFractionalType(target))
             return str.substring(0, str.indexOf("."));
 
         return str;
     }
 
     /**
-     * Check for target type is Integer type number.
-     *
-     * @return true if map contains integer type number
-     *         false if not
-     */
-
-    private boolean isNumberNotFractional() {
-        return NonFractionalNumberContainer.isNumberNotFractional(target);
-    }
-
-    /**
      * Check if base type is Double or Float object type.
      *
+     * @param clazz
      * @return true if base is Double or False
      *         false if base is other number type
      */
 
-    private boolean isDoubleOrFloatType() {
-        return base.getClass().isInstance(Double.class) || base.getClass().isInstance(Float.class);
+    private boolean isFractionalType(Class<?> clazz) {
+        return clazz.isAssignableFrom(Double.class) || clazz.isAssignableFrom(Float.class);
+    }
+
+    /**
+     * Check target type is Integer type number.
+     *
+     * @param clazz
+     * @return true if map contains integer type number
+     *         false if not
+     */
+
+    private boolean isNotFractionalType(Class<?> clazz) {
+        return clazz.isAssignableFrom(Integer.class) || clazz.isAssignableFrom(Short.class) || clazz.isAssignableFrom(Long.class);
     }
 }

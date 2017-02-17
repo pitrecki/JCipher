@@ -33,6 +33,11 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
     private final short SPECIAL_SIGN = 221;
     //equals 26
     private final int MOD_VAL = ASCII_TABLE.length;
+    /**
+     * global iterator
+     * {@link #cipherProcessing(String, CryptVariant)}
+     */
+    private int ITERATOR = 0;
 
      /**
      * In this case constructor generate NxN size matrix with random values
@@ -119,29 +124,16 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
         if (cryptVariant.equals(CryptVariant.DECRYPT))
             A = inverseKeyMatrix(A);
 
-        text = text.length()%2 == 0 ? text : text.concat(" ");
+        text = hasOddOrEvenLength(text);
         int fixedInputTextLength = text.length();
 
-        Integer[][] tmpMatrixBData = new Integer[1][A.getRow()];
+        Integer[] vectorA = new Integer[A.getRow()];
         List<Integer> resultOfMultiplication = new ArrayList<>();
 
-        int iterator = 0;
-        while (iterator != fixedInputTextLength) {
-            for (int matrixBColumn = 0; matrixBColumn < A.getRow(); matrixBColumn++) {
-                for (int i = 0; i < ASCII_TABLE.length; i++) {
-                    if (text.charAt(iterator) == ASCII_TABLE[i]) {
-                        tmpMatrixBData[0][matrixBColumn] = i;
-                        break;
-                    }
-                    else if (text.charAt(iterator) == ' ') {
-                        tmpMatrixBData[0][matrixBColumn] = (int) SPECIAL_SIGN;
-                        break;
-                    }
-                }
-                iterator++;
-            }
+        while (ITERATOR < fixedInputTextLength) {
+            fillVectorWithData(text, vectorA);
 
-            Matrix<Integer> B = new Matrix<>(tmpMatrixBData).transpose();
+            Matrix<Integer> B = new Matrix<>(new Integer[][] {vectorA}).transpose();
             B = A.multiply(B);
             B = B.transpose();
             B = convertDoubleDataToInteger(B);
@@ -159,6 +151,40 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
                 .forEach(stringBuilder::append);
 
         setProcessedText(stringBuilder.toString());
+        resetIterator();
+    }
+    
+    /**
+     * Checking parity or odd string length
+     * 
+     * @param text to check
+     * @return expanded string if length is even
+     */
+
+    private String hasOddOrEvenLength(String text) {
+        return text.length()%2 == 0 ? text : text.concat(" ");
+    }
+
+    /**
+     * Fill vector with given chars from text
+     *
+     * @param text plaintext to processing
+     * @param vectorA is a vector to fill
+     */
+    private void fillVectorWithData(final String text, Integer[] vectorA) {
+        for (int vectorIterator = 0; vectorIterator < vectorA.length; vectorIterator++) {
+            for (int i = 0; i < ASCII_TABLE.length; i++) {
+                if (text.charAt(ITERATOR) == ASCII_TABLE[i]) {
+                    vectorA[vectorIterator] = i;
+                    break;
+                }
+                else if (text.charAt(ITERATOR) == ' ') {
+                    vectorA[vectorIterator] = (int) SPECIAL_SIGN;
+                    break;
+                }
+            }
+            ITERATOR++;
+        }
     }
 
     /**
@@ -187,16 +213,22 @@ public class HillCipher extends Cipher implements AbstractEncryptMatrixGenerator
      */
 
     private Matrix convertDoubleDataToInteger(Matrix A) {
-        Integer[][] newMatrixData = new Integer[A.getRow()][A.getColumn()];
-        for (int i = 0; i < newMatrixData.length; i++) {
-            for (int j = 0; j < newMatrixData[i].length; j++) {
+        Integer[][] data = new Integer[A.getRow()][A.getColumn()];
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
                 long  roundValue =  Math.round((Double) A.getValue(i, j));
-                newMatrixData[i][j] = ((int) roundValue);
+                data[i][j] = ((int) roundValue);
             }
         }
-        A.setData(newMatrixData);
+
+
+        A.setData(data);
         return A;
         
+    }
+
+    private void resetIterator() {
+        ITERATOR = 0;
     }
 
 }
