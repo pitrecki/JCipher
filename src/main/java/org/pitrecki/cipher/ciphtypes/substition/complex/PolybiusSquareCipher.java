@@ -1,11 +1,12 @@
 package org.pitrecki.cipher.ciphtypes.substition.complex;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
-import org.pitrecki.cipher.interfaces.AbstractEncryptMatrixGenerator;
-import org.pitrecki.cipher.utils.EncryptMatrixGenerator;
+import org.pitrecki.cipher.utils.tools.PolybiusSquareMatrix;
 
 import java.security.InvalidKeyException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.IllegalFormatException;
+import java.util.List;
 
 /**
  * The Polybius Square is essentially identical to the simple substitution cipher,
@@ -20,82 +21,27 @@ import java.util.*;
  * @see Cipher
  * Created by Pitrecki on 2016-10-30.
  */
-public class PolybiusSquareCipher extends Cipher implements AbstractEncryptMatrixGenerator
+public class PolybiusSquareCipher extends Cipher
 {
-    //Length ====> 25
-    private final int KEY_LENGTH = ASCII_TABLE.length - 1;
-
-    private String cipherKey;
+    private PolybiusSquareMatrix polybiusSquareMatrix;
 
 
     public PolybiusSquareCipher() {
         super();
-        randomKeyGenerator();
-        generateEncryptMatrix(new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Character.class).build());
+        this.polybiusSquareMatrix = new PolybiusSquareMatrix();
+        setEncryptMatrix(polybiusSquareMatrix.getPolybiusMatrix());
     }
 
     public PolybiusSquareCipher(String key) throws InvalidKeyException {
-        super();
-        if (key.length() != KEY_LENGTH)
-            throw new InvalidKeyException("Invalid cipherKey length: " + key.length() + " , expected length: 25");
-        else if (!isUnique(key))
-            throw new InvalidKeyException("Cipher key is not unique");
-        else if (key.matches("[Jj0-9]"))
-            throw new InvalidKeyException("Key contains illegal character");
-        else
-            cipherKey = key.toUpperCase();
-
-        generateEncryptMatrix(new EncryptMatrixGenerator.EncryptMatrixGeneratorBuilder<>(Character.class).build());
+        super();;
+        this.polybiusSquareMatrix = new PolybiusSquareMatrix(key);
+        setEncryptMatrix(polybiusSquareMatrix.getPolybiusMatrix());
     }
 
     public String getCipherKey() {
-        return cipherKey;
+        return polybiusSquareMatrix.getCipherKey();
     }
 
-
-    /**
-     * Create 5x5 cryptography Matrix and fill with eenteredkey
-     * @param generator entered by user
-     */
-
-    @Override
-    public void generateEncryptMatrix(EncryptMatrixGenerator generator) {
-        Character[] characterKeyArray = cipherKey.chars()
-                .mapToObj(value ->(char) value)
-                .toArray(Character[]::new);
-
-        generator.fill(characterKeyArray);
-        setEncryptMatrix(generator.getMatrix());
-    }
-
-    /**
-     * Generate unique key
-     * Set should  prevent from duplicated values
-     */
-    private void randomKeyGenerator() {
-        Set<Character> chKeySet = new LinkedHashSet<>();
-        Random random = new Random();
-        do {
-            char letter = ASCII_TABLE[random.nextInt(26)];
-            if (letter != 'J')
-                chKeySet.add(letter);
-        } while (chKeySet.size() != KEY_LENGTH);
-
-        cipherKey = textProcessing(chKeySet.toString());
-    }
-
-    /**
-     * This method is responsible for check is typed key by user is unique
-     * @param key input key by user
-     * @return true if key length is same, Set collection
-     */
-    private boolean isUnique(String key) {
-        Set<Character> characterSet = new HashSet<>();
-        for (char letter : key.toCharArray())
-            characterSet.add(letter);
-
-        return key.length() == characterSet.size();
-    }
 
     @Override
     @SuppressWarnings("Work only with alphabetic plaintext")
