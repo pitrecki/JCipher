@@ -34,8 +34,7 @@ public class PolybiusSquareMatrix implements AbstractEncryptMatrixGenerator
             throw new InvalidKeyException("Invalid cipher key length: " + key.length() + " , expected length: 25");
         else if (!isUnique(key))
             throw new InvalidKeyException("Cipher key is not unique");
-        //todo fix regex
-        else if (key.matches("[Jj0-9]"))
+        else if (key.matches("^.*[jJ0-9].*$?"))
             throw new InvalidKeyException("Key contains illegal character");
         else
             cipherKey = key.toUpperCase();
