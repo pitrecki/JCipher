@@ -16,8 +16,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
  */
 class PolybiusSquareMatrixTest
 {
-    private PolybiusSquareMatrix polybiusSquareMatrix;
-
     @Test
     @DisplayName("Test polybius matrix generator with shorter key")
     void testWithShorterKeyShouldThrowsException() {
@@ -78,7 +76,7 @@ class PolybiusSquareMatrixTest
     @Test
     @DisplayName("Test polybius matrix generator with random key")
     void testRandomKeyMatrix() {
-        polybiusSquareMatrix = new PolybiusSquareMatrix();
+        PolybiusSquareMatrix polybiusSquareMatrix = new PolybiusSquareMatrix();
         Matrix<Character> actual = polybiusSquareMatrix.getPolybiusMatrix();
 
         assertSoftly(softly -> {
