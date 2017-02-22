@@ -2,12 +2,10 @@ package org.pitrecki.cipher.ciphtypes.substition.complex;
 
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
+import org.pitrecki.cipher.interfaces.MapValueMapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -28,7 +26,7 @@ import java.util.stream.IntStream;
  * Created by Pitrecki on 2016-11-02.
  * @see Cipher
  */
-public class BaconianCipher extends Cipher
+public class BaconianCipher extends Cipher implements MapValueMapper<Character, String>
 {
     public enum Variant {STANDARD, DISTINCT}
 
@@ -142,12 +140,4 @@ public class BaconianCipher extends Cipher
         setProcessedText(decryptedText);
     }
 
-    //For more info please look here: http://stackoverflow.com/questions/1383797/java-hashmap-how-to-get-key-from-value
-
-    private <Character, String> Set<Character> getKeyByValue(Map<Character, String> map, String value) {
-        return map.entrySet().stream()
-                .filter(entry -> Objects.equals(entry.getValue(), value))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
-    }
 }
