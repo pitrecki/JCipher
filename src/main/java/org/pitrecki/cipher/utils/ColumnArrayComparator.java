@@ -3,7 +3,8 @@ package org.pitrecki.cipher.utils;
 import java.util.Comparator;
 
 /**
- * Simple comparator based on column comparision
+ * Simple custom comparator based on column comparision entered
+ * by user.
  *
  * @author Piotr 'pitrecki' Nowak
  *         Created by Pitrecki on 2017-02-21.
