@@ -18,6 +18,7 @@ The project aims to familiarize with the principle of action ciphers in the clas
 9. Atbash
 10. Caesar
 11. Rail-fence
+12. ADFGX
 
 
 
