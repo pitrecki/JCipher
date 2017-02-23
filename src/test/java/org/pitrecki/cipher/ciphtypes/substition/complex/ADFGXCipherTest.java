@@ -1,7 +1,6 @@
 package org.pitrecki.cipher.ciphtypes.substition.complex;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +34,6 @@ class ADFGXCipherTest
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Disabled
     @Test
     @DisplayName("Test text decryption with given key and transposition key")
     void testCorrectDecryption() {

@@ -1,6 +1,7 @@
 package org.pitrecki.cipher.ciphtypes.substition.complex;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
+import org.pitrecki.cipher.utils.math.Matrix;
 import org.pitrecki.cipher.utils.tools.PolybiusSquareMatrix;
 
 import java.security.InvalidKeyException;
@@ -49,15 +50,15 @@ public class ADFGXCipher extends Cipher
     public void encrypt(String inputText) {
         inputText = textProcessing(inputText);
 
-        ADFGXCipherProcessor processor = new ADFGXCipherProcessor(transpositionKey, inputText, this);
+        ADFGXCipherLogic processor = new ADFGXCipherLogic(transpositionKey, inputText, this);
         //fill list with converted coordinates
         List<Character> listWithCoordinates = processor.searchAndFillListWithConvertedCoordinates();
-        Character[][] createdCodeTable = processor.createTwoDimArrayOfCharacters(listWithCoordinates);
+        Matrix<Character> createdCodeTable = processor.createCodeTable(listWithCoordinates);
 
         //fill created array with coordinates
-        processor.fillArray(createdCodeTable, listWithCoordinates);
-
-        createdCodeTable = processor.sort(createdCodeTable);
+        processor.fillCodeTableWithData(createdCodeTable, listWithCoordinates);
+        //transpozyzja
+        processor.sort(createdCodeTable.transpose());
         String text = processor.readFromTopToBottom(createdCodeTable);
 
         //set text
@@ -72,26 +73,25 @@ public class ADFGXCipher extends Cipher
         transpositionKey = sortTranspostionKey(transpositionKey);
         inputText = textProcessing(inputText);
 
-        ADFGXCipherProcessor processor = new ADFGXCipherProcessor(transpositionKey, inputText, this);
+        ADFGXCipherLogic processor = new ADFGXCipherLogic(transpositionKey, inputText, this);
         List<Character> convertedTextToList = processor.convertTextToList();
-        Character[][] createdCodeTable = processor.createTwoDimArrayOfCharacters(convertedTextToList);
+        Matrix<Character> createdCodeTable = processor.createCodeTable(convertedTextToList);
 
         //fill array
-        processor.fillArray(createdCodeTable, convertedTextToList);
-        //transpose data
-        createdCodeTable = processor.transpose(createdCodeTable);
+        processor.fillCodeTableWithData(createdCodeTable, convertedTextToList);
+        //transposeWithoutTranspositionKey data
+        processor.transposeWithoutTranspositionKey(createdCodeTable);
         //fill again
-        createdCodeTable = processor.mergeTranspositionWithCodeTable(createdCodeTable);
+        processor.mergeTranspositionWithCodeTable(createdCodeTable);
         //sort
-        createdCodeTable = processor.sort(createdCodeTable, copyOfTranspositionKey);
+        processor.sort(createdCodeTable, copyOfTranspositionKey);
         //convert data in array with text from encrypt matrix
-        Character[] characters = processor.convertDataInCodeTable(createdCodeTable);
+        char[] characters = processor.convertDataInCodeTableToArray(createdCodeTable);
         //read text
         String text = processor.readData(characters);
         //set text
         text = textProcessing(text);
         setProcessedText(text);
-
     }
 
     private String sortTranspostionKey(String transpositionKey) {
