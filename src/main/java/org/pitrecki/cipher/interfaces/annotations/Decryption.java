@@ -6,6 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Use this annotation to indicates that method is intended to
+ * to decryption.
+ *
  * @author Piotr 'pitrecki' Nowak
  *         Created by Pitrecki on 2017-02-22.
  */
