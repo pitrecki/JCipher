@@ -1,4 +1,4 @@
-package org.pitrecki.cipher.ciphtypes.substition.complex;
+package org.pitrecki.cipher.ciphtypes.substition.complex.adfgx;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
 import org.pitrecki.cipher.utils.math.Matrix;

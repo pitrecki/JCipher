@@ -2,6 +2,7 @@ package org.pitrecki.cipher.ciphtypes.substition.complex;
 
 import org.pitrecki.cipher.ciphtypes.Cipher;
 import org.pitrecki.cipher.utils.tools.PolybiusSquareMatrix;
+import org.pitrecki.cipher.utils.tools.ValueMatrixFinder;
 
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class PolybiusSquareCipher extends Cipher
     }
 
     public PolybiusSquareCipher(String key) throws InvalidKeyException {
-        super();;
+        super();
         this.polybiusSquareMatrix = new PolybiusSquareMatrix(key);
         setEncryptMatrix(polybiusSquareMatrix.getPolybiusMatrix());
     }
@@ -52,7 +53,8 @@ public class PolybiusSquareCipher extends Cipher
         inputText = textProcessing(inputText);
         List<Integer> coordinates = new ArrayList<>();
 
-        fillListWithCoordinates(inputText, coordinates, coordinates);
+//        fillListWithCoordinates(inputText, coordinates, coordinates);
+        fillListWithCoordinates(inputText, coordinates);
         setProcessedText(coordinates.toString().replaceAll("[\\p{Punct}\\W]", ""));
     }
 
@@ -60,20 +62,16 @@ public class PolybiusSquareCipher extends Cipher
      * Search for coordinates in polybius square and fill list with XY points
      *
      * @param inputText plaintext
-     * @param rows list which store y arguments
-     * @param columns list which store x arguments
+//     * @param rows list which store y arguments
+//     * @param columns list which store x arguments
      */
 
-    protected void fillListWithCoordinates(String inputText, List<Integer> rows, List<Integer> columns) {
+    void fillListWithCoordinates(String inputText, List<Integer> coordinates) {
+        ValueMatrixFinder valueMatrixFinder = new ValueMatrixFinder();
         for (int i = 0; i < inputText.length(); i++) {
-            for (int j = 0; j < getEncryptMatrix().getRow(); j++) {
-                for (int k = 0; k < getEncryptMatrix().getColumn(); k++) {
-                    if (getValueFromEncryptMatrix(j, k).equals(inputText.charAt(i))) {
-                        rows.add(j);
-                        columns.add(k);
-                    }
-                }
-            }
+            valueMatrixFinder.findCoordinateOfValue(getEncryptMatrix(), inputText.charAt(i));
+            coordinates.add(valueMatrixFinder.getRowCoordinate());
+            coordinates.add(valueMatrixFinder.getColumnCoordinate());
         }
     }
 

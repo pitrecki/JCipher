@@ -1,4 +1,4 @@
-package org.pitrecki.cipher.ciphtypes.substition.complex;
+package org.pitrecki.cipher.ciphtypes.substition.complex.adfgx;
 
 import org.pitrecki.cipher.interfaces.MapValueMapper;
 import org.pitrecki.cipher.interfaces.annotations.Decryption;
@@ -6,6 +6,7 @@ import org.pitrecki.cipher.interfaces.annotations.Encryption;
 import org.pitrecki.cipher.utils.ColumnArrayComparator;
 import org.pitrecki.cipher.utils.math.Matrix;
 import org.pitrecki.cipher.utils.tools.MatrixUtils;
+import org.pitrecki.cipher.utils.tools.ValueMatrixFinder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,19 +57,13 @@ class ADFGXCipherLogic implements MapValueMapper<Integer, Character>
     @Encryption
     List<Character> searchAndFillListWithConvertedCoordinates() {
         List<Character> listWithCoordinates = new ArrayList<>();
-
-        int iterator = 0;
-        while (iterator < (plainText.length() - 1)) {
-            for (int i = 0; i < adfgxCipher.getEncryptMatrix().getRow(); i++) {
-                for (int j = 0; j < adfgxCipher.getEncryptMatrix().getColumn(); j++) {
-                    if (adfgxCipher.getEncryptMatrix().getValue(i, j).equals(plainText.charAt(iterator))) {
-                        listWithCoordinates.add(coordinatesMap.get(i));
-                        listWithCoordinates.add(coordinatesMap.get(j));
-                        iterator++;
-                        break;
-                    }
-                }
-            }
+        ValueMatrixFinder<Character> valueMatrixFinder = new ValueMatrixFinder<>();
+        for (int i = 0; i < plainText.length(); i++) {
+            valueMatrixFinder.findCoordinateOfValue(adfgxCipher.getEncryptMatrix(), plainText.charAt(i));
+            int row = valueMatrixFinder.getRowCoordinate();
+            int column = valueMatrixFinder.getColumnCoordinate();
+            listWithCoordinates.add(coordinatesMap.get(row));
+            listWithCoordinates.add(coordinatesMap.get(column));
         }
 
         return listWithCoordinates;

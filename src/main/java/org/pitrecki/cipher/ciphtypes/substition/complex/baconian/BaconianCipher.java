@@ -1,4 +1,4 @@
-package org.pitrecki.cipher.ciphtypes.substition.complex;
+package org.pitrecki.cipher.ciphtypes.substition.complex.baconian;
 
 
 import org.pitrecki.cipher.ciphtypes.Cipher;

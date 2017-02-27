@@ -15,28 +15,24 @@ import java.lang.reflect.Array;
 public class MatrixUtils<T>
 {
     private Matrix<T> matrix;
-    private T[][] tArray;
 
     public MatrixUtils(Matrix<T> matrix) {
         this.matrix = matrix;
     }
 
-    public MatrixUtils(T[][] tArray) {
-        this.tArray = tArray;
-    }
-
     /**
      * Create single column T array based on entered column number by user
      *
-     * @param columnNumber  column number of terms which will be created vector
+     * @param rowNumber  column number of terms which will be created vector
      * @return new single column T array
      */
 
     @SuppressWarnings("unchecked T cast")
-    public T[][] getColumn(int columnNumber) {
-        T[][] tmpArray = (T[][]) Array.newInstance(tArray.getClass().getComponentType().getComponentType(), tArray.length, 1);
-        for (int i = 0; i < tArray.length; i++)
-            tmpArray[i][0] = tArray[i][columnNumber];
+    public T[] getRowAsArray(int rowNumber) {
+        Class<?> clazz = matrix.getData().getClass().getComponentType().getComponentType();
+        T[] tmpArray = (T[]) Array.newInstance(clazz, matrix.getColumn());
+        for (int i = 0; i < matrix.getColumn(); i++)
+            tmpArray[i] =  matrix.getValue(rowNumber, i);
 
         return tmpArray;
     }
@@ -50,10 +46,11 @@ public class MatrixUtils<T>
 
     @SuppressWarnings("unchecked T cast")
     public T[] getColumnAsArray(int columnNumber) {
-        T[] tmpArray = (T[]) Array.newInstance(tArray.getClass().getComponentType().getComponentType(), tArray.length);
-        for (int i = 0; i < tArray.length; i++) {
-            tmpArray[i] = tArray[i][columnNumber];
-        }
+        Class<?> clazz = matrix.getData().getClass().getComponentType().getComponentType();
+        T[] tmpArray = (T[]) Array.newInstance(clazz, matrix.getRow());
+        for (int i = 0; i < matrix.getRow(); i++)
+            tmpArray[i] = matrix.getValue(i, columnNumber);
+
         return tmpArray;
     }
 
@@ -71,6 +68,13 @@ public class MatrixUtils<T>
             tmpMatrix.setValueInMatrix(i, 0, matrix.getValue(i, columnNumber));
         }
 
+        return tmpMatrix;
+    }
+
+    public Matrix<T> getRowMatrix(int rowNumber) {
+        Matrix<T> tmpMatrix = new Matrix<>(1, matrix.getColumn());
+        for (int i = 0; i < matrix.getColumn(); i++)
+            tmpMatrix.setValueInMatrix(0, i, matrix.getValue(rowNumber, i));
         return tmpMatrix;
     }
 

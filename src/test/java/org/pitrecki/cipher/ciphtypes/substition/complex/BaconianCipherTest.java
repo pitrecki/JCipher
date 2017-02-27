@@ -3,6 +3,7 @@ package org.pitrecki.cipher.ciphtypes.substition.complex;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.pitrecki.cipher.ciphtypes.Cipher;
+import org.pitrecki.cipher.ciphtypes.substition.complex.baconian.BaconianCipher;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,8 +11,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.pitrecki.cipher.ciphtypes.substition.complex.BaconianCipher.Variant.DISTINCT;
-import static org.pitrecki.cipher.ciphtypes.substition.complex.BaconianCipher.Variant.STANDARD;
+import static org.pitrecki.cipher.ciphtypes.substition.complex.baconian.BaconianCipher.Variant.DISTINCT;
+import static org.pitrecki.cipher.ciphtypes.substition.complex.baconian.BaconianCipher.Variant.STANDARD;
 import static org.pitrecki.cipher.utils.TestContainer.*;
 
 /**

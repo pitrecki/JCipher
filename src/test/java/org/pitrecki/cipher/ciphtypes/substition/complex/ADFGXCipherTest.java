@@ -3,6 +3,7 @@ package org.pitrecki.cipher.ciphtypes.substition.complex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.pitrecki.cipher.ciphtypes.substition.complex.adfgx.ADFGXCipher;
 
 import java.security.InvalidKeyException;
 

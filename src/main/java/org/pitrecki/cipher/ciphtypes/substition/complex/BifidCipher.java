@@ -1,10 +1,11 @@
 package org.pitrecki.cipher.ciphtypes.substition.complex;
 
+import org.pitrecki.cipher.interfaces.annotations.Decryption;
+
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Bifid is a cipher which combines the Polybius square with transposition, and uses
@@ -28,35 +29,38 @@ public class BifidCipher extends PolybiusSquareCipher
         super(key);
     }
 
-    private String checkIfInputTextContainsOnlyLetter(String text) {
-        if (text.matches(".*[\\p{Digit}\\p{Punct}].*"))
-            throw new IllegalArgumentException("Only letters, your input" + text);
-
-        return textProcessing(text);
-    }
-
     @Override
     public void encrypt(String inputText) {
         inputText = checkIfInputTextContainsOnlyLetter(inputText);
 
+        List<Integer> coordinates = new ArrayList<>();
+        fillListWithCoordinates(inputText, coordinates);
 
-        List<Integer> rows = new ArrayList<>();
-        List<Integer> columns = new ArrayList<>();
-        fillListWithCoordinates(inputText, rows, columns);
-
-        List<Integer> merged = Stream.concat(rows.stream(), columns.stream())
-                .collect(Collectors.toList());
+        coordinates = swapOrderOfCoordinates(coordinates);
 
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < merged.size(); i += 2) {
-            int rowVal = merged.get(i);
-            int columnVal = merged.get(i + 1);
+        for (int i = 0; i < coordinates.size(); i+=2) {
+            int rowVal = coordinates.get(i);
+            int columnVal = coordinates.get(i + 1);
             builder.append(getValueFromEncryptMatrix(rowVal, columnVal));
         }
 
-
         setProcessedText(builder.toString());
     }
+
+    @Decryption
+    private List<Integer> swapOrderOfCoordinates(List<Integer> coordinates) {
+        Integer[] integers = new Integer[coordinates.size()];
+        int arrayIndex = 0;
+        int halfSize = coordinates.size() / 2;
+        for (int i = 0; i < coordinates.size(); i+=2) {
+            integers[arrayIndex] = coordinates.get(i);
+            integers[arrayIndex + halfSize] = coordinates.get(i + 1);
+            arrayIndex++;
+        }
+        return Arrays.asList(integers);
+    }
+
 
     @Override
     public void decrypt(String inputText) {
@@ -64,19 +68,26 @@ public class BifidCipher extends PolybiusSquareCipher
 
         List<Integer> coordinates = new ArrayList<>();
 
-        fillListWithCoordinates(inputText, coordinates, coordinates);
+        fillListWithCoordinates(inputText, coordinates);
 
-        List<Integer> rows = coordinates.subList(0, coordinates.size()/2);
-        List<Integer> columns = coordinates.subList(coordinates.size()/2, coordinates.size());
 
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < inputText.length(); i++) {
-            int rowVal = rows.get(i);
-            int columnVal = columns.get(i);
+        int halfSize = coordinates.size() / 2;
+        for (int i = 0; i < inputText.length();i++) {
+            int rowVal = coordinates.get(i);
+            int columnVal = coordinates.get(halfSize + i);
             builder.append(getValueFromEncryptMatrix(rowVal, columnVal));
         }
 
         setProcessedText(builder.toString());
 
+    }
+
+
+    private String checkIfInputTextContainsOnlyLetter(String text) {
+        if (text.matches(".*[\\p{Digit}\\p{Punct}].*"))
+            throw new IllegalArgumentException("Only letters, your input" + text);
+
+        return textProcessing(text);
     }
 }
